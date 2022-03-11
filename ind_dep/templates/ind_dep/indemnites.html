@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Indemnités de déplacement {% endblock %}
+{% block content %}
+<div class="row">
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette indemnités de déplacement</h3>
+</div>
+
+<div class="row mt-4 d-flex justify-content-center">
+<div class="col-10">
+    <form action="" method="get" class="form">
+        <div class="row">
+            <div class="col">
+                <label for="h_debut">Horaire de début de travail</label>
+                <input type="time" class="form-control" id="h_debut" name="h_debut" value ="{{ timeD }}">
+            </div>
+            <div class="col">
+                <label for="h_fin">Horaire de fin de travail</label>
+                <input type="time" class="form-control" id="h_fin" name="h_fin" value ="{{ timeR }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="formControlRange">Duree de trajet domicile travail</label>
+        </div>
+        <div>
+            <input type="range" class="form-control-range" id="formControlRange" name="duree" min="0" max="120" value="{{ duree }}"/>
+            <span id="duree">{{ duree }}</span> mn
+        </div>
+        <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="memoCheck" checked>
+      <label class="form-check-label" for="memoCheck">
+        Se souvenir de moi
+      </label>
+    </div>
+  </div>
+        <!--    <input class="form-control" type="time" id="h_depart" name="h_depart" value ="{{ depart }}"/>-->
+        <!--    <input class="form-control" type="time" id="h_retour" name="h_retour" value ="{{ retour }}"/>-->
+        <div class="row">
+            <div class="col">
+                <label for="h_depart">Heure de départ du domicile</label>
+                <input type="time" class="form-control" id="h_depart" name="h_depart" value ="{{ depart }}">
+            </div>
+            <div class="col">
+                <label for="h_retour">Heure de retour au domicile</label>
+                <input type="time" class="form-control" id="h_retour" name="h_retour" value ="{{ retour }}">
+            </div>
+        </div>
+        <input class="btn btn-primary mb-4 my-4" type="submit" value="Envoyer"/>
+    </form>
+<!--    <div>-->
+<!--        <p>heure de début {{ timeD }}</p>-->
+<!--        <p>heure de fin  {{ timeR }}</p>-->
+<!--        <p>heure de depart  {{ depart }}</p>-->
+<!--        <p>heure de retour {{ retour }}</p>-->
+<!--    </div>-->
+    <h4>Résultats</h4>
+    <div>
+        <p>durée retenue Aller {{ resultat.t1 }} mn soit {{ resultat.ind1 }} Indemnité(s) AIDA</p>
+        <p>durée retenue Retour {{ resultat.t2 }} mn soit {{ resultat.ind2 }} Indemnité(s) AIDA</p>
+    </div>
+    <!--<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>-->
+    <script defer src="{% static 'js/script_ind.js' %}"></script>
+</div>
+</div>
+{% endblock %}

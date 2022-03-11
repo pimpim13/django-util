@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Frais de déplacement {% endblock %}
+{% block head%}
+<script defer src="{% static 'js/Frais_storage.js' %}"></script>
+<script defer src="{% static 'js/index_frais_dev.js' %}"></script>
+{% endblock head%}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+<div class="row">
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette Frais de déplacement</h3>
+</div>
+<div class="row mt-4 d-flex justify-content-center">
+  <div class="col-6">
+<!--  <div class="col-12">-->
+    <form action="" method="GET" class="form">
+        <div class="row">
+                <div>
+                    {{ form.taux|as_crispy_field }}
+                </div>
+                <div>
+                    {{ form.localisation|as_crispy_field }}
+                </div>
+                <div>
+                    {{ form.college|as_crispy_field }}
+                </div>
+                <div id="memo" class="mt-2">
+                    {{ form.memo|as_crispy_field }}
+                </div>
+                <input id="calculer" type="submit" value="Calculer" class="btn btn-primary mb-4 my-4" />
+        </div>
+    </form>
+    </div>
+</div>
+<row class="d-flex justify-content-center">
+  <div id="textResult" class="border text-center text-muted col-sm-8 col-lg-6 bg-light ">
+
+  </div>
+</row>
+    <!-- <table id="table" class="table col-6"> -->
+    <!-- <div class="row mt-4 d-flex justify-content-center"> -->
+    <div class="row mt-4 mx-4">
+    <table id="table" class="table table-striped text-end table-bordered border-primary">
+    <!-- <table id="table" class="table col-6 text-end"> -->
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Barème</th>
+          <th scope="col">Cotis</th>
+          <th scope="col">Impôts</th>
+          <th scope="col">Reste</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" class="text-start">Repas</th>
+          <td id="repas">{{ repas|floatformat:2 }}</td>
+          <td id="cotisationsRepas">{{ retenue_ecart_r|floatformat:2 }}</td>
+          <td id="impotsRepas">{{ retenue_cs_non_soumises_r|floatformat:2 }}</td>
+          <td id="resteRepas">---</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start">Nuit + pdj</th>
+          <td id="nuit">{{ nuit|floatformat:2 }}</td>
+          <td id="cotisationsNuit">{{ retenue_ecart_n|floatformat:2 }}</td>
+          <td id="impotsNuit">{{ retenue_cs_non_soumises_n|floatformat:2 }}</td>
+          <td id="resteNuit">---</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start">Total</th>
+          <td id="total">---</td>
+          <td id="totalCotisations">---</td>
+          <td id="totalImpots">---</td>
+          <td id="totalReste"class="">---</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- </div>
+    <div>
+        <ul>
+            <li>Repas = {{ repas }} - {{ retenue_ecart_r }} - {{ retenue_cs_non_soumises_r }} </li>
+            <li>Nuit+pdj = {{ nuit }} - {{ retenue_ecart_n }} - {{ retenue_cs_non_soumises_n }} </li>
+        </ul>
+    </div>
+</div> -->
+
+{% endblock content %}

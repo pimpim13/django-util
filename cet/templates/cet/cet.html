@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Calcul {% endblock %}
+{% block navitems %}
+
+{% endblock navitems %}
+
+{% block content%}
+<div class="row">
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette Utilisation CET</h3>
+</div>
+<!--<div class="row mt-4">-->
+<div class="row mt-4 d-flex justify-content-center">
+<!--<section class="row">-->
+        <div class="col-12 col-md-6 col-lg-3">
+            <section class="card h-100">
+                <img src=" {% static 'images/temps1.jpg' %}" alt="pim" class="card-img-top"/>
+                <div class="card-body">
+                    <h1 class="h3 card-title">
+                        Date vers heures
+                    </h1>
+                    <p class="card-text">
+                        Déterminez le nombre d'heures dont vous avez besoin pour partir en AFC à une date précise
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'cet_choix' 'timetodate' %}" class="btn btn-primary">Y aller...</a>
+                </div>
+
+            </section>
+
+        </div><!--End first element-->
+        <div class="col-12 col-md-6 col-lg-3">
+            <section class="card h-100">
+                <img src=" {% static 'images/retraite.jpg' %}" alt="pim" class="card-img-top"/>
+                <div class="card-body">
+                    <h1 class="h3 card-title">
+                        heures vers date
+                    </h1>
+                    <p class="card-text">
+                        Determinez votre date de départ en AFC. <br>
+                        <br>
+
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'cet_index' %}" class="btn btn-primary">Y aller...</a>
+                </div>
+
+            </section>
+
+        </div><!--End second element-->
+<!--    </section>&lt;!&ndash;End section.row second row&ndash;&gt;-->
+</div>
+
+{% endblock content%}

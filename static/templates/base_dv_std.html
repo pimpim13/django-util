@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/calculatrice.png' %}">
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script defer src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block head %} {% endblock head%}
+    {% block head_extra %} {% endblock %}
+    <title>PIM - {% block title %}{% endblock %}</title>
+</head>
+
+<nav class="navbar sticky-top navbar-expand-sm navbar-light" style="background-color: #FF6600;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/logo_cfdt_rte.jpg' %}" alt="logo" width="96" height="96">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-scroll me-auto amb-2 mb-lg-0">
+                {% block navitems %}
+                {% endblock navitems %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="https://rte.cfdt.app" target="_blank">AppRTE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="mailto:rte-cfdt-mediterranee@rte-france.com?subject=contact%20depuis%20le%20site">Nous contacter</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-scroll amb-2 mb-lg-0 ml-auto">
+                {% if user.is_authenticated %}
+                <li>
+                        <span class="navbar-text">
+                            Bienvenue {{ user.username }}
+                        </span>
+                    <a class="nav-link text-end" href="#" >se deconnecter</a>
+                </li>
+                {% else %}
+                <li><a class="nav-link text-end" href="#" >s'inscrire</a></li>
+                <li><a class="nav-link text-end" href="#" >se connecter</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- <body class="bg-secondary text-light"> -->
+
+<body class="bg-light text-dark">
+<div class="container-fluid sm-3">
+
+    {% block content%}
+
+    {% endblock content%}
+
+</div>
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
