@@ -1,6 +1,5 @@
 asgiref==3.4.1
 Django==4.0
-django-bootstrap-datepicker-plus==4.0.0
 django-crispy-forms==1.13.0
 et-xmlfile==1.1.0
 jours-feries-france==0.7.0
