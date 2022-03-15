@@ -2,9 +2,11 @@ from pprint import pprint
 import json
 import openpyxl
 
-#from pathlib import Path
+
+# from pathlib import Path
 def __init__():
     return
+
 
 def parse_xlsx(path):
     workbook = openpyxl.load_workbook(path)

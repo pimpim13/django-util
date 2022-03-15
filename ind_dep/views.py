@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .api_dep import Indemnite
 # test = Indemnite({"h_debut": "8:00", "d_trajet": "35", "h_depart": "6:00", "h_fin": "17:00", "h_retour": "18:10"})
 
+
 def ind_dep(request):
 
     embauche = request.GET.get('h_debut', '08:00')
