@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">-->
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/calculatrice.png' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script defer src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
@@ -38,11 +39,11 @@
                         <span class="navbar-text">
                             Bienvenue {{ user.username|capfirst }}
                         </span>
-                    <a class="nav-link text-end" href="#" >se deconnecter</a>
+                    <a class="nav-link text-end" href="{% url 'logout' %}" >se deconnecter</a>
                 </li>
                 {% else %}
-                <li><a class="nav-link text-end" href="#" >s'inscrire</a></li>
-                <li><a class="nav-link text-end" href="#" >se connecter</a></li>
+                <li><a class="nav-link text-end" href="{% url 'signup' %}" >s'inscrire</a></li>
+                <li><a class="nav-link text-end" href="{% url 'login' %}" >se connecter</a></li>
                 {% endif %}
             </ul>
         </div>

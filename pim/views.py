@@ -65,6 +65,8 @@ def reset(request):
 
 def help_item(request, item=""):
     # choice = ["tps-travail", "ecart_tps", "indem_tps", "allong_km", "indem_km", "indem_tps_tt", "indem_km_tt"]
-    t = Aideitem.objects.get(item=item)
-    print(t.description)
-    return render(request, 'pim/help.html', {"description": t.description, "titre": t.titre})
+    url = f"pim/{item}.html"
+    context = {'url': url}
+    # t = Aideitem.objects.get(item=item)
+    # print(t.description)
+    return render(request, 'pim/help.html', context=context)

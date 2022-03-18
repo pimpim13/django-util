@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'cet',
     'frais',
     'ind_dep',
-    'bootstrap_datepicker_plus'
+    'accounts',
+    'bootstrap_datepicker_plus',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -135,3 +136,7 @@ STATIC_ROOT = BASE_DIR
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
