@@ -51,4 +51,16 @@ def frais(request):
                }
     # pprint(context)
 
-    return render(request, 'frais/frais_dev_2.html', context)
+    return render(request, 'frais/frais.html', context)
+
+
+def maj_ursaff(request):
+    context = {}
+    taux_ursaff = parse_xl.get_json('static/datas/ursaff.json')
+    # taux_cs_ecart = taux_ursaff['2022']['taux_cs_ecart']/100
+    # taux_cs_non_soumises = taux_ursaff['2022']['taux_cs_non_soumises']/100
+
+    context['ursaff'] = taux_ursaff
+
+
+    return render(request, 'frais/ursaff.html', context=context)

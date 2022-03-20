@@ -5,11 +5,12 @@ from django import forms
 from frais import parse_xl
 #import parse_xl
 
-bareme_total = parse_xl.get_json('static/datas/2021.json')
-
+bareme_total = parse_xl.get_json('static/datas/2022.json')
+ursaff = parse_xl.get_json('static/datas/ursaff.json')
 
 localisations = sorted(bareme_total.keys())
 loc = [(localisation, localisation) for localisation in localisations ]
+annee = [(an, an) for an in ursaff.keys()]
 
 
 CHOICES_COLLEGE = [('M', 'Execution/Maitrise'),
@@ -37,6 +38,6 @@ class FraisForm(forms.Form):
 
 
 if __name__ == '__main__':
-    pprint(loc)
+    print('hello')
 
 

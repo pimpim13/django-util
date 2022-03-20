@@ -87,9 +87,9 @@ def update_ursaff(annee, taux_cs_ecart, taux_cs_non_soumises):
 
 
 if __name__ == '__main__':
-    # bareme = get_json('2021.json')
-    bareme = parse_xlsx(path='../static/datas/frais2021.xlsx')
-    save_to_json(datas=bareme, name='2021.json')
-    pprint(bareme)
+    annee = get_json('../static/datas/ursaff.json')
+    # bareme = parse_xlsx(path='../static/datas/frais2021.xlsx')
+    # save_to_json(datas=bareme, name='2021.json')
+    pprint(annee)
     # print(Path.cwd())
     # update_ursaff('2021', 8.86, 6.01)

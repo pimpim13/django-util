@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% for k,v in ursaff.items %}
+    <p> année {{ k }}</p>
+    <ul>
+    {% for x, y in v.items %}
+        <li> {{ x }} : {{ y }} </li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+
+{% endblock content %}
