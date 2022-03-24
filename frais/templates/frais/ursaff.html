@@ -3,14 +3,27 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-{% for k,v in ursaff.items %}
-    <p> année {{ k }}</p>
-    <ul>
-    {% for x, y in v.items %}
-        <li> {{ x }} : {{ y }} </li>
+<div class="container-fluid">
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Année</th>
+        <th scope="col">Taux Ursaff</th>
+        <th scope="col">Taux Impôts</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for x in list_taux %}
+    <tr>
+        <th scope="row">{{ x.annee }}</th>
+        <td> {{ x.taux_cs }} %</td>
+        <td> {{ x.taux_cs_non_soumise  }} %</td>
+        <td><button type="button" class="btn btn-outline-primary btn-sm" value="{{ x.annee }}">
+            <a href="{% url 'ursaff_item' x.annee %}">Modifier</a></button></td>
+    </tr>
     {% endfor %}
-    </ul>
-{% endfor %}
+    </tbody>
+</table>
+</div>
 
 {% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} MAJ-Ursaff {% endblock title %}
+
+{% block content %}
+<div class="my-3">
+    <form action="" method="POST" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Modifier">
+    </form>
+</div>
+
+{{ success|safe }}
+
+{% endblock content %}

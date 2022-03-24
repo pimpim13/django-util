@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from frais.models import ursaffModel, Bareme
+
+admin.site.register(ursaffModel)
+admin.site.register(Bareme)

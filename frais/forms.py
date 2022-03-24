@@ -3,7 +3,7 @@ from pprint import pprint
 from django import forms
 
 from frais import parse_xl
-#import parse_xl
+from frais.models import ursaffModel
 
 bareme_total = parse_xl.get_json('static/datas/2022.json')
 ursaff = parse_xl.get_json('static/datas/ursaff.json')
@@ -35,6 +35,20 @@ class FraisForm(forms.Form):
     college = forms.ChoiceField(label='Collège', choices=CHOICES_COLLEGE)
     memo = forms.ChoiceField(label="Se souvenir de moi", widget=forms.CheckboxInput,
                              initial=True, choices=CHOICES_MEMO, required=False)
+
+
+# YEAR_CHOICES = [(an, an) for an in ursaff.keys()]
+YEAR_CHOICES = [(a.annee, a.annee) for a in ursaffModel.objects.all()]
+
+
+class updateUrsaffForm(forms.ModelForm):
+
+    class Meta:
+        model = ursaffModel
+        fields = ['annee', 'taux_cs', 'taux_cs_non_soumise']
+        labels = {'taux_cs': 'Taux Ursaff', 'taux_cs_non_soumise': 'Taux Impôts'}
+
+        # widgets = {'annee': forms.Select(choices=YEAR_CHOICES)}
 
 
 if __name__ == '__main__':

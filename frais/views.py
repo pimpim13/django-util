@@ -1,8 +1,9 @@
 from pprint import pprint
-
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .forms import FraisForm
+from .forms import FraisForm, updateUrsaffForm
 from frais import parse_xl
+from frais.models import ursaffModel, Bareme
 
 
 def frais(request):
@@ -27,6 +28,10 @@ def frais(request):
 
         valeurs = request.GET
         if localisation and college:
+
+            # nuitDb = Bareme.objects.filter(annee=2022, localisation=localisation, college=college)
+            # print(nuitDb[0].Repas)
+
             nuit = bareme_total[localisation][college]['N+PD']
             repas = bareme_total[localisation][college]['R']
             acoss_r = bareme_total[localisation]['ACOSS']['R']
@@ -56,11 +61,46 @@ def frais(request):
 
 def maj_ursaff(request):
     context = {}
+    list_taux = ursaffModel.objects.all()
+
     taux_ursaff = parse_xl.get_json('static/datas/ursaff.json')
-    # taux_cs_ecart = taux_ursaff['2022']['taux_cs_ecart']/100
-    # taux_cs_non_soumises = taux_ursaff['2022']['taux_cs_non_soumises']/100
+    taux_cs_ecart = taux_ursaff['2022']['taux_cs_ecart']
+    taux_cs_non_soumise = taux_ursaff['2022']['taux_cs_non_soumises']
+
+    form = updateUrsaffForm(initial={'taux_cs': taux_cs_ecart,
+                                     'taux_cs_non_soumise': taux_cs_non_soumise,
+                                     'annee': 2022})
 
     context['ursaff'] = taux_ursaff
-
+    context['form'] = form
+    context['list_taux'] = list_taux
 
     return render(request, 'frais/ursaff.html', context=context)
+
+
+def maj_ursaff_item(request, item):
+
+
+    context = {}
+    list_taux = ursaffModel.objects.get(annee=item)
+    taux_cs_ecart = list_taux.taux_cs
+    taux_cs_non_soumise = list_taux.taux_cs_non_soumise
+    form = updateUrsaffForm(initial={'taux_cs': taux_cs_ecart,
+                                     'taux_cs_non_soumise': taux_cs_non_soumise,
+                                     'annee': list_taux.annee})
+    if request.method == 'POST':
+
+        if form.is_valid():
+            # form.save()
+            success = "Mdifications sauvegardées"
+
+        else:
+            success = "Le formulaire n'est pas valide"
+
+        context['success'] = success
+        context['form'] = form
+        return render(request, 'frais/ursaff_update.html', context=context)
+
+    context['form'] = form
+
+    return render(request, 'frais/ursaff_update.html', context=context)

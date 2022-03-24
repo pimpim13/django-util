@@ -86,10 +86,28 @@ def update_ursaff(annee, taux_cs_ecart, taux_cs_non_soumises):
     save_to_json(ursaff, name='../static/datas/ursaff.json')
 
 
+def jsonTodb(file):
+
+
+    with open(file,'r') as f:
+        data = json.load(f)
+
+    for element in data.keys():
+        for x in data[element].keys():
+            print(x)
+            repas = data[element][x]['R']
+            nuit = data[element][x]['N+PD']
+
+            print(element, x, repas, nuit)
+
 if __name__ == '__main__':
-    annee = get_json('../static/datas/ursaff.json')
+
+    jsonTodb('/Users/alainzypinoglou/PycharmProject/django-util-replica/static/datas/2022.json')
+    # annee = get_json('../static/datas/ursaff.json')
     # bareme = parse_xlsx(path='../static/datas/frais2021.xlsx')
     # save_to_json(datas=bareme, name='2021.json')
-    pprint(annee)
+    # pprint(annee)
     # print(Path.cwd())
     # update_ursaff('2021', 8.86, 6.01)
+
+
