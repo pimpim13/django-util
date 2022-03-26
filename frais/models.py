@@ -19,8 +19,10 @@ class Bareme(models.Model):
     annee = models.IntegerField()
     localisation = models.CharField(max_length=200)
     college = models.CharField(max_length=20)
-    Repas = models.DecimalField(max_digits=5, decimal_places=2)
-    Nuit_Pdj = models.DecimalField(max_digits=5, decimal_places=2)
+    # Repas = models.DecimalField(max_digits=5, decimal_places=2)
+    Repas = models.FloatField()
+    # Nuit_Pdj = models.DecimalField(max_digits=5, decimal_places=2)
+    Nuit_Pdj = models.FloatField()
 
     def __str__(self):
         return f"{self.annee} - {self.localisation}"

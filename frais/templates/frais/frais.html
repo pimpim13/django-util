@@ -17,7 +17,7 @@
             Parametres
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">MAJ Taux URSAFF</a></li>
+            <li><a class="dropdown-item" href="{% url 'ursaff' %}">MAJ Taux URSAFF</a></li>
             <li><a class="dropdown-item" href="#">Nouveau barème</a></li>
           </ul>
         </li>
@@ -27,13 +27,15 @@
 {% block content %}
 
 <div class="row">
-    <h3 class="h3 bg-secondary text-light text-center" >Calculette Frais de déplacement</h3>
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette Frais de déplacement - {{ message }}</h3>
 </div>
 <div class="row mt-4 d-flex justify-content-center">
 <!--    <div class="col-6">-->
     <div class="col-10">
         <form action="" method="GET" class="form">
             <div class="row">
+
+
                 <div>
                     {{ form.taux|as_crispy_field }}
                 </div>

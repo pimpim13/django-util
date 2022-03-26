@@ -27,25 +27,27 @@ CHOICES_TAUX = [(0.0, '0%'),
 CHOICES_MEMO = [(True, ""),
                 (False, "")]
 
+YEAR_CHOICES = [(a.annee, a.annee) for a in ursaffModel.objects.all()]
+
 
 class FraisForm(forms.Form):
 
+    # annee = forms.ChoiceField(label="Année", choices=YEAR_CHOICES)
     taux = forms.ChoiceField(label="Taux marginal impôt", choices=CHOICES_TAUX)
     localisation = forms.ChoiceField(label="Localisation", choices=loc)
     college = forms.ChoiceField(label='Collège', choices=CHOICES_COLLEGE)
     memo = forms.ChoiceField(label="Se souvenir de moi", widget=forms.CheckboxInput,
                              initial=True, choices=CHOICES_MEMO, required=False)
 
-
-# YEAR_CHOICES = [(an, an) for an in ursaff.keys()]
-YEAR_CHOICES = [(a.annee, a.annee) for a in ursaffModel.objects.all()]
+    class Meta:
+        fields = ['taux', 'localisation', 'college', 'memo']
 
 
 class updateUrsaffForm(forms.ModelForm):
 
     class Meta:
         model = ursaffModel
-        fields = ['annee', 'taux_cs', 'taux_cs_non_soumise']
+        fields = ['taux_cs', 'taux_cs_non_soumise']
         labels = {'taux_cs': 'Taux Ursaff', 'taux_cs_non_soumise': 'Taux Impôts'}
 
         # widgets = {'annee': forms.Select(choices=YEAR_CHOICES)}
