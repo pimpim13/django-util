@@ -1,25 +1,28 @@
 from pprint import pprint
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .forms import FraisForm, updateUrsaffForm
+from .forms import FraisForm, updateUrsaffForm, newUrsaffForm
 from frais.models import ursaffModel, Bareme
 from datetime import date
-
-annee_bareme = date.today().year
 
 
 def frais(request):
 
-    bareme_total = Bareme.objects.filter(annee=annee_bareme)
-    taux_ursaff = ursaffModel.objects.filter(annee=annee_bareme)
+    bareme_total = Bareme.objects.filter(annee=date.today().year)
+    taux_ursaff = ursaffModel.objects.filter(annee=date.today().year)
 
     if bareme_total.count() == 0:
-        message = f"Barème {annee_bareme} pas encore disponible"
-
+        annee_bareme = Bareme.objects.last().annee
     else:
-        message = f"{annee_bareme}"
+        annee_bareme = date.today().year
 
-    list_taux = ursaffModel.objects.get(annee=annee_bareme)
+    return redirect('frais_an', annee_bareme)
+#     return redirect('frais_an', an=annee_bareme)
+
+
+def frais_an(request, an):
+
+    list_taux = ursaffModel.objects.get(annee=an)
     taux_cs_ecart = float(list_taux.taux_cs)/100
     taux_cs_non_soumises = float(list_taux.taux_cs_non_soumise)/100
 
@@ -38,10 +41,10 @@ def frais(request):
         valeurs = request.GET
         if localisation and college:
 
-            nuit = Bareme.objects.get(annee=annee_bareme, localisation=localisation, college=college,).Nuit_Pdj
-            repas = Bareme.objects.get(annee=annee_bareme, localisation=localisation, college=college,).Repas
-            acoss_r = Bareme.objects.get(annee=annee_bareme, localisation=localisation, college='ACOSS',).Repas
-            acoss_n = Bareme.objects.get(annee=annee_bareme, localisation=localisation, college='ACOSS',).Nuit_Pdj
+            nuit = Bareme.objects.get(annee=an, localisation=localisation, college=college,).Nuit_Pdj
+            repas = Bareme.objects.get(annee=an, localisation=localisation, college=college,).Repas
+            acoss_r = Bareme.objects.get(annee=an, localisation=localisation, college='ACOSS',).Repas
+            acoss_n = Bareme.objects.get(annee=an, localisation=localisation, college='ACOSS',).Nuit_Pdj
 
             retenue_ecart_r = round((repas - acoss_r) * taux_cs_ecart, 2)
             retenue_ecart_n = round((nuit - acoss_n) * taux_cs_ecart, 2)
@@ -59,7 +62,7 @@ def frais(request):
                'retenue_ecart_n': retenue_ecart_n,
                'retenue_cs_non_soumises_r': retenue_cs_non_soumises_r,
                'retenue_cs_non_soumises_n': retenue_cs_non_soumises_n,
-               'message': message
+               'message': an
                }
     # pprint(context)
 
@@ -71,6 +74,7 @@ def maj_ursaff(request):
     context = {}
     list_taux = ursaffModel.objects.all()
     context['list_taux'] = list_taux
+    context['creation'] = True
 
     return render(request, 'frais/ursaff.html', context=context)
 
@@ -103,3 +107,27 @@ def maj_ursaff_item(request, item):
     context['form'] = form
 
     return render(request, 'frais/ursaff_update.html', context=context)
+
+
+def del_ursaff_item(request, item):
+    a = ursaffModel.objects.get(annee=item)
+    a.delete()
+
+    return redirect('ursaff')
+
+
+def new_ursaff_item(request):
+
+    context = {}
+    form = newUrsaffForm()
+
+    if request.method == 'POST':
+        form = newUrsaffForm(request.POST)
+
+    if form.is_valid():
+        form.save()
+        return redirect('ursaff')
+
+    context['form'] = form
+
+    return render(request, 'frais/ursaff_new.html', context=context)

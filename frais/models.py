@@ -7,9 +7,12 @@ annee_min = 2021
 
 
 class ursaffModel(models.Model):
-    annee = models.IntegerField()
+    annee = models.IntegerField(unique=True)
     taux_cs = models.DecimalField(max_digits=4, decimal_places=2)
     taux_cs_non_soumise = models.DecimalField(max_digits=4, decimal_places=2)
+
+    class Meta:
+        ordering = ('annee',)
 
     def __str__(self):
         return str(self.annee)
@@ -23,6 +26,9 @@ class Bareme(models.Model):
     Repas = models.FloatField()
     # Nuit_Pdj = models.DecimalField(max_digits=5, decimal_places=2)
     Nuit_Pdj = models.FloatField()
+
+    class Meta:
+        ordering = ('annee',)
 
     def __str__(self):
         return f"{self.annee} - {self.localisation}"

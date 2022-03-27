@@ -53,6 +53,14 @@ class updateUrsaffForm(forms.ModelForm):
         # widgets = {'annee': forms.Select(choices=YEAR_CHOICES)}
 
 
+class newUrsaffForm(forms.ModelForm):
+
+    class Meta:
+        model = ursaffModel
+        fields = ['annee', 'taux_cs', 'taux_cs_non_soumise']
+        labels = {'taux_cs': 'Taux Ursaff', 'taux_cs_non_soumise': 'Taux Impôts'}
+
+
 if __name__ == '__main__':
     print('hello')
 
