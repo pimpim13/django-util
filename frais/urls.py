@@ -9,4 +9,5 @@ urlpatterns = [
     path('update/ursaff/<str:item>/', views.maj_ursaff_item, name='ursaff_item'),
     path('delete/ursaff/<str:item>/', views.del_ursaff_item, name='ursaff_del_item'),
     path('new/ursaff/', views.new_ursaff_item, name='ursaff_new_item'),
+    path('new/bareme/', views.new_bareme_item, name='bareme_new_item'),
 ]

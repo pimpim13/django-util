@@ -1,5 +1,7 @@
 from pprint import pprint
 from django.http import HttpResponse, HttpResponseRedirect
+import json
+
 from django.shortcuts import render, redirect
 from .forms import FraisForm, updateUrsaffForm, newUrsaffForm
 from frais.models import ursaffModel, Bareme
@@ -131,3 +133,21 @@ def new_ursaff_item(request):
     context['form'] = form
 
     return render(request, 'frais/ursaff_new.html', context=context)
+
+
+def jsonTodb(file):
+
+    with open(file,'r') as f:
+        data = json.load(f)
+
+    for element in data.keys():
+        for x in data[element].keys():
+            print(x)
+            repas = data[element][x]['R']
+            nuit = data[element][x]['N+PD']
+
+            print(element, x, repas, nuit)
+
+
+def new_bareme_item(request):
+    return None

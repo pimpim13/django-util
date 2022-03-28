@@ -11,7 +11,7 @@
 {% endblock head%}
 
 {% block navitems %}
-{% if user.is_authenticated %}
+{% if user.is_staff %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Parametres

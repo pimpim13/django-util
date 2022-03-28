@@ -2,7 +2,6 @@ from pprint import pprint
 import json
 import openpyxl
 
-
 # from pathlib import Path
 def __init__():
     return
@@ -88,7 +87,6 @@ def update_ursaff(annee, taux_cs_ecart, taux_cs_non_soumises):
 
 def jsonTodb(file):
 
-
     with open(file,'r') as f:
         data = json.load(f)
 
@@ -100,8 +98,8 @@ def jsonTodb(file):
 
             print(element, x, repas, nuit)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     jsonTodb('/Users/alainzypinoglou/PycharmProject/django-util-replica/static/datas/2022.json')
     # annee = get_json('../static/datas/ursaff.json')
     # bareme = parse_xlsx(path='../static/datas/frais2021.xlsx')

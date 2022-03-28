@@ -1,17 +1,10 @@
-from pprint import pprint
-
 from django import forms
+from frais.models import ursaffModel, Bareme
 
-from frais import parse_xl
-from frais.models import ursaffModel
-
-bareme_total = parse_xl.get_json('static/datas/2022.json')
-ursaff = parse_xl.get_json('static/datas/ursaff.json')
-
-localisations = sorted(bareme_total.keys())
-loc = [(localisation, localisation) for localisation in localisations ]
-annee = [(an, an) for an in ursaff.keys()]
-
+an = Bareme.objects.last().annee
+bareme_actuel = Bareme.objects.filter(annee=an)
+localisations = sorted({_.localisation for _ in bareme_actuel})
+loc = [(localisation, localisation) for localisation in localisations]
 
 CHOICES_COLLEGE = [('M', 'Execution/Maitrise'),
                ('C', 'Cadre'),
@@ -32,7 +25,6 @@ YEAR_CHOICES = [(a.annee, a.annee) for a in ursaffModel.objects.all()]
 
 class FraisForm(forms.Form):
 
-    # annee = forms.ChoiceField(label="Année", choices=YEAR_CHOICES)
     taux = forms.ChoiceField(label="Taux marginal impôt", choices=CHOICES_TAUX)
     localisation = forms.ChoiceField(label="Localisation", choices=loc)
     college = forms.ChoiceField(label='Collège', choices=CHOICES_COLLEGE)
@@ -50,8 +42,6 @@ class updateUrsaffForm(forms.ModelForm):
         fields = ['taux_cs', 'taux_cs_non_soumise']
         labels = {'taux_cs': 'Taux Ursaff', 'taux_cs_non_soumise': 'Taux Impôts'}
 
-        # widgets = {'annee': forms.Select(choices=YEAR_CHOICES)}
-
 
 class newUrsaffForm(forms.ModelForm):
 
@@ -61,7 +51,10 @@ class newUrsaffForm(forms.ModelForm):
         labels = {'taux_cs': 'Taux Ursaff', 'taux_cs_non_soumise': 'Taux Impôts'}
 
 
+# class newBaremeForm(forms.Form):
+#
+#     annee = forms.IntegerField()
+
+
 if __name__ == '__main__':
     print('hello')
-
-
