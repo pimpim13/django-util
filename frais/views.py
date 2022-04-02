@@ -1,9 +1,11 @@
 from pprint import pprint
+
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 
 from django.shortcuts import render, redirect
-from .forms import FraisForm, updateUrsaffForm, newUrsaffForm
+from .forms import FraisForm, updateUrsaffForm, newUrsaffForm, newBaremeForm
 from frais.models import ursaffModel, Bareme
 from datetime import date
 
@@ -76,7 +78,7 @@ def maj_ursaff(request):
     context = {}
     list_taux = ursaffModel.objects.all()
     context['list_taux'] = list_taux
-    context['creation'] = True
+    context['new'] = False
 
     return render(request, 'frais/ursaff.html', context=context)
 
@@ -104,6 +106,7 @@ def maj_ursaff_item(request, item):
 
         context['success'] = success
         context['form'] = form
+        context['new'] = False
         return render(request, 'frais/ursaff_update.html', context=context)
 
     context['form'] = form
@@ -121,7 +124,11 @@ def del_ursaff_item(request, item):
 def new_ursaff_item(request):
 
     context = {}
-    form = newUrsaffForm()
+
+    list_taux = ursaffModel.objects.all()
+    context['list_taux'] = list_taux
+    an = list_taux.last().annee + 1
+    form = newUrsaffForm(initial={'annee': an})
 
     if request.method == 'POST':
         form = newUrsaffForm(request.POST)
@@ -131,9 +138,10 @@ def new_ursaff_item(request):
         return redirect('ursaff')
 
     context['form'] = form
+    context['new'] = True
 
-    return render(request, 'frais/ursaff_new.html', context=context)
-
+    # return render(request, 'frais/ursaff_new.html', context=context)
+    return render(request, 'frais/ursaff.html', context=context)
 
 def jsonTodb(file):
 
@@ -150,4 +158,22 @@ def jsonTodb(file):
 
 
 def new_bareme_item(request):
-    return None
+
+    context = {}
+    an = Bareme.objects.last().annee + 1
+
+    form = newBaremeForm(initial={'annee': an})
+    if request.method == 'POST' and request.FILES['file']:
+        file = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(file.name, file)
+        uploaded_file_url = fs.url(filename)
+        context['url'] = uploaded_file_url
+
+
+
+        return render(request, 'frais/bareme_new.html', context)
+
+    # context['form'] = form
+
+    return render(request, 'frais/bareme_new.html', context=context)

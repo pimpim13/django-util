@@ -34,6 +34,9 @@
                         <button type="button" class="btn btn-success btn-sm" value="{{ x.annee }}">
                             <a class="text-light" href="{% url 'ursaff_new_item' %}">Nouveau</a>
                         </button>
+                        <button type="button" class="btn btn-secondary btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'frais' %}">Retour</a>
+                        </button>
                     </th>
                     <td></td>
                     <td></td>
@@ -45,4 +48,10 @@
         </div>
     </div>
 </div>
+
+{% if new %}
+{% include 'frais/ursaff_new.html' %}
+{% endif %}
+
+
 {% endblock content %}

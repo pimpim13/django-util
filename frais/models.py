@@ -30,6 +30,12 @@ class Bareme(models.Model):
     class Meta:
         ordering = ('annee',)
 
+
+class NewBareme(models.Model):
+    date = models.DateTimeField(auto_now=True)
+    annee = models.IntegerField()
+    file = models.FileField(upload_to='static/datas')
+
+
     def __str__(self):
         return f"{self.annee} - {self.localisation}"
-

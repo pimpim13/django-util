@@ -1,6 +1,7 @@
 from pprint import pprint
 import json
 import openpyxl
+# from frais.models import Bareme
 
 # from pathlib import Path
 def __init__():
@@ -13,13 +14,15 @@ def parse_xlsx(path):
 
     bareme = {}
     localisations = []
-
+    """ determination de la derniere cellule utilisée ex G148 """
     dim = sheet.calculate_dimension().split(':')[-1]
+    """ recuperation de la partie numérique ex:148 = ligne max """
     res = ''.join(i for i in dim if i.isdigit())
     max_l = int(res)
 
     for col in sheet.iter_cols(max_col=1, min_row=4):
         departements = list({cell.value[:2] for cell in col})
+        print(departements)
 
         for departement in departements:
             for row in sheet.iter_rows(min_row=4, max_col=1):
@@ -87,7 +90,7 @@ def update_ursaff(annee, taux_cs_ecart, taux_cs_non_soumises):
 
 def jsonTodb(file):
 
-    with open(file,'r') as f:
+    with open(file, 'r') as f:
         data = json.load(f)
 
     for element in data.keys():
@@ -99,11 +102,41 @@ def jsonTodb(file):
             print(element, x, repas, nuit)
 
 
+def xlsx_to_db(path, an):
+
+    data = {}
+    datas = []
+
+    workbook = openpyxl.load_workbook(path)
+    sheet = workbook[workbook.sheetnames[0]]
+
+    """ determination de la derniere cellule utilisée ex G148 """
+    dim = sheet.calculate_dimension().split(':')[-1]
+    """ recuperation de la partie numérique ex:148 = ligne max """
+    res = ''.join(i for i in dim if i.isdigit())
+    max_l = int(res)
+
+    for i in range(4, max_l + 1):
+        data["annee"] = an
+        data["loc"] = sheet.cell(i, 1).value
+        data["acoss_r"] = sheet.cell(i, 6).value
+        data["acoss_npd"] = sheet.cell(i, 7).value
+        data["cadre_r"] = sheet.cell(i, 4).value
+        data["cadre_npd"] = sheet.cell(i, 5).value
+        data["noncadre_npd"] = sheet.cell(i, 3).value
+        data["noncadre_r"] = sheet.cell(i, 2).value
+
+        datas.append(data)
+
+    return datas
+
+
 if __name__ == '__main__':
-    jsonTodb('/Users/alainzypinoglou/PycharmProject/django-util-replica/static/datas/2022.json')
+    # jsonTodb('/Users/alainzypinoglou/PycharmProject/django-util-replica/static/datas/2022.json')
     # annee = get_json('../static/datas/ursaff.json')
     # bareme = parse_xlsx(path='../static/datas/frais2021.xlsx')
-    # save_to_json(datas=bareme, name='2021.json')
+    xlsx_to_db(path='../static/datas/frais2021.xlsx', an=2023)
+    # save_to_json(datas=bareme, name='2021.json')@
     # pprint(annee)
     # print(Path.cwd())
     # update_ursaff('2021', 8.86, 6.01)
