@@ -1,8 +1,7 @@
 from django import forms
-from frais.models import ursaffModel, Bareme, NewBareme
+from frais.models import ursaffModel, Bareme
 from utilproject import settings
 from pathlib import Path
-
 
 
 an = Bareme.objects.last().annee
@@ -55,12 +54,12 @@ class newUrsaffForm(forms.ModelForm):
         labels = {'taux_cs': 'Taux Ursaff', 'taux_cs_non_soumise': 'Taux Impôts'}
 
 
-class newBaremeForm(forms.ModelForm):
-
-    class Meta:
-        model = NewBareme
-        fields = ['annee', 'file']
-        labels = {'annee': 'Année', 'file': 'Fichier Excel'}
+# class newBaremeForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = NewBareme
+#         fields = ['annee', 'file']
+#         labels = {'annee': 'Année', 'file': 'Fichier Excel'}
 
 
 if __name__ == '__main__':

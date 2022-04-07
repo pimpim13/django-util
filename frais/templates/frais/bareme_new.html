@@ -4,12 +4,12 @@
 
 {% block content %}
 
-<div class="row my-3 d-flex justify-content-center">
+<div class="row mt-3 d-flex justify-content-center">
     <div class="col-4">
         <form action="" method="POST" class="form" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="annee" class="form-label">Année</label>
-            <input type="text" id="annee" name="annee" class="form-control">
+            <input type="text" id="annee" name="annee" class="form-control" value="{{ an }}">
             <label for="file" class="form-label">Choisissez le fichier:</label>
             <input type="file" id="file" name="file" accept=".xlsx" class="form-control">
             <div>
@@ -17,6 +17,33 @@
             </div>
         </form>
     </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="accordion col-6 mb-3" id="accordionExample">
+         <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Modèle de fichier Excel à utiliser : Dépliez pour en savoir plus
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>Caractéristiques à respecter : </strong> Le format de fichier doit être 'xlsx' <br>
+                  Les entêtes de colonnes sont sur les 3 premières lignes mais ne sont pas utilisées <br>
+                  Les données utiles doivent commencer à la <strong> ligne 4 colonne A</strong>  comme décrit ci dessous <br>
+                  La colonne A doit contenir les localisations La colonne B doit contenir le barème Repas Execution/Maitrise, la C
+                  Le barème Nuit + PdJ pour les Execution/Maitrise. <br>
+                  Les colonnes D & E les repas et Nuit + PdJ des cadres
+                  <br>
+                  Les colonnes F & G les barèmes ACOSS Repas et Nuit + PdJ
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-center">
+    <img src="{% static 'images/Modele_bareme_xlsx.png' %}" class="img-fluid col-6" alt="Modele bareme xlsx">
 </div>
 
 

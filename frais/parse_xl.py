@@ -16,6 +16,7 @@ def parse_xlsx(path):
     localisations = []
     """ determination de la derniere cellule utilisée ex G148 """
     dim = sheet.calculate_dimension().split(':')[-1]
+
     """ recuperation de la partie numérique ex:148 = ligne max """
     res = ''.join(i for i in dim if i.isdigit())
     max_l = int(res)
@@ -102,9 +103,10 @@ def jsonTodb(file):
             print(element, x, repas, nuit)
 
 
+
 def xlsx_to_db(path, an):
 
-    data = {}
+
     datas = []
 
     workbook = openpyxl.load_workbook(path)
@@ -112,21 +114,38 @@ def xlsx_to_db(path, an):
 
     """ determination de la derniere cellule utilisée ex G148 """
     dim = sheet.calculate_dimension().split(':')[-1]
+
     """ recuperation de la partie numérique ex:148 = ligne max """
     res = ''.join(i for i in dim if i.isdigit())
     max_l = int(res)
 
-    for i in range(4, max_l + 1):
-        data["annee"] = an
-        data["loc"] = sheet.cell(i, 1).value
-        data["acoss_r"] = sheet.cell(i, 6).value
-        data["acoss_npd"] = sheet.cell(i, 7).value
-        data["cadre_r"] = sheet.cell(i, 4).value
-        data["cadre_npd"] = sheet.cell(i, 5).value
-        data["noncadre_npd"] = sheet.cell(i, 3).value
-        data["noncadre_r"] = sheet.cell(i, 2).value
 
-        datas.append(data)
+    for i in range(4, max_l + 1):
+
+        data1 = {}
+        data2 = {}
+        data3 = {}
+
+        data1["annee"] = an
+        data1["localisation"] = sheet.cell(i, 1).value
+        data1["college"] = "M"
+        data1["Nuit_Pdj"] = sheet.cell(i, 3).value
+        data1["Repas"] = sheet.cell(i, 2).value
+        datas.append(data1)
+
+        data2["annee"] = an
+        data2["localisation"] = sheet.cell(i, 1).value
+        data2["college"] = "C"
+        data2["Nuit_Pdj"] = sheet.cell(i, 5).value
+        data2["Repas"] = sheet.cell(i, 4).value
+        datas.append(data2)
+
+        data3["annee"] = an
+        data3["localisation"] = sheet.cell(i, 1).value
+        data3["college"] = "ACOSS"
+        data3["Nuit_Pdj"] = sheet.cell(i, 7).value
+        data3["Repas"] = sheet.cell(i, 6).value
+        datas.append(data3)
 
     return datas
 
@@ -135,7 +154,7 @@ if __name__ == '__main__':
     # jsonTodb('/Users/alainzypinoglou/PycharmProject/django-util-replica/static/datas/2022.json')
     # annee = get_json('../static/datas/ursaff.json')
     # bareme = parse_xlsx(path='../static/datas/frais2021.xlsx')
-    xlsx_to_db(path='../static/datas/frais2021.xlsx', an=2023)
+    xlsx_to_db(path='/Users/alainzypinoglou/PycharmProject/django-util-replica/test_bareme.xlsx', an=2023)
     # save_to_json(datas=bareme, name='2021.json')@
     # pprint(annee)
     # print(Path.cwd())

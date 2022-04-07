@@ -1,13 +1,14 @@
-from pprint import pprint
 
+from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 import json
 
 from django.shortcuts import render, redirect
-from .forms import FraisForm, updateUrsaffForm, newUrsaffForm, newBaremeForm
+from .forms import FraisForm, updateUrsaffForm, newUrsaffForm
 from frais.models import ursaffModel, Bareme
 from datetime import date
+from frais import parse_xl
 
 
 def frais(request):
@@ -66,7 +67,7 @@ def frais_an(request, an):
                'retenue_ecart_n': retenue_ecart_n,
                'retenue_cs_non_soumises_r': retenue_cs_non_soumises_r,
                'retenue_cs_non_soumises_n': retenue_cs_non_soumises_n,
-               'message': an
+               'message': an,
                }
     # pprint(context)
 
@@ -143,9 +144,10 @@ def new_ursaff_item(request):
     # return render(request, 'frais/ursaff_new.html', context=context)
     return render(request, 'frais/ursaff.html', context=context)
 
+
 def jsonTodb(file):
 
-    with open(file,'r') as f:
+    with open(file, 'r') as f:
         data = json.load(f)
 
     for element in data.keys():
@@ -157,23 +159,69 @@ def jsonTodb(file):
             print(element, x, repas, nuit)
 
 
+def dict_to_db(elements):
+
+    for element in elements:
+        Bareme.objects.create(**element)
+        # print(element)
+    return len(elements)
+
+
 def new_bareme_item(request):
 
     context = {}
     an = Bareme.objects.last().annee + 1
-
-    form = newBaremeForm(initial={'annee': an})
+    context['an'] = an
+    success = True
     if request.method == 'POST' and request.FILES['file']:
-        file = request.FILES['file']
-        fs = FileSystemStorage()
-        filename = fs.save(file.name, file)
-        uploaded_file_url = fs.url(filename)
-        context['url'] = uploaded_file_url
 
+        an = request.POST.get('annee')
 
+        if Bareme.objects.filter(annee=an).count() != 0:
+            messages.error(request, f"l'année {an} existe déjà")
+            success = False
+            context['an'] = an
+            return redirect('frais')
+        else:
+            file = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
 
-        return render(request, 'frais/bareme_new.html', context)
+            uploaded_file_url = fs.url(filename)
+            uploaded_file_path = fs.path(filename)
+            datas = parse_xl.xlsx_to_db(uploaded_file_path, an)
 
-    # context['form'] = form
+            success = True
+            nb_enr = dict_to_db(datas)
 
+            context['success'] = success
+            messages.success(request, f"{nb_enr} nouvelles entrées pour l'année {an} ont été ajoutées")
+
+            return redirect('ursaff')
+
+    context['success'] = success
     return render(request, 'frais/bareme_new.html', context=context)
+
+
+def del_bareme(request):
+    context = {}
+
+    b = Bareme.objects.all()
+    annees = set()
+    datas = []
+    for element in b:
+        annees.add(element.annee)
+
+    context['annees'] = annees
+    for an in annees:
+        n = Bareme.objects.filter(annee=an).count()
+        datas.append((an, n))
+    context['datas'] = datas
+
+    return render(request, 'frais/bareme_del.html', context=context)
+
+
+def del_bareme_item(request, item):
+    Bareme.objects.filter(annee=item).delete()
+    messages.success(request, f"Les données de l'année {an} ont été supprimées")
+    return HttpResponse("Les données ont été effacées")

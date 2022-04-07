@@ -22,20 +22,21 @@ class Bareme(models.Model):
     annee = models.IntegerField()
     localisation = models.CharField(max_length=200)
     college = models.CharField(max_length=20)
-    # Repas = models.DecimalField(max_digits=5, decimal_places=2)
     Repas = models.FloatField()
-    # Nuit_Pdj = models.DecimalField(max_digits=5, decimal_places=2)
     Nuit_Pdj = models.FloatField()
 
     class Meta:
         ordering = ('annee',)
 
-
-class NewBareme(models.Model):
-    date = models.DateTimeField(auto_now=True)
-    annee = models.IntegerField()
-    file = models.FileField(upload_to='static/datas')
-
-
     def __str__(self):
-        return f"{self.annee} - {self.localisation}"
+        return f'{self.annee} - {self.localisation} - {self.college} - {self.Repas} - {self.Nuit_Pdj}'
+
+
+# class NewBareme(models.Model):
+#     date = models.DateTimeField(auto_now=True)
+#     annee = models.IntegerField()
+#     file = models.FileField(upload_to='static/datas')
+#
+#
+#     def __str__(self):
+#         return f"{self.annee} - {self.localisation}"
