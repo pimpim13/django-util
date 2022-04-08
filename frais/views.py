@@ -1,5 +1,6 @@
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 import json
@@ -74,7 +75,12 @@ def frais_an(request, an):
     return render(request, 'frais/frais.html', context)
 
 
+@login_required
 def maj_ursaff(request):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
 
     context = {}
     list_taux = ursaffModel.objects.all()
@@ -84,7 +90,12 @@ def maj_ursaff(request):
     return render(request, 'frais/ursaff.html', context=context)
 
 
+@login_required
 def maj_ursaff_item(request, item):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
 
     context = {}
     list_taux = ursaffModel.objects.get(annee=item)
@@ -115,14 +126,25 @@ def maj_ursaff_item(request, item):
     return render(request, 'frais/ursaff_update.html', context=context)
 
 
+@login_required
 def del_ursaff_item(request, item):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
+
     a = ursaffModel.objects.get(annee=item)
     a.delete()
 
     return redirect('ursaff')
 
 
+@login_required
 def new_ursaff_item(request):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
 
     context = {}
 
@@ -167,7 +189,12 @@ def dict_to_db(elements):
     return len(elements)
 
 
+@login_required
 def new_bareme_item(request):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
 
     context = {}
     an = Bareme.objects.last().annee + 1
@@ -181,7 +208,7 @@ def new_bareme_item(request):
             messages.error(request, f"l'année {an} existe déjà")
             success = False
             context['an'] = an
-            return redirect('frais')
+            # return redirect('frais')
         else:
             file = request.FILES['file']
             fs = FileSystemStorage()
@@ -197,21 +224,24 @@ def new_bareme_item(request):
             context['success'] = success
             messages.success(request, f"{nb_enr} nouvelles entrées pour l'année {an} ont été ajoutées")
 
-            return redirect('ursaff')
+            return redirect('frais')
 
     context['success'] = success
     return render(request, 'frais/bareme_new.html', context=context)
 
 
+@login_required
 def del_bareme(request):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
+
     context = {}
 
     b = Bareme.objects.all()
-    annees = set()
     datas = []
-    for element in b:
-        annees.add(element.annee)
-
+    annees = {element.annee for element in b}
     context['annees'] = annees
     for an in annees:
         n = Bareme.objects.filter(annee=an).count()
@@ -221,7 +251,14 @@ def del_bareme(request):
     return render(request, 'frais/bareme_del.html', context=context)
 
 
+@login_required
 def del_bareme_item(request, item):
+
+    if not request.user.is_staff:
+        messages.error(request, "Vous n'avez pas les droits suffisants pour accéder à cette page")
+        return redirect('frais')
+
     Bareme.objects.filter(annee=item).delete()
-    messages.success(request, f"Les données de l'année {an} ont été supprimées")
-    return HttpResponse("Les données ont été effacées")
+    messages.success(request, f"Les données de l'année {item} ont été supprimées")
+
+    return redirect('bareme_item')

@@ -11,6 +11,7 @@ def index_cet(request):
 
     return render(request, 'cet/cet.html', {"choix": "bien arrivé sur la page CET", })
 
+
 # @login_required
 def cet_choix(request, choix=""):
 
