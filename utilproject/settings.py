@@ -6,7 +6,7 @@ from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(Path(__file__).resolve())
 env = environ.Env()
 environ.Env.read_env(env_file=str(BASE_DIR / "utilproject" / ".env"))
 
@@ -14,6 +14,7 @@ environ.Env.read_env(env_file=str(BASE_DIR / "utilproject" / ".env"))
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 SECRET_KEY = env("SECRET_KEY")
+PDF_TABLE_API_KEY = env('PDF_TABLE_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = env.bool("DEBUG", False)
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'ind_dep',
     'accounts',
     'bootstrap_datepicker_plus',
+    'snb',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -137,11 +139,11 @@ TAUX_TRANCHES_IMPOTS = [(0.0, '0%'),
                         (30.0, '30%'),
                         (41.0, '41%'),
                         (45.0, '45%'),
-                         ]
+                        ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / "media"
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',

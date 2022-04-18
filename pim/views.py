@@ -3,7 +3,7 @@ from .forms import DataForm
 from .api import Indemnisation
 from django.http import HttpResponse, HttpResponseRedirect
 
-from pim.models import Aideitem
+# from pim.models import Aideitem
 
 
 def index(request):

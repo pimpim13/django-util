@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} MAJ-SNB {% endblock title %}
+{% if user.is_staff %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mt-4 d-flex justify-content-center">
+        <div class="col-lg-8">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Année</th>
+                    <th scope="col">SNB</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for x in list_snb %}
+                <tr>
+                    <th scope="row">{{ x.annee }}</th>
+                    <td> {{ x.snb}} </td>
+                    <td><button type="button" class="btn btn-primary btn-sm" value="{{ x.annee }}">
+                        <a class="text-light" href="{% url 'snb_update_item' x.annee %}">Modifier</a></button>
+                        <button type="button" class="btn btn-danger btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'snb_delete_item' x.annee %}">Supprimer</a></button></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th>
+                        <button type="button" class="btn btn-success btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'snb_new_item' %}">Nouveau</a>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'snb' %}">Retour</a>
+                        </button>
+                    </th>
+                    <td></td>
+                    <td></td>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if maj %}
+{% include 'snb/snb_maj.html' %}
+{% endif %}
+
+
+
+{% endblock %}
+{% endif %}

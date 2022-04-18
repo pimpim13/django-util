@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Rému / SNB {% endblock title %}
+{% if user.is_staff %}
+{% block navitems %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Parametres
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'snb_update' %}">SNB...</a></li>
+          </ul>
+        </li>
+{% endblock navitems %}
+{% endif %}
+{% block content %}
+{% endblock content %}
