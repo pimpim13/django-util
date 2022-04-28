@@ -40,3 +40,8 @@ class Echelon(models.Model):
 class Inflation(models.Model):
     annee = models.IntegerField(unique=True)
     valeur = models.FloatField(blank=True, null=True)
+
+    def __str__(self):
+        return f'Année : {self.annee} - {self.valeur}'
+
+

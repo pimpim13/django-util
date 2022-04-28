@@ -23,7 +23,7 @@
                     <th scope="row">{{ x.annee }}</th>
                     <td> {{ x.snb}} </td>
                     <td><button type="button" class="btn btn-primary btn-sm" value="{{ x.annee }}">
-                        <a class="text-light" href="{% url 'snb_update_item' x.annee %}">Modifier</a></button>
+                        <a class="text-light" href="{% url 'snb_update_item' x.pk %}">Modifier</a></button>
                         <button type="button" class="btn btn-danger btn-sm" value="{{ x.annee }}">
                             <a class="text-light" href="{% url 'snb_delete_item' x.annee %}">Supprimer</a></button></td>
                 </tr>
@@ -39,8 +39,6 @@
                     </th>
                     <td></td>
                     <td></td>
-
-
                 </tr>
                 </tbody>
             </table>

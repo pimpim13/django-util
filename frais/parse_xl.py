@@ -6,7 +6,6 @@ from pathlib import Path
 from utilproject.settings import PDF_TABLE_API_KEY
 
 
-
 def __init__():
     return
 
@@ -112,7 +111,7 @@ def xlsx_to_db(path, an):
     workbook = openpyxl.load_workbook(path)
     sheet = workbook[workbook.sheetnames[0]]
 
-    """ determination de la derniere cellule utilisée ex G148 """
+    """ determination de la derniere cellule utilisée ex A1:G148 """
     dim = sheet.calculate_dimension().split(':')[-1]
 
     """ recuperation de la partie numérique ex:148 = ligne max """

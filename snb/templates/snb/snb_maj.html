@@ -5,7 +5,7 @@
     <div class="col-4">
         <form action="" method="POST" class="form">
 
-                <p>Mise à jour du SNB {% if not new %} pour l'année {{ an }} {% endif %}</p>
+                <p>Mise à jour du SNB {% if form.instance.pk %} pour l'année {{ an }} {% endif %}</p>
 
             {% csrf_token %}
 
@@ -17,7 +17,7 @@
                 {{ form.snb|as_crispy_field }}
             </div>
             <input class="btn btn-primary my-4" type="submit"
-                   value="{% if new %}Créer{% else %}Modifier{% endif %}">
+                   value="{% if not form.instance.pk %}Créer{% else %}Modifier{% endif %}">
         </form>
     </div>
 </div>
