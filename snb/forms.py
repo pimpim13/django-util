@@ -36,12 +36,12 @@ class CalculSalaireForm(forms.Form):
     CHOICES_MEMO = [(True, ""), (False, "")]
 
     annee = forms.ChoiceField(label='Année', choices=YEAR_CHOICES, initial=YEAR_CHOICES[0][0])
-    Nr = forms.ChoiceField(label='Nr Actuel', choices=NR_CHOICE)
-    echelon = forms.ChoiceField(label="Echelon Actuel", choices=ECHELON_CHOICE)
+    Nr = forms.ChoiceField(label='Nr actuel', choices=NR_CHOICE)
+    echelon = forms.ChoiceField(label="Echelon actuel", choices=ECHELON_CHOICE)
     maj_res = forms.ChoiceField(label='Maj rés', choices=MAJ_RES_CHOICE)
     tps_trav = forms.ChoiceField(label='ATT', choices=TPS_TRAV_CHOICE)
-    Nr_futur = forms.ChoiceField(label='Nr Futur', choices=NR_CHOICE)
-    echelon_futur = forms.ChoiceField(label="Ech Futur", choices=ECHELON_CHOICE)
+    Nr_futur = forms.ChoiceField(label='Nr futur', choices=NR_CHOICE)
+    echelon_futur = forms.ChoiceField(label="Ech futur", choices=ECHELON_CHOICE)
     memo = forms.ChoiceField(label="Se souvenir de moi", widget=forms.CheckboxInput,
                              initial=True, choices=CHOICES_MEMO, required=False)
 

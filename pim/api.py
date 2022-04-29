@@ -19,6 +19,7 @@ class Indemnisation:
         self.duree_tx_futur = float(dico.get("duree_tx_future", 194))
         self.teletravail_futur = float(dico.get("teletravail_futur", 0))
 
+
     def allongement_tps(self, actuel, futur):
         actuel_retenu = max(Indemnisation.FRANCHISE_MIN, min(Indemnisation.FRANCHISE_MAX, actuel))
         futur_retenu = max(Indemnisation.FRANCHISE_MIN, min(Indemnisation.FRANCHISE_MAX, futur))

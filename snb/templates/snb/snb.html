@@ -29,7 +29,7 @@
         <form action="" method="post" class="form">
             {% csrf_token %}
             <div class="row">
-                <h3 class="h4 bg-secondary text-light mt-2" >Situation Actuelle</h3>
+                <h3 class="h4 bg-secondary text-light mt-2" >Situation actuelle</h3>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -54,7 +54,7 @@
                     {{ form.tps_trav|as_crispy_field }}
                 </div>
 
-                    <h3 class="h4 bg-secondary text-light mt-2" >Situation Future</h3>
+                    <h3 class="h4 bg-secondary text-light mt-2" >Situation future</h3>
 
                 <div class="col-6">
                     {{ form.Nr_futur|as_crispy_field }}
@@ -129,7 +129,7 @@
             </tr>
             </thead>
             <tr>
-                <td scope="row">Delta</a></td>
+                <td scope="row">Delta annuel</a></td>
                 <td class="text-end">{{ perte }} €</td>
             </tr>
             </tbody>
@@ -141,7 +141,7 @@
             <div class="card-body">
                 <h5 class="card-title"></h5>
                 <p class="card-text">Compte tenu de l'inflation constatée et de la hausse du SNB,
-                    votre pouvoir d'achat a diminué de <strong>{{ perte }} € </strong></p>
+                    votre pouvoir d'achat diminue de <strong>{{ perte }} € </strong></p>
             </div>
         </div>
         {% elif perte > 50  %}
