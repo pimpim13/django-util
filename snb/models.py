@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Snb_ref(models.Model):
-    annee = models.IntegerField()
+    annee = models.IntegerField(unique=True)
     snb = models.FloatField()
 
     class Meta:

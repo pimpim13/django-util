@@ -6,7 +6,7 @@ from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(Path(__file__).resolve())
+
 env = environ.Env()
 environ.Env.read_env(env_file=str(BASE_DIR / "utilproject" / ".env"))
 

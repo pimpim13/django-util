@@ -1,6 +1,5 @@
-from django.contrib import admin
-from django.urls import path, include
-from . import views
+from django.urls import path
+from pim import views
 
 urlpatterns = [
     path('', views.index, name='index'),

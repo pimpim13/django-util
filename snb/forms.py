@@ -30,7 +30,7 @@ class CalculSalaireForm(forms.Form):
 
     YEAR_CHOICES = [(a.annee, a.annee) for a in Snb_ref.objects.all()]
     NR_CHOICE = [(a.valeur, a.NR) for a in Coeff.objects.all()]
-    ECHELON_CHOICE = [(a.coeff, a.echelon) for a in Echelon.objects.all()]
+    ECHELON_CHOICE = [(a.coeff, a.echelon) for a in Echelon.objects.filter(echelon__gt=3)]
     MAJ_RES_CHOICE = [(1.24, '24%'), (1.245, '24,5%'), (1.25, '25%')]
     TPS_TRAV_CHOICE = [(1, '35h'), (0.971, '32h Coll.'), (0.943, '32h Indiv.'), (0.707, "24h")]
     CHOICES_MEMO = [(True, ""), (False, "")]

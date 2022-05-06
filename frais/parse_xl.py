@@ -1,7 +1,7 @@
 from pprint import pprint
 import json
 import openpyxl
-import pdftables_api
+# import pdftables_api
 from pathlib import Path
 from utilproject.settings import PDF_TABLE_API_KEY
 

@@ -4,14 +4,15 @@ const snb_val = document.getElementById("snb_val")
 const slideInflation = document.getElementById("formControlRangeInflation")
 const inflation_val = document.getElementById("inflation_val")
 
+inflation_val.innerHTML = slideInflation.value
+snb_val.innerHTML = slideSnb.value
+
 const nr = document.querySelector('#id_Nr')
 const ech = document.querySelector('#id_echelon')
 const majres = document.querySelector('#id_maj_res')
 const tpstrv = document.querySelector('#id_tps_trav')
 const nrFutur = document.querySelector('#id_Nr_futur')
 const echFutur = document.querySelector('#id_echelon_futur')
-
-
 
 
 slideSnb.addEventListener('input', () => {
@@ -78,7 +79,7 @@ function setPreferences(){
 }
 
 if(localStorage.getItem('nr')){
-  console.log(localStorage.getItem('nr'))
+  //console.log(localStorage.getItem('nr'))
   setPreferences()
 
 }

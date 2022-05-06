@@ -16,6 +16,11 @@ def snb(request):
 
     if not Coeff.objects.all():
         populate_db_nr()
+
+    datachart = chart()
+    print(datachart)
+
+
     context = {}
     evol_snb = ""
     inflation = ""
@@ -58,8 +63,12 @@ def snb(request):
 
             salaire_annuel = round(salaire * 13, 2)
             salaire_futur_annuel = round(salaire_futur * 13, 2)
+            salaire_annuel_net = round(salaire_annuel * 0.75, 2)
+            salaire_futur_annuel_net = round(salaire_futur_annuel * 0.75, 2)
 
-            perte = calculate_perte(salaire, salaire_futur, fl_evol_inflation)
+            perte_brute = calculate_perte(salaire, salaire_futur, fl_evol_inflation)
+            perte = round(perte_brute * 0.75, 2)
+
 
             context['annee'] = form.cleaned_data['annee']
             context['annee_next'] = annee_next
@@ -72,12 +81,16 @@ def snb(request):
             context['snb'] = snb
             context['snb_previous'] = snb_previous
             context['evol_snb'] = evol_snb
+            context['perte_brute'] = perte_brute
             context['perte'] = perte
+
     context['form'] = form
     context['evol_snb'] = evol_snb
     context['inflation'] = inflation
+    context['datachart'] = datachart.get('data', [])
+    context['labelchart'] = datachart.get('annees', [])
 
-    return render(request, 'snb/snb.html', context=context)
+    return render(request, 'snb/snb.html/', context=context)
 
 
 class SnbListView(ListView):
@@ -185,5 +198,18 @@ def calculate_mensuel(snb=0.0, Nr=0.0, echelon=0.0,  maj_res=0.0, tps_trav=0.0, 
 
 
 def calculate_perte(salaire, salaire_futur, inflation):
-    return round(13 * (salaire_futur - salaire * inflation), 2)
+    """ coeff de 0.75 pour évaluer la perte nette """
+    return round(13 * ((salaire_futur * 1) - (salaire * 1) * inflation), 2)
+
+
+def chart():
+    annees = []
+    data = []
+    queryset = Snb_ref.objects.order_by('annee')
+    for ligne in queryset:
+        annees.append(ligne.annee)
+        data.append(ligne.snb)
+
+    return {'annees': annees, 'data': data}
+
 

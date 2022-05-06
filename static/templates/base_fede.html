@@ -15,7 +15,7 @@
 <nav class="navbar sticky-top navbar-expand-sm navbar-light" style="background-color: #FF6600;">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'images/logo_cfdt_rte.jpg' %}" alt="logo" width="96" height="96">
+            <img src="{% static 'images/logo_cfdt_rte.png' %}" alt="logo" width="96" height="96">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -26,14 +26,14 @@
             <ul class="navbar-nav navbar-nav-scroll me-auto amb-2 mb-lg-0">
                 {% block navitems %}
                 {% endblock navitems %}
-
+                {% comment %}
                 <li class="nav-item">
                     <a class="nav-link" href="https://rte.cfdt.app" target="_blank">AppRTE</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="mailto:rte-cfdt-mediterranee@rte-france.com?subject=contact%20depuis%20le%20site">Nous contacter</a>
                 </li>
-
+                {% endcomment %}
             </ul>
             <ul class="navbar-nav navbar-nav-scroll amb-2 mb-lg-0 ml-auto">
                 {% if user.is_authenticated %}

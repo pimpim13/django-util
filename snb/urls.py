@@ -5,6 +5,7 @@ from snb.views import SnbListView, SnbUpdate
 
 urlpatterns = [
     re_path(r'^$', views.snb, name='snb'),
+    # re_path(r'^#result/$', views.snb, name='snb_result'),
     # path('update/snb/', views.snb_list, name='snb_list'),
     path('update/snb/', SnbListView.as_view(), name='snb_list'),
     # path('update/snb/<str:item>/', views.snb_update_item, name='snb_update_item'),
