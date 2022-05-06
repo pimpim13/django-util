@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="helpIndTps" class="row mt-4 col-lg-6">
+    <h4 class="h4 text-light bg-secondary " > {{ titre }} :</h4>
+    <div class="col-sm-6  col-lg-12">
+        <p>
+           {{ description|safe }}
+        </p>
+    </div>
+<a rel='prev' href="javascript:history.go(-1)"><button class="btn btn-secondary mb-4">Retour</button></a>
+</div>
+
+{% endblock content %}
