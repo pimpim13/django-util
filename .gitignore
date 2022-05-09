@@ -5,3 +5,5 @@ __pycache__/
 .env
 TestJS/
 settings.py
+static/plugins/fontawesome-free/
+snb/migrations/0014_alter_snb_ref_annee.py
