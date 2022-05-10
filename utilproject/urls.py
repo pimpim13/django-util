@@ -25,4 +25,7 @@ urlpatterns = [
     path('cet/', include('cet.urls')),
     path('frais/', include('frais.urls')),
     path('indemnites/', include('ind_dep.urls')),
+    path('remuneration/', include('snb.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
