@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 from .views import home
 from accounts.views import profile
+from testapp.views import pdf_display
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,7 @@ urlpatterns = [
     # path('accounts/profile/', profile, name='profile'),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('testpdf/', pdf_display, name='pdf_display')
 
 ]
 

@@ -1,4 +1,4 @@
-
+from models import Snb_ref
 
 def calcul_salaire_mensuel(ech, maj_res, tps_trav, coeff, snb):
 

@@ -1,13 +1,8 @@
-
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
-from django.contrib import messages
 
-from pathlib import Path
-from utilproject.settings import MEDIA_ROOT
-from snb.models import Snb_ref, Coeff
+from snb.models import Snb_ref, Coeff, Inflation
 from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm
 from frais.parse_xl import populate_nr
 
@@ -20,10 +15,9 @@ def snb(request):
     datachart = chart()
     print(datachart)
 
-
     context = {}
-    evol_snb = ""
-    inflation = ""
+    evol_snb = "0.3"
+    inflation = "5.1"
     form = CalculSalaireForm()
     if request.method == 'POST':
         form = CalculSalaireForm(request.POST)
@@ -38,8 +32,8 @@ def snb(request):
             echelon = float(form.cleaned_data['echelon'])
             maj_res = float(form.cleaned_data['maj_res'])
             tps_trav = float(form.cleaned_data['tps_trav'])
-            Nr_futur = float(form.cleaned_data['Nr_futur'])
-            echelon_futur = float(form.cleaned_data['echelon_futur'])
+            # Nr_futur = float(form.cleaned_data['Nr_futur'])
+            # echelon_futur = float(form.cleaned_data['echelon_futur'])
             # inflation = float(form.cleaned_data['inflation'])/100 + 1.0
 
             evol_snb = request.POST.get('evol_snb')
@@ -55,8 +49,14 @@ def snb(request):
                                         tps_trav=tps_trav,
                                         snb=snb)
 
-            salaire_futur = calculate_mensuel(Nr=Nr_futur,
-                                              echelon=echelon_futur,
+            # salaire_futur = calculate_mensuel(Nr=Nr_futur,
+            #   echelon=echelon_futur,
+            #   maj_res=maj_res,
+            #   tps_trav=tps_trav,
+            #   snb=snb_futur)
+
+            salaire_futur = calculate_mensuel(Nr=Nr,
+                                              echelon=echelon,
                                               maj_res=maj_res,
                                               tps_trav=tps_trav,
                                               snb=snb_futur)
@@ -67,8 +67,8 @@ def snb(request):
             salaire_futur_annuel_net = round(salaire_futur_annuel * 0.75, 2)
 
             perte_brute = calculate_perte(salaire, salaire_futur, fl_evol_inflation)
+            # perte_brute = calculate_perte(salaire, salaire, fl_evol_inflation)
             perte = round(perte_brute * 0.75, 2)
-
 
             context['annee'] = form.cleaned_data['annee']
             context['annee_next'] = annee_next
@@ -87,13 +87,15 @@ def snb(request):
     context['form'] = form
     context['evol_snb'] = evol_snb
     context['inflation'] = inflation
-    context['datachart'] = datachart.get('data', [])
+    context['variation_snb'] = datachart.get('variation_snb', [])
     context['labelchart'] = datachart.get('annees', [])
+    context['inflation_chart'] = datachart.get('inflation', [])
 
     return render(request, 'snb/snb.html/', context=context)
 
 
 class SnbListView(ListView):
+
     model = Snb_ref
     template_name = 'snb/snb_update.html'
     context_object_name = 'list_snb'
@@ -177,7 +179,7 @@ def snb_new(request):
     context['form'] = form
     context['maj'] = True
     context['new'] = True
-
+    # pdf_view(request)
     # return render(request, 'frais/ursaff_new.html', context=context)
     return render(request, 'snb/snb_update.html', context=context)
 
@@ -203,13 +205,15 @@ def calculate_perte(salaire, salaire_futur, inflation):
 
 
 def chart():
-    annees = []
-    data = []
     queryset = Snb_ref.objects.order_by('annee')
-    for ligne in queryset:
-        annees.append(ligne.annee)
-        data.append(ligne.snb)
+    annees = [_.annee for _ in queryset]
+    datas = [_.snb for _ in queryset]
 
-    return {'annees': annees, 'data': data}
+    inflation = [round(_.valeur * 100,1) for _ in Inflation.objects.order_by('annee')]
+    variation = [round(((datas[n+1]/datas[n])-1)*100, 1) for n in range(len(datas)-1)]
+    inflation[0] = 0
+    variation.insert(0, 0)
+
+    return {'annees': annees, 'datas': datas, 'inflation': inflation, 'variation_snb': variation}
 
 

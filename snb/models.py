@@ -13,7 +13,6 @@ class Snb_ref(models.Model):
 
 
 class Coeff(models.Model):
-
     NR = models.IntegerField()
     valeur = models.FloatField()
 
@@ -43,5 +42,3 @@ class Inflation(models.Model):
 
     def __str__(self):
         return f'Année : {self.annee} - {self.valeur}'
-
-

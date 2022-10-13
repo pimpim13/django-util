@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap_datepicker_plus',
     'snb',
+    'testapp',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

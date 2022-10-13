@@ -54,21 +54,12 @@
                     {{ form.tps_trav|as_crispy_field }}
                 </div>
 
-                    <h3 class="h4 bg-secondary text-light mt-2" >Situation future</h3>
-
-                <div class="col-6">
-                    {{ form.Nr_futur|as_crispy_field }}
-                </div>
-                <div class="col-6">
-                    {{ form.echelon_futur|as_crispy_field }}
-                </div>
-
                 <div class="form-group">
                     <label for="formControlRange">Evolution SNB</label>
                 </div>
                 <div>
                     <input type="range" class="form-control-range col-5"
-                           id="formControlRange" name="evol_snb" min="0" max="10" step="0.1" value="{{ evol_snb }}"/>
+                           id="formControlRange" name="evol_snb" min="0" max="10" step="0.1" value="{{ evol_snb }}" default="0.3"/>
                     <span id="snb_val">{{ evol_snb }}</span> %
                 </div>
 
@@ -164,16 +155,16 @@
         </div>
         {% endif %}
         {% endif %}
-    </div>
-    <div class="row d-flex justify-content-center">
-        <div id="container" style="width: 75%;">
+        <div id="container" style="width: 100%;">
             <canvas id="myChart"></canvas>
         </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+
     </div>
 
 </div>
 
 <script defer src="{% static 'js/script_snb.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
 {% endblock content %}
