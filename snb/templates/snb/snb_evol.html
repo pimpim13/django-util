@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Rému / SNB {% endblock title %}
+
+{% block navitems %}
+{% if user.is_staff %}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+       aria-expanded="false">
+        Parametres
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'snb_list' %}">SNB...</a></li>
+    </ul>
+</li>
+{% endif %}
+{% endblock navitems %}
+
+{% block content %}
+
+<div class="row">
+    <h3 class="h3 bg-secondary text-light text-center" >Evolution Pouvoir d'achat</h3>
+</div>
+
+<div class="row mt-4 d-flex justify-content-center">
+
+    <div class="col-sm-4 col-lg-6">
+        <form action="#scroll" method="post" class="form">
+            {% csrf_token %}
+            <div class="row">
+                <h3 class="h4 bg-secondary text-light mt-2" >Situation actuelle</h3>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form.Nr|as_crispy_field }}
+                    {{ form.maj_res|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.echelon|as_crispy_field }}
+                    {{ form.tps_trav|as_crispy_field }}
+                </div>
+            </div>
+
+
+            <input type="submit" value="Calculer" class="btn btn-primary mt-4" />
+
+        </form>
+    </div>
+
+    <div class="col-sm-4 mt-2" id="scroll">
+        <table class="table table-striped table-hover table-sm">
+            <thead class="table-primary">
+            <tr>
+                <th scope="col">Salaire Janvier 2022</th>
+                <th class="text-end" scope="col">Valeur</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td scope="row">Mensuel brut</a></td>
+                <td class="text-end">{{ salaire1 }} €</td>
+            </tr>
+            <tr>
+                <td scope="row">Annuel brut</a></td>
+                <td class="text-end">{{ salaire_annuel1 }} €</td>
+            </tr>
+            <thead class="table-warning">
+            <tr>
+                <th scope="col">Salaire Juillet 2022</th>
+                <th class="text-end" scope="col">Valeur</th>
+            </tr>
+            </thead>
+            <tr>
+                <td scope="row">Mensuel brut</a></td>
+                <td class="text-end">{{ salaire2 }} €</td>
+            </tr>
+            <tr>
+                <td scope="row">Annuel brut (année pleine) </a></td>
+                <td class="text-end">{{ salaire_annuel2 }} €</td>
+            </tr>
+            <tr>
+                <td scope="row">Gain sur 2022 </a></td>
+                <td class="text-end">{{ ecart_2022 }} €</td>
+            </tr>
+            <thead class="table-success">
+            <tr>
+                <th scope="col">Salaire Janvier 2023</th>
+                <th class="text-end" scope="col">Valeur</th>
+            </tr>
+            </thead>
+            <tr>
+                <td scope="row">Mensuel brut</a></td>
+                <td class="text-end">{{ salaire3 }} €</td>
+            </tr>
+            <tr>
+                <td scope="row">Annuel brut</a></td>
+                <td class="text-end">{{ salaire_annuel3 }} €</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <thead class="table-info">
+            <tr>
+                <th scope="col">Evolution Pouvoir d'achat</th>
+                <th class="text-end" scope="col">Valeur</th>
+            </tr>
+            </thead>
+            <tr>
+                <td scope="row">Gain 2023 </a></td>
+                <td class="text-end">{{ gain_2023 }} €</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="row d-flex justify-content-center">
+
+    </div>
+
+</div>
+
+<script defer src="{% static 'js/script_snb.js' %}"></script>
+
+{% endblock content %}
