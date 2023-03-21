@@ -1,3 +1,4 @@
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
@@ -5,6 +6,17 @@ from django.views.generic import ListView, UpdateView
 from snb.models import Snb_ref, Inflation, Coeff_New, Snb_ref_New
 from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm
 from frais.parse_xl import populate_nr
+from snb.api_snb import create_table, test as pdf_gen
+
+from datetime import datetime
+
+EVOL_SNB = "0.3"
+INFLATION = "5.1"
+TAUX_BRUT_NET = 0.75
+
+DATE_1 = '2021-01-01'
+DATE_2 = '2022-07-01'
+DATE_3 = '2023-01-01'
 
 
 def snb(request):
@@ -13,8 +25,10 @@ def snb(request):
         populate_db_nr()
 
     context = {}
-    evol_snb = "0.3"
-    inflation = "5.1"
+    # evol_snb = "0.3"
+    evol_snb = EVOL_SNB
+    inflation = INFLATION
+    # inflation = "5.1"
     form = CalculSalaireForm()
     if request.method == 'POST':
         form = CalculSalaireForm(request.POST)
@@ -58,7 +72,7 @@ def snb(request):
             salaire_futur_annuel = round(salaire_futur * 13, 2)
 
             perte_brute = calculate_perte(salaire, salaire_futur, fl_evol_inflation)
-            perte = round(perte_brute * 0.75, 2)
+            perte = round(perte_brute * TAUX_BRUT_NET, 2)
 
             context['annee'] = form.cleaned_data['date_application'][:4]
             context['annee_next'] = annee_next
@@ -82,7 +96,6 @@ def snb(request):
 
 
 class SnbListView(ListView):
-
     model = Snb_ref_New
     template_name = 'snb/snb_update.html'
     context_object_name = 'list_snb'
@@ -100,38 +113,6 @@ class SnbUpdate(UpdateView):
         # context['new'] = False
         context['list_snb'] = Snb_ref.objects.all()
         return context
-
-#
-# def snb_update_item(request, item):
-#
-#     context = {'an': item}
-#     success = False
-#     list_snb = Snb_ref.objects.all()
-#     context['list_snb'] = list_snb
-#
-#     snb_an = Snb_ref.objects.get(annee=item)
-#     print(item)
-#
-#     if request.method == 'POST':
-#
-#         form = SnbUpdateForm(request.POST, instance=snb_an)
-#         # form.annee = snb_an.annee
-#         if form.is_valid():
-#             print(form.cleaned_data)
-#             form.save()
-#             context['maj'] = False
-#             return redirect('snb_list')
-#
-#     else:
-#         form = SnbUpdateForm(instance=snb_an)
-#
-#     context['success'] = success
-#     context['form'] = form
-#     context['maj'] = True
-#     context['new'] = False
-#
-#     # return render(request, 'frais/ursaff_new.html', context=context)
-#     return render(request, 'snb/snb_update.html', context=context)
 
 
 def snb_new(request):
@@ -185,36 +166,29 @@ def calculate_perte(salaire, salaire_futur, inflation):
 def snb_evol(request):
 
     context = {}
-
     form = EvolSnbForm()
     if request.method == 'POST':
         form = EvolSnbForm(request.POST)
         if form.is_valid():
-            date1 = '2022-01-01'
-            date2 = '2022-07-01'
-            date3 = '2023-01-01'
 
-            snb1 = float(Snb_ref_New.objects.filter(date_application=date1)[0].snb)
-            snb2 = float(Snb_ref_New.objects.filter(date_application=date2)[0].snb)
-            snb3 = float(Snb_ref_New.objects.filter(date_application=date3)[0].snb)
+            snb1 = float(Snb_ref_New.objects.filter(date_application=DATE_1)[0].snb)
+            snb2 = float(Snb_ref_New.objects.filter(date_application=DATE_2)[0].snb)
+            snb3 = float(Snb_ref_New.objects.filter(date_application=DATE_3)[0].snb)
 
             nr = form.cleaned_data['Nr']
-            coeff_nr1 = Coeff_New.objects.filter(date_application__lte=date1, NR=nr)[0].valeur
-            coeff_nr2 = Coeff_New.objects.filter(date_application__lte=date2, NR=nr)[0].valeur
-            coeff_nr3 = Coeff_New.objects.filter(date_application__lte=date3, NR=nr)[0].valeur
-            print(coeff_nr1, snb1)
-            print(coeff_nr2, snb2)
-            print(coeff_nr3, snb3)
+            coeff_nr1 = Coeff_New.objects.filter(date_application__lte=DATE_1, NR=nr)[0].valeur
+            coeff_nr2 = Coeff_New.objects.filter(date_application__lte=DATE_2, NR=nr)[0].valeur
+            coeff_nr3 = Coeff_New.objects.filter(date_application__lte=DATE_3, NR=nr)[0].valeur
 
             echelon = float(form.cleaned_data['echelon'])
             maj_res = float(form.cleaned_data['maj_res'])
             tps_trav = float(form.cleaned_data['tps_trav'])
 
             salaire1 = round(calculate_mensuel(Nr=coeff_nr1,
-                                         echelon=echelon,
-                                         maj_res=maj_res,
-                                         tps_trav=tps_trav,
-                                         snb=snb1), 2)
+                                               echelon=echelon,
+                                               maj_res=maj_res,
+                                               tps_trav=tps_trav,
+                                               snb=snb1), 2)
 
             salaire2 = calculate_mensuel(Nr=coeff_nr2,
                                          echelon=echelon,
@@ -244,8 +218,121 @@ def snb_evol(request):
             context['ecart_2_3'] = salaire3 - salaire2
 
             context['ecart_2022'] = round((salaire2 - salaire1) * 6.5, 2)
+            context['ecart_mensuel_2022'] = round((salaire2 - salaire1), 2)
             context['gain_2023'] = round((salaire3 - salaire2) * 13, 2)
+
+            context['data1'] = [salaire1]
+            context['data2'] = [salaire2]
+            context['data3'] = [salaire3]
+            # context['data2'] = [salaire_annuel1, salaire_annuel2, salaire_annuel3]
 
     context['form'] = form
 
     return render(request, 'snb/snb_evol.html/', context=context)
+
+
+def compute(request):
+
+    date1 = DATE_1
+    date2 = DATE_2
+    date3 = DATE_3
+
+    context = {}
+
+    snb1 = float(Snb_ref_New.objects.filter(date_application=date1)[0].snb)
+    snb2 = float(Snb_ref_New.objects.filter(date_application=date2)[0].snb)
+    snb3 = float(Snb_ref_New.objects.filter(date_application=date3)[0].snb)
+
+    nr = request.POST.get('Nr', 30)
+    coeff_nr1 = Coeff_New.objects.filter(date_application__lte=date1, NR=nr)[0].valeur
+    coeff_nr2 = Coeff_New.objects.filter(date_application__lte=date2, NR=nr)[0].valeur
+    coeff_nr3 = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[0].valeur
+    coeff_nr_sup = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[1].valeur
+    nr_sup = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[1].NR
+
+    print(nr_sup)
+
+
+
+    echelon = float(request.POST.get('echelon', 4.0))
+    maj_res = float(request.POST.get('maj_res', 24.0))
+    tps_trav = float(request.POST.get('tps_trav', 1.0))
+
+    salaire1 = round(calculate_mensuel(Nr=coeff_nr1,
+                                       echelon=echelon,
+                                       maj_res=maj_res,
+                                       tps_trav=tps_trav,
+                                       snb=snb1), 2)
+
+    salaire2 = calculate_mensuel(Nr=coeff_nr2,
+                                 echelon=echelon,
+                                 maj_res=maj_res,
+                                 tps_trav=tps_trav,
+                                 snb=snb2)
+
+    salaire3 = calculate_mensuel(Nr=coeff_nr3,
+                                 echelon=echelon,
+                                 maj_res=maj_res,
+                                 tps_trav=tps_trav,
+                                 snb=snb3)
+
+    salaire4 = calculate_mensuel(Nr=coeff_nr_sup,
+                                 echelon=echelon,
+                                 maj_res=maj_res,
+                                 tps_trav=tps_trav,
+                                 snb=snb3)
+
+
+    p27orTalon = round(salaire4 * 0.027 if salaire4 * 0.027 >= 100 else 100, 2)
+    p27 = round(salaire4 * 0.027, 2)
+
+    salaire5 = salaire4 + p27orTalon
+
+    salaire_annuel1 = round(salaire1 * 13, 2)
+    salaire_annuel2 = round(salaire2 * 13, 2)
+    salaire_annuel3 = round(salaire3 * 13, 2)
+
+    context['salaire1'] = salaire1  # salaire mensuel au 01/01/2022
+    context['salaire2'] = salaire2  # salaire mensuel au 01/07/2022
+    context['salaire3'] = salaire3  # salaire mensuel au 01/01/2023 après mesures de branche
+    context['salaire4'] = salaire4  # salaire mensuel au 01/01/2023 après mesures salariales Rte avant prime
+
+    context['nr_sup'] = nr_sup
+
+    context['salaire_annuel1'] = salaire_annuel1
+    context['salaire_annuel2'] = salaire_annuel2
+    context['salaire_annuel3'] = salaire_annuel3
+
+    context['ecart_1_2'] = salaire2 - salaire1
+    context['ecart_2_3'] = salaire3 - salaire2
+    context['ecart_4_3'] = salaire4 - salaire3
+    context['p27'] = p27
+    context['p27orTalon'] = p27orTalon
+
+    context['ecart_pourcent_2023_2022'] = round((salaire3/salaire2)*100 - 100, 2)
+    context['salaire5'] = round(salaire5, 2) # salaire mensuel total au 01/01/2023
+    context['total_evolution'] = round(salaire5 - salaire1, 2)
+
+    context['ecart_2022'] = round((salaire2 - salaire1) * 6.5, 2)
+    context['ecart_mensuel_2022'] = round((salaire2 - salaire1), 2)
+
+    context['data1'] = [salaire1]
+    context['data2'] = [round(salaire2 - salaire1, 2)]
+    context['data3'] = [round(salaire3 - salaire2, 2)]
+    context['data4'] = [round(salaire5 - salaire3, 2)]
+    context['gain_2023'] = round((salaire3 - salaire1), 2)
+    context['ecart_mensuel_2023'] = round((salaire3 - salaire2), 2)
+    context['gain_total'] = round((salaire3 - salaire1), 2)
+    context['pourcent_total'] = round((salaire3 / salaire1) * 100 - 100, 2)
+    context['totalPourcent2322'] = round((salaire5 / salaire1) * 100 - 100, 2)
+    context['totalPourcentRte'] = round((salaire5 / salaire3) * 100 - 100, 2)
+
+    return JsonResponse(context)
+
+
+def test(request):
+
+    pdf_gen()
+    texte = f"paf généré à {datetime.now()}"
+
+    return HttpResponse(texte)

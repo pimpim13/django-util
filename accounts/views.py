@@ -5,11 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from accounts.models import CustomUser
 
 
-# def signin(request):
-#     success_url = 'home'
-#     return render(request, 'registration/login.html')
-#
-
 class CustomSignupForm(UserCreationForm):
     class Meta:
         model = CustomUser

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
 from . import views
-from snb.views import SnbListView, SnbUpdate
+from snb.views import SnbListView, SnbUpdate, compute, test
 
 urlpatterns = [
     re_path(r'^$', views.snb, name='snb'),
@@ -13,4 +13,6 @@ urlpatterns = [
     path('delete/snb/<str:item>/', views.snb_delete_item, name='snb_delete_item'),
     path('new/snb/', views.snb_new, name='snb_new_item'),
     path('evolution/', views.snb_evol, name='snb_evol'),
+    path('evolution/compute/', views.compute, name='compute'),
+    path('test/', views.test, name='test'),
 ]

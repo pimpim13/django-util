@@ -12,3 +12,7 @@ pytz==2021.3
 six==1.16.0
 sqlparse==0.4.2
 xlrd==2.0.1
+
+requests~=2.27.1
+pytesseract~=0.3.10
+Pillow~=9.1.1

@@ -2,12 +2,9 @@
 {% load static %}
 
 {% block title %} Sommaire {% endblock %}
-
-
 {% block content%}
 
 <main class="container-fluid mb-4">
-
     <section class="row my-4">
         {% if user.is_staff %}
         <div class="col-12 col-md-6 col-lg-3 mb-3">
@@ -106,7 +103,25 @@
 
 
             </div>
+<div class="col-12 col-md-6 col-lg-3 mb-3">
+            <section class="card h-100">
+                <img src=" {% static 'images/container-moving-artdem.jpg' %}" alt="diname" class="card-img-top"/>
+                <div class="card-body">
+                    <h1 class="h3 card-title">
+                        DiNaMe
+                    </h1>
+                    <p class="card-text">
+                        Accompagnement de la mobilité d'entreprise. Quels sont vos droits.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'diname' %}" class="btn btn-primary">Y aller...</a>
+                </div>
 
+            </section><!--End section.row 5 row-->
+
+
+            </div>
     </section>
 </main><!--end main.container-fluid-->
 

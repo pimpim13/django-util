@@ -1,4 +1,4 @@
-{% extends 'base_fede.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -45,7 +45,6 @@
                            value="{{ inflation }}"/>
                     <span id="inflation_val">{{ inflation }}</span> %
                 </div>
-
                 <div class="col-6">
                     {{ form.Nr|as_crispy_field }}
                     {{ form.maj_res|as_crispy_field }}
@@ -54,7 +53,6 @@
                     {{ form.echelon|as_crispy_field }}
                     {{ form.tps_trav|as_crispy_field }}
                 </div>
-
                 <div class="form-group">
                     <label for="formControlRange">Evolution SNB</label>
                 </div>
@@ -63,18 +61,12 @@
                            id="formControlRange" name="evol_snb" min="0" max="10" step="0.1" value="{{ evol_snb }}" default="0.3"/>
                     <span id="snb_val">{{ evol_snb }}</span> %
                 </div>
-
                 <div class="col-6">
                     {{ form.memo|as_crispy_field }}
                 </div>
-
-
-
             </div>
-
-
             <input type="submit" value="Calculer" class="btn btn-primary mt-4" />
-
+            <a href="{% url 'snb_evol' %}" class="btn btn-info mt-4">Mesures salariales 2022 - 2023</a>
         </form>
     </div>
 

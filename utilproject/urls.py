@@ -30,6 +30,7 @@ urlpatterns = [
     path('frais/', include('frais.urls')),
     path('indemnites/', include('ind_dep.urls')),
     path('remuneration/', include('snb.urls')),
+    path('diname/', include('diname.urls')),
     # path('accounts/profile/', profile, name='profile'),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),

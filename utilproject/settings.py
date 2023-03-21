@@ -24,6 +24,9 @@ ALLOWED_HOSTS = ['127.0.0.1']
 #
 # Application definition
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap_datepicker_plus',
     'snb',
+    'diname',
     'testapp',
 ]
 
@@ -59,7 +63,7 @@ ROOT_URLCONF = 'utilproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['utilproject/templates',  os.path.join(BASE_DIR, 'static/templates')],
+        'DIRS': ['utilproject/templates', BASE_DIR / 'static/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,8 +125,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR
 
@@ -143,7 +151,6 @@ TAUX_TRANCHES_IMPOTS = [(0.0, '0%'),
                         ]
 
 MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = BASE_DIR / "media"
 
 MESSAGE_TAGS = {

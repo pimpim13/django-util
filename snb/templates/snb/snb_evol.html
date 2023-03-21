@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %} Rému / SNB {% endblock title %}
+{% block title %} Evolution SNB {% endblock title %}
 
 {% block navitems %}
 {% if user.is_staff %}
@@ -20,109 +20,293 @@
 
 {% block content %}
 
-<div class="row">
-    <h3 class="h3 bg-secondary text-light text-center" >Evolution Pouvoir d'achat</h3>
+<div class="row d-flex">
+    <h3 class="h3 bg-secondary text-light text-center" >Evolution pouvoir d'achat</h3>
 </div>
 
 <div class="row mt-4 d-flex justify-content-center">
-
-    <div class="col-sm-4 col-lg-6">
+    <div class="col-md-4 col-lg-12">
         <form action="#scroll" method="post" class="form">
             {% csrf_token %}
             <div class="row">
-                <h3 class="h4 bg-secondary text-light mt-2" >Situation actuelle</h3>
+                <h3 class="h4 bg-secondary text-light" >Situation actuelle</h3>
             </div>
-            <div class="row">
-                <div class="col-6">
+            <div class="container-fluid">
+
+            <div class="row d-flex">
+                <div class="col-lg-3 col-sm-12">
                     {{ form.Nr|as_crispy_field }}
+                </div>
+                <div class="col-lg-3 col-sm-12">
                     {{ form.maj_res|as_crispy_field }}
                 </div>
-                <div class="col-6">
+                <div class="col-lg-3 col-sm-12">
                     {{ form.echelon|as_crispy_field }}
+                </div>
+                <div class="col-lg-3 col-sm-12">
                     {{ form.tps_trav|as_crispy_field }}
                 </div>
             </div>
-
-
-            <input type="submit" value="Calculer" class="btn btn-primary mt-4" />
-
+            <div class="d-flex justify-content-end" >
+            <input id="fetch-call" type="submit" value="Calculer" class="btn btn-primary mt-3" />
+            </div>
+            </div>
         </form>
     </div>
+</div><!-- end of row -->
+<div class="row d-flex justify-content-between ">
+        <div class="col-lg-6 col-md-12">
+            <div class="card-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
+                  <div  class="card-header h4">Mesures de branche</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-group">
+                <div class="col-lg-4 col-md-12">
+                    <div class="card h-100 text-white bg-success mt-1 mb-3 mx-1 w-90" >
+                        <div  class="card-header h4">Gain 2022 : <span id="emb1"> {{ ecart_mensuel_2022 }}</span>€ / mois</div>
+                        <div class="card-body">
+                            <p class="card-text">L'augmentation du SNB de 0,3% au 1/1/2022 et 1% au 1/7/2022 conduit
+                                à une augmentation de :
+                                <strong id="emb11">{{ ecart_mensuel_2022 }}</strong>€ / mois</p>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="card h-100 bg-warning mt-1 mb-3 w-90" >
+                        <div  class="card-header h4">Gain 2023 : <span id="emb221"> {{ ecart_mensuel_2023 }}</span>€ / mois</div>
+                        <div class="card-body">
+                            <p class="card-text">L'augmentation du SNB de 2,3% au 1/01/2023 vous
+                                fait bénéficier d'une augmentation mensuelle de :
+                                <strong id="emb222">{{ ecart_mensuel_2023 }} </strong>€ / mois
+                            </p>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="card h-100 text-dark bg-info mt-1 mb-3 mx-1 w-90" >
+                        <div  class="card-header h4">Total gains : <span id="emb31">{{ gain_total }}</span> € / mois</div>
+                        <div class="card-body">
+                            <p class="card-text">Les mesures de branche négociées en 2022 vous
+                                font bénéficier d'une augmentation globale de:
+                                <strong id="emb32">{{ gain_total }}</strong>€ / mois</p>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="col-lg-12 col-sm-12">
+                  <div class="card text-white mt-2 my-1 mx-1 w-90 bg-primary">
+                    <div  class="card-header h4">Mesures salariales Rte</div>
+                  </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="card h-100 border-success mt-1 mb-3 mx-1 w-90"  style="background:#E2E6E5;">
+                        <div  class="card-header h4">1 NR pour tous :</br>+ <span id="nr_sup"></span> € / mois</div>
+                        <div class="card-body">
+                            <p class="card-text">Le passage au NR <span id='nr_sup2'>{{ nr_sup }}</span> au 1er janvier 2023 porte votre
+                              rémunération mensuelle à :
+                                <strong id="ec43">{{ ecart_4_3 }} </strong> € / mois
+                            </p>
+                        </div>
+                        <div class="card-footer"> </div>
+                    </div>
+                </div>
 
-    <div class="col-sm-4 mt-2" id="scroll">
-        <table class="table table-striped table-hover table-sm">
-            <thead class="table-primary">
-            <tr>
-                <th scope="col">Salaire Janvier 2022</th>
-                <th class="text-end" scope="col">Valeur</th>
-            </tr>
-            </thead>
-            <tbody>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="card h-100 border-secondary mx-1 mt-1 mb-3 w-90" style="background:#E7B199;">
+                        <div  class="card-header h4">Prime 2,7% ou talon 100€ :+ <span id="p27"></span> € / mois</div>
+                        <div class="card-body">
+                            <p class="card-text">La prime de 2,7% avec talon à 100€ au 1er janvier 2023 porte votre
+                              rémunération mensuelle à :<strong id="total"></strong> € / mois
+                            </p>
+                        </div>
+                        <div class="card-footer"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="col-12"  id="scroll">
+                  <div class="card text-black my-1 mt-2 mx-1" style="background-color:#8DBE89;" >
+                    <div  class="card-header h4">Total évolution : <span id="tot2322"></span> € / mois soit <span id="emb41"></span> %</div>
+                      <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">Les mesures de branche négociées en 2022 vous
+                        font bénéficier d'une augmentation globale de:
+                        <strong id="emb42">{{ pourcent_total }}</strong> %</p>
+                        <p>Les mesures Rte représentent <strong id="pourcentRte"></strong> % supplementaires</p>
+                      </div>
+                      <div class="card-footer"></div>
+                  </div>
+                </div>
+            </div>
+        </div>
 
-            <tr>
-                <td scope="row">Mensuel brut</a></td>
-                <td class="text-end">{{ salaire1 }} €</td>
-            </tr>
-            <tr>
-                <td scope="row">Annuel brut</a></td>
-                <td class="text-end">{{ salaire_annuel1 }} €</td>
-            </tr>
-            <thead class="table-warning">
-            <tr>
-                <th scope="col">Salaire Juillet 2022</th>
-                <th class="text-end" scope="col">Valeur</th>
-            </tr>
-            </thead>
-            <tr>
-                <td scope="row">Mensuel brut</a></td>
-                <td class="text-end">{{ salaire2 }} €</td>
-            </tr>
-            <tr>
-                <td scope="row">Annuel brut (année pleine) </a></td>
-                <td class="text-end">{{ salaire_annuel2 }} €</td>
-            </tr>
-            <tr>
-                <td scope="row">Gain sur 2022 </a></td>
-                <td class="text-end">{{ ecart_2022 }} €</td>
-            </tr>
-            <thead class="table-success">
-            <tr>
-                <th scope="col">Salaire Janvier 2023</th>
-                <th class="text-end" scope="col">Valeur</th>
-            </tr>
-            </thead>
-            <tr>
-                <td scope="row">Mensuel brut</a></td>
-                <td class="text-end">{{ salaire3 }} €</td>
-            </tr>
-            <tr>
-                <td scope="row">Annuel brut</a></td>
-                <td class="text-end">{{ salaire_annuel3 }} €</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-            <thead class="table-info">
-            <tr>
-                <th scope="col">Evolution Pouvoir d'achat</th>
-                <th class="text-end" scope="col">Valeur</th>
-            </tr>
-            </thead>
-            <tr>
-                <td scope="row">Gain 2023 </a></td>
-                <td class="text-end">{{ gain_2023 }} €</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="col-lg-6 col-sm-12 mt-3">
 
-    </div>
-    <div class="row d-flex justify-content-center">
 
-    </div>
 
+            <div id="container"></div>
+                <div class="p-5 mt-2 mb-4 bg-warning bg-opacity-10 rounded-3 border border-2 border-warning rounded">
+                    <div class="container-fluid py-3">
+                        <h1 class="h3 fw-bold">L'info en plus :</h1>
+                        <ul>
+                            <li> Les mesures de branches sont appliquées depuis janvier 2023</li>
+                            <li> Le NR pour tous sera appliqué sur la paie de février avec effet au 1er janvier</li>
+                            <li> Idem pour la prime de 2,7%</li>
+                            <li> Les primes CFJ sont versées dès la paie de janvier</li>
+                            <li> Les RIP seront versées sur la paie d'avril (inchangé)</li>
+                            <li> Les avancements au choix seront visibles sur la paie d'avril avec effet rétroactif au 1er janvier (inchangé)</li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
 </div>
 
-<script defer src="{% static 'js/script_snb.js' %}"></script>
+<script>
+
+    document.querySelector('#fetch-call').addEventListener('click', event => {
+          event.preventDefault();
+          recalcul();});
+
+
+    const canva = document.querySelector('#container')
+
+    function recalcul(){
+
+      let form = new FormData();
+      let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      console.log(csrfTokenValue);
+
+      form.append("Nr", document.querySelector('#id_Nr').value);
+      form.append('echelon', document.querySelector('#id_echelon').value);
+      form.append('maj_res', document.querySelector('#id_maj_res').value);
+      form.append('tps_trav', document.querySelector('#id_tps_trav').value);
+
+      let request = new Request("{% url 'compute' %}", {method: "POST",
+                                                    body: form,
+                                                    headers: {"X-CSRFToken": csrfTokenValue}});
+
+      fetch(request)
+        .then(response => response.json())
+        .then(context => {
+          //document.querySelector('#mb1').innerHTML = context["salaire1"].toFixed(2);
+          document.querySelector('#emb1').innerHTML = context["ecart_mensuel_2022"].toFixed(2);
+          document.querySelector('#emb11').innerHTML = context["ecart_mensuel_2022"].toFixed(2);
+          document.querySelector('#emb221').innerHTML = context["ecart_mensuel_2023"].toFixed(2);
+          document.querySelector('#emb222').innerHTML = context["ecart_mensuel_2023"].toFixed(2);
+          document.querySelector('#emb31').innerHTML = context["gain_total"].toFixed(2);
+          document.querySelector('#emb32').innerHTML = context["gain_total"].toFixed(2);
+          document.querySelector('#emb41').innerHTML = context["totalPourcent2322"].toFixed(2);
+          document.querySelector('#emb42').innerHTML = context["pourcent_total"].toFixed(2);
+          document.querySelector('#nr_sup').innerHTML = context["ecart_4_3"].toFixed(2);
+          document.querySelector('#nr_sup2').innerHTML = context["nr_sup"];
+          document.querySelector('#ec43').innerHTML = context["salaire4"].toFixed(2);
+          document.querySelector('#total').innerHTML = context["salaire5"].toFixed(2);
+          document.querySelector('#p27').innerHTML = context["p27orTalon"].toFixed(2);
+          document.querySelector('#tot2322').innerHTML = context["total_evolution"].toFixed(2);
+          //document.querySelector('#gm22').innerHTML = context["ecart_mensuel_2022"].toFixed(2);
+          //document.querySelector('#gm23').innerHTML = context["ecart_mensuel_2023"].toFixed(2);
+          //document.querySelector('#pc2322').innerHTML = context["ecart_pourcent_2023_2022"].toFixed(2);
+          document.querySelector('#pourcentRte').innerHTML = context["totalPourcentRte"].toFixed(2);
+          //document.querySelector('#g23').innerHTML = context["gain_2023"].toFixed(2);
+          let data1 = context["data1"]
+          let data2 = context["data2"]
+          let data3 = context["data3"]
+          let data4 = context["data4"]
+
+          Highcharts.chart('container', {
+            chart: {
+              type: 'column'
+            },
+            title: {
+              //text: 'Evolution 2022 - 2023',
+              align: 'center'
+            },
+            xAxis: {
+              categories: ['Salaire Mensuel']
+            },
+            yAxis: {
+              min: data1 * 0.95,
+              title: {
+                text: 'Euros'
+              },
+              stackLabels: {
+                enabled: true,
+                style: {
+                  fontWeight: 'bold',
+                  color: ( // theme
+                    Highcharts.defaultOptions.title.style &&
+                    Highcharts.defaultOptions.title.style.color
+                  ) || 'gray',
+                  textOutline: 'none'
+                }
+              }
+            },
+            legend: {
+              align: 'center',
+              //x: 0,
+              verticalAlign: 'top',
+              //y: 150,
+              floating: true,
+              backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || 'white',
+              borderColor: '#CCC',
+              borderWidth: 1,
+              shadow: false
+            },
+            tooltip: {
+              headerFormat: '<b>{point.x}</b><br/>',
+              pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            },
+            plotOptions: {
+              column: {
+                stacking: 'normal',
+                dataLabels: {
+                  enabled: true
+                }
+              }
+            },
+            series: [{
+              name: 'Rte 2023',
+              data: [data4],
+              //color: '#D2E0FB'
+              color: '#DFB39D'},
+            {
+              name: '2023',
+              data: [data3],
+              //color: '#CFE0D8'
+              color: '#FF6600'
+            }, {
+              name: '2022',
+              data: [data2],
+              //color: '#FAF0CE'
+              color: '#00FF00'
+            }, {
+              name: '12/2021',
+              data: [data1],
+              //color: '#D2E0FB'
+              color: '#0000FF'
+            },
+            ]
+            });
+          })
+        }
+
+    document.querySelector('#id_Nr').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_echelon').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_maj_res').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_tps_trav').addEventListener('change', event => {recalcul()});
+
+
+
+</script>
 
 {% endblock content %}
