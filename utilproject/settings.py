@@ -20,7 +20,7 @@ PDF_TABLE_API_KEY = env('PDF_TABLE_API_KEY')
 # DEBUG = env.bool("DEBUG", False)
 DEBUG = True
 # ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'spiro6.hopto.org', '77.205.22.237', ]
 #
 # Application definition
 

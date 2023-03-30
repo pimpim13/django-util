@@ -34,6 +34,9 @@ class Emplois(models.Model):
     libelle_emploi = models.CharField(max_length=128)
     actif = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ('etablissement', 'libelle_emploi')
+
     def __str__(self):
         return f'{self.etablissement} - {self.libelle_emploi}'
  

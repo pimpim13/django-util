@@ -34,7 +34,7 @@ class DinameForm(forms.Form):
     site_destination = forms.ChoiceField(label="Site Rte d'arrivée", choices=SITES_CHOICE)
 
     # etablissement = forms.ChoiceField(label='Etablissement', choices=ETABLISSEMENT_CHOICE, required=True)
-    # emploi = forms.ChoiceField(label="Libellé de l'emploi", choices=EMPLOI_CHOICE)
+    emploi = forms.ChoiceField(label="", choices=EMPLOI_CHOICE, required=False)
 
     eligible_MGEE = forms.BooleanField(label='Eligible MGEE', required=False, initial=False)
 

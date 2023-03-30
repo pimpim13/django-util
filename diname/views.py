@@ -15,10 +15,9 @@ ECH_PLANCHER = 4
 ECH_PLAFOND = 7
 context = {}
 
-
 def diname(request):
 
-    context = {}
+    context['attractivite'] = "bg-secondary"
     form = DinameForm()
 
     if request.method == 'POST':
@@ -53,7 +52,7 @@ def diname(request):
                                                     snb=snb1), 2)
             plafond = round(calcul_salaire_mensuel(coeff=coeff_nr_plafond,
                                                     ech=echelon_plafond,
-                                                    maj_res=1.24,
+                                                    maj_res=1.25,
                                                     tps_trav=1,
                                                     snb=snb1), 2)
 
@@ -68,16 +67,16 @@ def diname(request):
             loyer_destination = Site.objects.get(localisation=form.cleaned_data['site_destination']).loyer
 
             ecart_loyer = round(max((loyer_destination - loyer_origine), 0), 2)
-            indemnisation_ecart_loyer = round(ecart_loyer * 12 * 5 * float(surface), 2)
+            indemnisation_ecart_loyer = round(ecart_loyer * 12 * 5 * float(surface), 2) * form.cleaned_data['eligible_AMG']
             base_diname = min(max(plancher, salaire1), plafond)
-            prime_amg = base_diname * 5
-            context['attractivite'] = "bg-secondary"
+            prime_amg = base_diname * 5 * form.cleaned_data['eligible_AMG']
 
             attractivite = Site.objects.get(localisation=form.cleaned_data['site_destination']).attractivite.couleur
             moisMGES = Site.objects.get(localisation=form.cleaned_data['site_destination']).attractivite.mois
             lbl_MGES = Site.objects.get(localisation=form.cleaned_data['site_destination']).attractivite.lbl_MGES
 
-            prime_MGES = round(base_diname * moisMGES, 2)
+            prime_MGES = round(base_diname * moisMGES, 2) * form.cleaned_data['eligible_AMG']
+            # prime_MGES_ = f"{prime_MGES:9.2f}"
             context['mois_MGEE'] = 0
             prime_MGEE = 0
 
@@ -88,25 +87,30 @@ def diname(request):
                 else:
                     prime_MGEE = base_diname
                     context['mois_MGEE'] = 1
-
+            total_diname = prime_amg + indemnisation_ecart_loyer + prime_MGES + prime_MGEE
+            total_diname_an = round(min(total_diname/5, 20000), 2)
+            total_general = min(total_diname, 100000) + ind_art30
 
             context['form'] = form
-            context["salaire_mensuel"] = salaire1
-            context['ind_art30'] = ind_art30
+            context["salaire_mensuel"] = f"{salaire1:9.2f}"
+            context['ind_art30'] = f"{ind_art30:9.2f}"
             context['surface'] = surface
-            context["loyer_origine"] = loyer_origine
-            context["loyer_destination"] = loyer_destination
-            context["ecart_loyer"] = ecart_loyer
-            context['plancher'] = plancher
-            context['plafond'] = plafond
-            context['base_diname'] = base_diname
-            context['indemnisation_loyer'] = indemnisation_ecart_loyer
-            context['prime_amg'] = prime_amg
+            context["loyer_origine"] = f"{loyer_origine:9.2f}"
+            context["loyer_destination"] = f"{loyer_destination:9.2f}"
+            context["ecart_loyer"] = f"{ecart_loyer:9.2f}"
+            context['plancher'] = f"{plancher:9.2f}"
+            context['plafond'] = f"{plafond:9.2f}"
+            context['base_diname'] =f"{base_diname:9.2f}"
+            context['indemnisation_loyer'] = f"{indemnisation_ecart_loyer:9.2f}"
+            context['prime_amg'] = f"{prime_amg:9.2f}"
             context['attractivite'] = attractivite
             context['moisMGES'] = moisMGES
             context['lbl_MGES'] = lbl_MGES
-            context['prime_MGES'] = prime_MGES
-            context['prime_MGEE'] = prime_MGEE
+            context['prime_MGES'] = f"{prime_MGES:9.2f}"
+            context['prime_MGEE'] = f"{prime_MGEE:9.2f}"
+            context['total_diname'] = f"{total_diname:9.2f}"
+            context['total_diname_an'] = f"{total_diname_an:9.2f}"
+            context['total_general'] = f"{total_general:9.2f}"
 
     context["form"] = form
 
