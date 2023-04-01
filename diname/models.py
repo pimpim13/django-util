@@ -5,6 +5,9 @@ class Famille(models.Model):
     situation = models.CharField(max_length=50)
     surface = models.IntegerField()
 
+    class Meta:
+        ordering = ('surface',)
+
 
 class Attractivite(models.Model):
     code = models.CharField(max_length=2)
@@ -39,4 +42,3 @@ class Emplois(models.Model):
 
     def __str__(self):
         return f'{self.etablissement} - {self.libelle_emploi}'
- 

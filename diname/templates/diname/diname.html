@@ -84,28 +84,28 @@
                         <div  class="card-header h4">Logement</div>
                         <div class="card-body">
                             <p>La surface correspondant à votre composition familiale est fixée à :
-                                <strong>{{ surface }}</strong> m2
+                                <strong id="js_surface">{{ surface }}</strong> m2
 
                             <p>L'écart de loyer entre l'ancienne et la nouvelle localisation est de :
-                            <strong>{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de
-                            <strong>{{ indemnisation_loyer }}</strong> € sur 5 ans</p>
+                            <strong id="js_ecart_loyer2">{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de
+                            <strong id="js_indemnisation_loyer2">{{ indemnisation_loyer }}</strong> € sur 5 ans</p>
                             <p>En complément l'AMG vous permet d'obtenir une prime de 5 mois de salaire soit
-                            <strong>{{ prime_amg }}</strong> € </p>
+                            <strong id="js_prime_amg2">{{ prime_amg }}</strong> € </p>
                         </div>
                     </div>
                 </div>
 <!--                <div class="card-group mt-4">-->
                 <div class="col-lg-12 col-sm-12 mt-4">
                     <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90">
-                        <div  class="card-header h4 {{ attractivite }}">
+                        <div  id="js_color" class="card-header h4 {{ attractivite }}">
                         <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGES_Modal">
                             MGES
                         </button>
                         </div>
                         <div class="card-body bg-secondary">
                             <p>Le site destination est considéré comme
-                            <strong>{{ lbl_MGES}}</strong>
-                            <p>et ajoute <strong>{{ moisMGES }}</strong> mois de salaire</p>
+                            <strong id="js_lbl_MGES">{{ lbl_MGES}}</strong>
+                            <p>et ajoute <strong id="js_moisMGES2">{{ moisMGES }}</strong> mois de salaire</p>
                         </div>
                     </div>
 <!--                </div>-->
@@ -133,7 +133,7 @@
         </div>
         <div class="container-fluid">
             <div class="d-flex justify-content-end" >
-                <input id="fetch-call" type="submit" value="Calculer" class="btn btn-primary mt-3" />
+                <input id="fetch-call2" type="submit" value="Calculer" class="btn btn-primary my-3" />
             </div>
         </div>
     </div>
@@ -162,9 +162,9 @@
             <tbody>
             <tr>
                 <td scope="row">Article 30</td>
-                <td class="text-center">2</td>
-                <td class="text-end">{{ salaire_mensuel }}</td>
-                <td class="text-end">{{ ind_art30 }}</td>
+                <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
+                <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
+                <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
             </tr>
             <thead>
             <tr>
@@ -177,20 +177,20 @@
             <tr>
                 <td scope="row">AMG</td>
                 <td class="text-center">5</td>
-                <td class="text-end">{{ base_diname }}</td>
-                <td class="text-end">{{ prime_amg }}</td>
+                <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
+                <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
             </tr>
             <tr>
                 <td scope="row">MGES</td>
-                <td class="text-center">{{ moisMGES }}</td>
-                <td class="text-end">{{ base_diname }}</td>
-                <td class="text-end">{{ prime_MGES }}</td>
+                <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
+                <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
+                <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
             </tr>
             <tr>
                 <td scope="row">MGEE</td>
-                <td class="text-center">{{ mois_MGEE }}</td>
-                <td class="text-end">{{ base_diname }}</td>
-                <td class="text-end">{{ prime_MGEE }}</td>
+                <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
+                <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
+                <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
             </tr>
             <thead>
             <tr>
@@ -202,9 +202,9 @@
             </thead>
             <tr>
                 <td scope="row">Ecart Loyer</td>
-                <td class="text-center">{{ surface }}</td>
-                <td class="text-end">{{ ecart_loyer }}</td>
-                <td class="text-end">{{ indemnisation_loyer }}</td>
+                <td class="text-center" id="js_surface2">{{ surface }}</td>
+                <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
+                <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
             </tr>
             <thead>
             <tr>
@@ -219,25 +219,25 @@
                 <td scope="col">Total Statutaire</td>
                 <td class="" scope="col">Art 30</td>
                 <td scope="col"></td>
-                <td scope="col" class="text-end">{{ ind_art30 }}</td>
+                <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
             </tr>
            <tr>
                 <td scope="col">Total DiNaMe</td>
                 <td class="" scope="col">AMG MGES MGEE Ecart Loyer</td>
-                <td scope="col"></td>
-                <td scope="col" class="text-end">{{ total_diname }}</td>
+                <td scope="col"> (écrêté à 100 000 €)</td>
+                <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
             </tr>
            <tr>
                 <td scope="col">Total Général</td>
-                <td class="" scope="col">Art30 + DiNaMe (écrêté à 100 000 €)</td>
+                <td class="" scope="col">Art30 + DiNaMe</td>
                 <td scope="col"></td>
-               <td scope="col" class="text-end"><strong>{{ total_general }}</strong></td>
+               <td scope="col" class="text-end" id="js_total_general"><strong>{{ total_general }}</strong></td>
             </tr>
            <tr>
                 <td scope="col">Total DiNaMe / an </td>
                 <td class="" scope="col">pendant 5 ans en janvier</td>
                 <td scope="col">max 20 k€</td>
-                <td scope="col" class="text-end">{{ total_diname_an }}</td>
+                <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
             </tr>
             </tbody>
 
@@ -308,5 +308,117 @@
   </div>
 </div>
 <!--<script defer src="{% static 'js/script_snb.js' %}"></script>-->
+<script>
+
+    document.querySelector('#fetch-call2').addEventListener('click', event => {
+          event.preventDefault();
+          recalcul();});
+
+    function recalcul(){
+
+      let form = new FormData();
+      let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      console.log(csrfTokenValue);
+
+      const Nr = document.querySelector('#id_Nr').value
+      const maj_res = document.querySelector('#id_maj_res').value
+      const tps_trav = document.querySelector('#id_tps_trav').value
+      const echelon = document.querySelector('#id_echelon').value
+      const art30 = document.getElementById('id_art30').checked
+
+      const eligible_AMG = document.getElementById('id_eligible_AMG').checked
+      const eligible_MGEE = document.getElementById('id_eligible_MGEE').checked
+      const famille = document.querySelector('#id_famille').value
+      const listeOrigine = document.getElementById('id_site_origine')
+      const site_origine = listeOrigine.options[listeOrigine.selectedIndex].text
+      const listeDest = document.getElementById('id_site_destination')
+      const site_destination = listeDest.options[listeDest.selectedIndex].text
+
+
+      form.append("Nr", Nr);
+      form.append("maj_res", maj_res);
+      form.append("echelon", echelon);
+      form.append("tps_trav", tps_trav);
+      form.append("art30", art30);
+      form.append("eligible_AMG", eligible_AMG);
+      form.append("eligible_MGEE", eligible_MGEE);
+      form.append("famille", famille);
+      form.append("site_origine", site_origine);
+      form.append("site_destination", site_destination);
+
+
+
+      console.log(form.get("Nr"))
+      console.log(form.get("echelon"))
+      console.log(form.get("maj_res"))
+      console.log(form.get("tps_trav"))
+      console.log(form.get("art30"))
+      console.log(form.get("eligible_AMG"))
+      console.log(form.get("eligible_MGEE"))
+      console.log(form.get("famille"))
+      console.log(form.get("site_origine"))
+      console.log(form.get("site_destination"))
+
+
+
+
+      let request = new Request("{% url 'recalcul' %}", {method: "POST",
+                                                    body: form,
+                                                    headers: {"X-CSRFToken": csrfTokenValue}});
+
+      fetch(request)
+        .then(response => response.json())
+        .then(context => {
+            console.log(context["salaire_mensuel"])
+            console.log(context["surface"])
+            console.log(context["mois_art30"])
+
+            document.querySelector('#js_salaire_mensuel').innerHTML = context["salaire_mensuel"];
+            document.querySelector('#js_mois_art30').innerHTML = context["mois_art30"];
+            document.querySelector('#js_ind_art30').innerHTML = context["ind_art30"];
+            document.querySelector('#js_base_diname_AMG').innerHTML = context["base_diname"];
+            document.querySelector('#js_base_diname_MGES').innerHTML = context["base_diname"];
+            document.querySelector('#js_base_diname_MGEE').innerHTML = context["base_diname"];
+            document.querySelector('#js_prime_AMG').innerHTML = context["prime_amg"];
+            document.querySelector('#js_prime_amg2').innerHTML = context["prime_amg"];
+            document.querySelector('#js_prime_MGES').innerHTML = context["prime_MGES"];
+            document.querySelector('#js_prime_MGEE').innerHTML = context["prime_MGEE"];
+            document.querySelector('#js_moisMGES').innerHTML = context["moisMGES"];
+            document.querySelector('#js_moisMGEE').innerHTML = context["mois_MGEE"];
+            document.querySelector('#js_ecart_loyer').innerHTML = context["ecart_loyer"];
+            document.querySelector('#js_ecart_loyer2').innerHTML = context["ecart_loyer"];
+            document.querySelector('#js_indemnisation_loyer').innerHTML = context["indemnisation_loyer"];
+            document.querySelector('#js_indemnisation_loyer2').innerHTML = context["indemnisation_loyer"];
+            document.querySelector('#js_tot_art30').innerHTML = context["ind_art30"];
+            document.querySelector('#js_total_diname').innerHTML = context["total_diname"];
+            document.querySelector('#js_total_general').innerHTML = context["total_general"];
+            document.querySelector('#js_total_diname_an').innerHTML = context["total_diname_an"];
+            document.querySelector('#js_lbl_MGES').innerHTML = context["lbl_MGES"];
+            document.querySelector('#js_moisMGES2').innerHTML = context["moisMGES"];
+
+            document.querySelector('#js_surface').innerHTML = context["surface"];
+            document.querySelector('#js_surface2').innerHTML = context["surface"];
+
+            document.querySelector('#js_color').className = "card-header h4 " + context["attractivite"]
+
+
+
+            })
+        }
+
+    document.querySelector('#id_Nr').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_echelon').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_maj_res').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_tps_trav').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_art30').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_eligible_AMG').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_site_origine').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_site_destination').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_famille').addEventListener('change', event => {recalcul()});
+
+
+
+</script>
 {% endblock content %}
 

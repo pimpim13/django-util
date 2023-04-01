@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.diname, name='diname'),
+    path('recalcul/', views.recalcul, name='recalcul')
 ]

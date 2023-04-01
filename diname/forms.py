@@ -11,7 +11,7 @@ class DinameForm(forms.Form):
     NR_CHOICE = [(a.NR, a.NR) for a in Coeff_New.objects.filter(date_application=date(1900, 1, 1))]
     ECHELON_CHOICE = [(a.coeff, a.echelon) for a in Echelon.objects.filter(echelon__gt=3)]
     MAJ_RES_CHOICE = [(1.24, '24%'), (1.245, '24,5%'), (1.25, '25%')]
-    TPS_TRAV_CHOICE = [(1, '35h'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'), (0.707, "24h")]
+    TPS_TRAV_CHOICE = [(1, '35h ou CFJ'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'), (0.707, "24h")]
     ETABLISSEMENT_CHOICE = [('EXPLOITATION', 'EXPLOITATION'),
                             ('FC', 'FC'),
                             ('MAINTENANCE', 'MAINTENANCE'),
@@ -26,12 +26,13 @@ class DinameForm(forms.Form):
     # art30 = forms.ChoiceField(label='article 30', widget=forms.CheckboxInput,
     #                           choices=ART_30_CHOICE, required=False)
 
-    art30 = forms.BooleanField(label='article 30', required=False, initial=None)
-    eligible_AMG = forms.BooleanField(label='Eligible AMG', required=False, initial=None)
+    art30 = forms.BooleanField(label='article 30', required=False, initial=True)
+    eligible_AMG = forms.BooleanField(label='Eligible AMG', required=False, initial=True)
 
     famille = forms.ChoiceField(label='Situation familiale', choices=FAMILLE_CHOICE, initial=FAMILLE_CHOICE[0][0])
     site_origine = forms.ChoiceField(label="Site Rte de départ", choices=SITES_CHOICE)
-    site_destination = forms.ChoiceField(label="Site Rte d'arrivée", choices=SITES_CHOICE)
+    site_destination = forms.ChoiceField(label="Site Rte d'arrivée", choices=SITES_CHOICE, initial=SITES_CHOICE[-1][-1])
+    agentGDP = forms.ChoiceField(label="Agent de GDP", required=False, initial=False)
 
     # etablissement = forms.ChoiceField(label='Etablissement', choices=ETABLISSEMENT_CHOICE, required=True)
     emploi = forms.ChoiceField(label="", choices=EMPLOI_CHOICE, required=False)
