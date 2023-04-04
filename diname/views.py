@@ -177,17 +177,41 @@ def recalcul(request):
     else:
         eligible_MGEE = False
 
+    if request.POST.get('agentGDP') == 'true':
+        agentGDP = True
+    else:
+        agentGDP = False
+
     ind_art30 = round(salaire1 * 2, 2) * art30
     surface = request.POST.get('famille', 77)
     print(request.POST.get('site_origine'))
 
     loyer_origine = Site.objects.get(localisation=request.POST.get('site_origine')).loyer
     loyer_destination = Site.objects.get(localisation=request.POST.get('site_destination')).loyer
-
     ecart_loyer = round(max((loyer_destination - loyer_origine), 0), 2)
     indemnisation_ecart_loyer = round(ecart_loyer * 12 * 5 * float(surface), 2) * eligible_AMG
     base_diname = min(max(plancher, salaire1), plafond)
     prime_amg = base_diname * 5 * eligible_AMG
+
+    loyer_origine_gdp = 0
+    ecart_loyer_gdp = 0
+    ecart_loyer_3 = 0
+
+    if agentGDP:
+        loyer_origine_gdp = round(min(salaire1 * 0.15, loyer_origine * float(surface)), 2)
+        ecart_loyer_gdp = (loyer_destination * float(surface) - loyer_origine_gdp) * 12 * 2
+        ecart_loyer_3 = ((loyer_destination - loyer_origine) * float(surface) * 12 * 3)
+        indemnisation_ecart_loyer = ecart_loyer_gdp + ecart_loyer_3
+
+    # print('surface', surface)
+    # print('origine', loyer_origine)
+    # print('destination', loyer_destination)
+    # print('loyer gdp retenu pour 2 ans', loyer_origine_gdp)
+    #
+    # print('ecart_loyer_gdp', ecart_loyer_gdp)
+    # print('ecart_loyer 3 ans', ecart_loyer_3)
+    #
+    # print('total', ecart_loyer)
 
     attractivite = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.couleur
     moisMGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.mois
@@ -217,9 +241,14 @@ def recalcul(request):
     context["art30"] = art30
     context['ind_art30'] = f"{ind_art30:9.2f}"
     context['surface'] = surface
+    context['agentGDP'] = agentGDP
     context["loyer_origine"] = f"{loyer_origine:9.2f}"
+    context["loyer_origine_gdp"] = f"{loyer_origine_gdp:9.2f}"
     context["loyer_destination"] = f"{loyer_destination:9.2f}"
+    context["ecart_loyer_gdp"] = f"{ecart_loyer_gdp:9.2f}"
+    context["ecart_loyer_3"] = f"{ecart_loyer_3:9.2f}"
     context["ecart_loyer"] = f"{ecart_loyer:9.2f}"
+    context["ecart_loyer_gdp"] = f"{ecart_loyer_gdp:9.2f}"
     context['plancher'] = f"{plancher:9.2f}"
     context['plafond'] = f"{plafond:9.2f}"
     context['base_diname'] = f"{base_diname:9.2f}"

@@ -18,9 +18,9 @@ class DinameForm(forms.Form):
                             ('DI', 'DI')]
     EMPLOI_CHOICE = [(a, a) for a in Emplois.objects.filter(actif=True)]
 
-    Nr = forms.ChoiceField(label='Nr ', choices=NR_CHOICE)
-    echelon = forms.ChoiceField(label="Echelon actuel", choices=ECHELON_CHOICE)
-    maj_res = forms.ChoiceField(label='Maj rés', choices=MAJ_RES_CHOICE)
+    Nr = forms.ChoiceField(label='Nr ', choices=NR_CHOICE, initial=180)
+    echelon = forms.ChoiceField(label="Echelon actuel", choices=ECHELON_CHOICE, initial=1.22)
+    maj_res = forms.ChoiceField(label='Maj rés', choices=MAJ_RES_CHOICE, initial=1.25)
     tps_trav = forms.ChoiceField(label='ATT', choices=TPS_TRAV_CHOICE)
 
     # art30 = forms.ChoiceField(label='article 30', widget=forms.CheckboxInput,
@@ -32,10 +32,10 @@ class DinameForm(forms.Form):
     famille = forms.ChoiceField(label='Situation familiale', choices=FAMILLE_CHOICE, initial=FAMILLE_CHOICE[0][0])
     site_origine = forms.ChoiceField(label="Site Rte de départ", choices=SITES_CHOICE)
     site_destination = forms.ChoiceField(label="Site Rte d'arrivée", choices=SITES_CHOICE, initial=SITES_CHOICE[-1][-1])
-    agentGDP = forms.ChoiceField(label="Agent de GDP", required=False, initial=False)
+    agentGDP = forms.BooleanField(label="Agent de GDP", required=False, initial=False)
 
     # etablissement = forms.ChoiceField(label='Etablissement', choices=ETABLISSEMENT_CHOICE, required=True)
-    emploi = forms.ChoiceField(label="", choices=EMPLOI_CHOICE, required=False)
+    emploi = forms.ChoiceField(label="Emplois encouragés", choices=EMPLOI_CHOICE, required=False)
 
     eligible_MGEE = forms.BooleanField(label='Eligible MGEE', required=False, initial=False)
 
