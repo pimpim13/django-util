@@ -22,145 +22,193 @@
 
 
 <div class="row d-flex">
-    <h3 class="h3 bg-secondary text-light text-center" >Calculette DiNaMe</h3>
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette DiNAME</h3>
 </div>
 
 <div class="row mt-4 d-flex justify-content-center">
     <div class="col-md-4 col-lg-6">
 
-    <form action="#scroll" method="post" class="form">
-        {% csrf_token %}
-        <div class="row d-flex justify-content-between ">
-        <div class="col-lg-12 col-md-12">
-            <div class="card-group">
-                <div class="col-lg-12 col-sm-12">
-                    <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                        <div  class="card-header h4">Votre situation</div>
-                        <div class="card-body d-flex">
-                            <div class="col-lg-5 mx-3">
-                                {{ form.Nr|as_crispy_field }}
-                                {{ form.echelon|as_crispy_field }}
-                            </div>
-                            <div class="col-lg-5 mx-3">
-                                {{ form.tps_trav|as_crispy_field }}
-                                {{ form.maj_res|as_crispy_field }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-group">
-                <div class="col-lg-12 col-sm-12">
-                    <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                        <div  class="card-header h4">Article 30</div>
-                        <div class="card-body d-flex">
-                            <div class="col-lg-6">
-                                {{ form.art30|as_crispy_field }}
+        <form action="#scroll" method="post" class="form">
+            {% csrf_token %}
+            <div class="row d-flex justify-content-between ">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card-group">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4">Votre situation à l'issue de votre mutation</div>
+                                <div class="card-body d-flex">
+                                    <div class="col-lg-5 mx-3">
+                                        {{ form.Nr|as_crispy_field }}
+                                        {{ form.echelon|as_crispy_field }}
+                                    </div>
+                                    <div class="col-lg-5 mx-3">
+                                        {{ form.tps_trav|as_crispy_field }}
+                                        {{ form.maj_res|as_crispy_field }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="card-group">
-                <div class="col-lg-6 col-sm-12">
-                    <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                        <div  class="card-header h4">
-                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
-                            AMG
-                        </button>
+                    <div class="card-group">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4">Article 30</div>
+                                <div class="card-body d-flex">
+                                    <div class="col-lg-6">
+                                        {{ form.art30|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
+                    </div>
+                    <div class="card-group">
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4">
+                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
+                                        AMG
+                                    </button>
+                                    <span style="font-size:50%"> <-- En savoir plus</span>
+                                </div>
+                                <div class="card-body">
 
-                            {{ form.eligible_AMG|as_crispy_field }}
-                            {{ form.famille|as_crispy_field }}
-                            {{ form.site_origine|as_crispy_field }}
-                            {{ form.site_destination|as_crispy_field }}
-                            <br>
-                            {{ form.agentGDP|as_crispy_field }}
+                                    {{ form.eligible_AMG|as_crispy_field }}
+                                    {{ form.famille|as_crispy_field }}
+                                    {{ form.site_origine|as_crispy_field }}
+                                    {{ form.site_destination|as_crispy_field }}
+                                    <br>
+                                    {{ form.agentGDP|as_crispy_field }}
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-12">
-                    <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                        <div  class="card-header h4">
-                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
-                            Logement
-                        </button>
-                            </div>
-                        <div class="card-body">
-                            <p>La surface correspondant à votre composition familiale est fixée à :
-                                <strong id="js_surface">{{ surface }}</strong> m2
-
-                            <p>L'écart de loyer entre l'ancienne et la nouvelle localisation est de :
-                            <strong id="js_ecart_loyer2">{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de
-                            <strong id="js_indemnisation_loyer2">{{ indemnisation_loyer }}</strong> € sur 5 ans</p>
-                            <p>En complément l'AMG vous permet d'obtenir une prime de 5 mois de salaire soit
-                            <strong id="js_prime_amg2">{{ prime_amg }}</strong> € </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-group">
-                <div class="col-lg-6 col-sm-12 mt-4">
-                    <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90">
-                        <div  id="js_color" class="card-header h4 {{ attractivite }}">
-                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGES_Modal">
-                            MGES
-                        </button>
-                        </div>
-                        <div class="card-body bg-secondary">
-                            <p>Le site destination est considéré comme
-                            <strong id="js_lbl_MGES">{{ lbl_MGES}}</strong>
-                            <p>et ajoute <strong id="js_moisMGES2">{{ moisMGES }}</strong> mois de salaire</p>
-                        </div>
-                    </div>
-<!--                </div>-->
-                </div>
-<!--            </div>-->
-<!--             <div class="card-group mt-4">-->
-                <div class="col-lg-6 col-sm-12 mt-4">
-                    <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                        <div id="js_color_MGEE" class="card-header h4">
-                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGEE_Modal">
-                            MGEE
-                        </button>
-                        </div>
-                        <div class="card-body d-flex">
-                            <div class="col-lg-12">
-                                {{ form.emploi|as_crispy_field }}
-                                <br>
-                                {{ form.eligible_MGEE|as_crispy_field }}
+                                </div>
                             </div>
                         </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4">
+                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
+                                        Logement
+                                    </button>
+                                    <span style="font-size:50%"> <-- En savoir plus</span>
+                                </div>
+                                <div class="card-body">
+                                    <p>La surface correspondant à votre composition familiale est fixée à :
+                                        <strong id="js_surface">{{ surface }}</strong> m2
+
+                                    <p>L'écart de loyer entre l'ancienne et la nouvelle localisation est de :
+                                        <strong id="js_ecart_loyer2">{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de
+                                        <strong id="js_indemnisation_loyer2">{{ indemnisation_loyer }}</strong> € sur 5 ans</p>
+                                    <p>En complément l'AMG vous permet d'obtenir une prime de 5 mois de salaire soit
+                                        <strong id="js_prime_amg2">{{ prime_amg }}</strong> € </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-group">
+                            <div class="col-lg-6 col-sm-12 mt-4">
+                                <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90">
+                                    <div  id="js_color" class="card-header h4 {{ attractivite }}">
+                                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGES_Modal">
+                                            MGES
+                                        </button>
+                                        <span style="font-size:50%"> <-- En savoir plus</span>
+                                    </div>
+                                    <div class="card-body bg-secondary">
+                                        <p>Le site destination est considéré comme
+                                            <strong id="js_lbl_MGES">{{ lbl_MGES}}</strong>
+                                        <p>et ajoute <strong id="js_moisMGES2">{{ moisMGES }}</strong> mois de salaire</p>
+                                    </div>
+                                </div>
+                                <!--                </div>-->
+                            </div>
+                            <!--            </div>-->
+                            <!--             <div class="card-group mt-4">-->
+                            <div class="col-lg-6 col-sm-12 mt-4">
+                                <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                    <div id="js_color_MGEE" class="card-header h4">
+                                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGEE_Modal">
+                                            MGEE
+                                        </button>
+                                        <span style="font-size:50%"> <-- En savoir plus</span>
+                                    </div>
+                                    <div class="card-body d-flex">
+                                        <div class="col-lg-12">
+                                            {{ form.emploi|as_crispy_field }}
+                                            <br>
+                                            {{ form.eligible_MGEE|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-             </div>
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-end mt-4 invisible" >
+                        <input id="fetch-call2" type="submit" value="Calculer" class="btn btn-primary my-3" />
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="container-fluid">
-            <div class="d-flex justify-content-end mt-4 invisible" >
-                <input id="fetch-call2" type="submit" value="Calculer" class="btn btn-primary my-3" />
-            </div>
-        </div>
+        </form>
+
+
     </div>
-    </form>
+    <div class="col-sm-6 " id="scroll">
+        <div class="card-group">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card mt-4 mb-1 mx-1 w-90" style="background: #FAD7A0;">
+                    <div  class="card-header h4">Article 30</div>
+                    <div class="card-body d-flex justify-content-between" style="background: #DAF7A6">
+                        <div class="h5">
+                            2 mois de salaire
+                        </div>
+                        <div id="js_art30" class="h5">
+                            {{ ind_art30 }}
+                        </div>
 
-
-</div>
-      <div class="col-sm-6 " id="scroll">
-          <div class="card-group">
-                <div class="col-lg-12 col-sm-12">
-                    <div class="card mt-4 mb-1 mx-1 w-90 bg-success text-light">
-                        <div  class="card-header h4">Article 30</div>
-                        <div class="card-body d-flex">
-                            <div class="col-lg-6">
-                                {{ ind_art30 }}
-                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-group">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card mt-4 mb-1 mx-1 w-90" style="background: #FAD7A0;">
+                    <div  class="card-header h4">DiNAME Mobilité Géographique</div>
+                    <div class="card-body d-flex justify-content-between" style="background: #DAF7A6">
+                        <div class="h5 col-lg-6">
+                            AMG-MGES-LOYER
+                        </div>
+                        <div id="js_diname_geo" class="h5 col-lg-6 text-end">
+                            {{ total_diname_mobilite_geo }}
                         </div>
                     </div>
                 </div>
             </div>
-        <table class="table table-striped table-hover table-sm">
+        </div>
+        <div class="card-group">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card mt-4 mb-1 mx-1 w-90" style="background: #FAD7A0;">
+                    <div  class="card-header h4">DiNAME Mobilité Fonctionnelle</div>
+                    <div class="card-body d-flex justify-content-between" style="background: #DAF7A6">
+                        <div class="h5 col-lg-6">
+                            MGEE
+                        </div>
+                        <div id="js_diname_fonc" class="h5 col-lg-6 text-end">
+                            {{ total_diname_mobilite_fonc }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Détail des résultats
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                            <table class="table table-striped table-hover table-sm">
             <thead>
             <tr>
                 <th scope="col">Item</th>
@@ -239,19 +287,25 @@
                 <td scope="col"></td>
                 <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
             </tr>
-           <tr>
+            <tr>
+                <td scope="col">Total DiNaMe avant écrêtage</td>
+                <td class="" scope="col">AMG MGES MGEE LOYER</td>
+                <td scope="col"></td>
+                <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
+            </tr>
+            <tr>
                 <td scope="col">Total DiNaMe</td>
-                <td class="" scope="col">AMG MGES MGEE Ecart Loyer</td>
+                <td class="" scope="col">AMG MGES MGEE LOYER</td>
                 <td scope="col"> (écrêté à 100 000 €)</td>
                 <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
             </tr>
-           <tr>
+            <tr>
                 <td scope="col">Total Général</td>
                 <td class="" scope="col">Art30 + DiNaMe</td>
                 <td scope="col"></td>
-               <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
+                <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
             </tr>
-           <tr>
+            <tr>
                 <td scope="col">Total DiNaMe / an </td>
                 <td class="" scope="col">pendant 5 ans en janvier</td>
                 <td scope="col">max 20 k€</td>
@@ -260,70 +314,75 @@
             </tbody>
 
         </table>
-   </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="MGEE_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="ModalLabelMGEE">MGEE Mobilité Encouragée vers certains Emplois</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Si vous gréez un emploi qui fait partie de la liste déroulante, cochez la case "Eligible MGEE".
-          Vous ouvrez alors droit à une prime de 2 mois de salaire si déménagement, 1 mois sans déménagement.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabelMGEE">MGEE Mobilité Encouragée vers certains Emplois</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Si vous gréez un emploi qui fait partie de la liste déroulante, cochez la case "Eligible MGEE".
+                Vous ouvrez alors droit à une prime de 2 mois de salaire si déménagement, 1 mois sans déménagement.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="modal fade" id="MGES_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="ModalLabelMGES">MGES Mobilité Encouragée vers certains Sites</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">Les sites de Rte sont classés en fonction de leur attractivité
-          en 4 catégories du plus au moins attractif. La prime d'installation dans un de ces sites
-          est de 8, 5 ou 0 mois de salaire pour les sites des moins attractifs aux plus attractifs,
-           ou 7 mois pour un site de la région parisienne. </BR>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabelMGES">MGES Mobilité Encouragée vers certains Sites</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Les sites de Rte sont classés en fonction de leur attractivité
+                en 4 catégories du plus au moins attractif. La prime d'installation dans un de ces sites
+                est de 8, 5 ou 0 mois de salaire pour les sites des moins attractifs aux plus attractifs,
+                ou 7 mois pour un site de la région parisienne. </BR>
 
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-      </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="modal fade" id="AMG_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5 modal-dialog-scrollable" id="ModalLabelAMG">AMG Accompagnement de la Mobilité Géographique</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">L'indemnisation de la mobilité géographique est composé de 2 partie :
-          <ul>
-              <li>Une prime de 5 mois de salaire (Plancher NR 130 ech 4, Plafond NR 280 ech 7)</li>
-              <li>Une compensation de l'écart de loyer.</li>
-          </ul>
-          <p>Si vous êtes agent de GDP et avez un loyer écrété à 15% du salaire, des dispositions particulières s'appliquent.</p>
-          À chaque site correspond un loyer de base au m2. Une indemnisation de l'écart
-          de loyer est calculée sur 5 ans dans le cas où le loyer du site de destination est supérieur à
-          celui du site d'origine.</BR>
-          La surface retenue pour l'indemnisation est fonction de la composition familiale.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 modal-dialog-scrollable" id="ModalLabelAMG">AMG Accompagnement de la Mobilité Géographique</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">L'indemnisation de la mobilité géographique est composé de 2 partie :
+                <ul>
+                    <li>Une prime de 5 mois de salaire (Plancher NR 130 ech 4, Plafond NR 280 ech 7)</li>
+                    <li>Une compensation de l'écart de loyer.</li>
+                </ul>
+                <p>Si vous êtes agent de GDP et avez un loyer écrété à 15% du salaire, des dispositions particulières s'appliquent.</p>
+                À chaque site correspond un loyer de base au m2. Une indemnisation de l'écart
+                de loyer est calculée sur 5 ans dans le cas où le loyer du site de destination est supérieur à
+                celui du site d'origine.</BR>
+                La surface retenue pour l'indemnisation est fonction de la composition familiale.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!--<script defer src="{% static 'js/script_snb.js' %}"></script>-->
 <script>
@@ -392,10 +451,13 @@
             document.querySelector('#js_salaire_mensuel').innerHTML = context["salaire_mensuel"];
             document.querySelector('#js_mois_art30').innerHTML = context["mois_art30"];
             document.querySelector('#js_ind_art30').innerHTML = context["ind_art30"];
+            document.querySelector('#js_art30').innerHTML = context["ind_art30"];
             document.querySelector('#js_base_diname_AMG').innerHTML = context["base_diname"];
             document.querySelector('#js_base_diname_MGES').innerHTML = context["base_diname"];
             document.querySelector('#js_base_diname_MGEE').innerHTML = context["base_diname"];
             document.querySelector('#js_prime_AMG').innerHTML = context["prime_amg"];
+//            document.querySelector('#js_amg2').innerHTML = context["total_diname"];
+//            document.querySelector('#js_mges').innerHTML = context["prime_MGES"];
             document.querySelector('#js_prime_amg2').innerHTML = context["prime_amg"];
             document.querySelector('#js_prime_MGES').innerHTML = context["prime_MGES"];
             document.querySelector('#js_prime_MGEE').innerHTML = context["prime_MGEE"];
@@ -408,7 +470,10 @@
             document.querySelector('#js_indemnisation_loyer2').innerHTML = context["indemnisation_loyer"];
 
             document.querySelector('#js_tot_art30').innerHTML = context["ind_art30"];
+            document.querySelector('#js_total_diname_avant_ecretage').innerHTML = context["total_diname_avant_ecretage"];
             document.querySelector('#js_total_diname').innerHTML = context["total_diname"];
+            document.querySelector('#js_diname_geo').innerHTML = context["total_diname_mobilite_geo"];
+            document.querySelector('#js_diname_fonc').innerHTML = context["total_diname_mobilite_fonc"];
             document.querySelector('#js_total_general').innerHTML = context["total_general"];
             document.querySelector('#js_total_diname_an').innerHTML = context["total_diname_an"];
             document.querySelector('#js_lbl_MGES').innerHTML = context["lbl_MGES"];

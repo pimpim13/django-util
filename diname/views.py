@@ -201,17 +201,9 @@ def recalcul(request):
         loyer_origine_gdp = round(min(salaire1 * 0.15, loyer_origine * float(surface)), 2)
         ecart_loyer_gdp = (loyer_destination * float(surface) - loyer_origine_gdp) * 12 * 2
         ecart_loyer_3 = ((loyer_destination - loyer_origine) * float(surface) * 12 * 3)
-        indemnisation_ecart_loyer = ecart_loyer_gdp + ecart_loyer_3
+        indemnisation_ecart_loyer = (ecart_loyer_gdp + ecart_loyer_3) * eligible_AMG
 
-    # print('surface', surface)
-    # print('origine', loyer_origine)
-    # print('destination', loyer_destination)
-    # print('loyer gdp retenu pour 2 ans', loyer_origine_gdp)
-    #
-    # print('ecart_loyer_gdp', ecart_loyer_gdp)
-    # print('ecart_loyer 3 ans', ecart_loyer_3)
-    #
-    # print('total', ecart_loyer)
+
 
     attractivite = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.couleur
     moisMGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.mois
@@ -231,7 +223,11 @@ def recalcul(request):
             context['mois_MGEE'] = 1
 
     total_diname = round(min(prime_amg + indemnisation_ecart_loyer + prime_MGES + prime_MGEE, 100000), 2)
+    total_diname_mobilite_geo = round(prime_amg + indemnisation_ecart_loyer + prime_MGES, 2)
+    total_diname_mobilite_fonc = round(prime_MGEE, 2)
+    total_diname_avant_ecretage = round((prime_amg + indemnisation_ecart_loyer + prime_MGES + prime_MGEE), 2)
     total_diname_an = round(total_diname / 5, 2)
+
     # total_general = min(total_diname, 100000) + ind_art30
     total_general = total_diname + ind_art30
 
@@ -260,7 +256,10 @@ def recalcul(request):
     context['prime_MGES'] = f"{prime_MGES:9.2f}"
     context['prime_MGEE'] = f"{prime_MGEE:9.2f}"
     context['total_diname'] = f"{total_diname:9.2f}"
+    context['total_diname_mobilite_geo'] = f"{total_diname_mobilite_geo:9.2f}"
+    context['total_diname_mobilite_fonc'] = f"{total_diname_mobilite_fonc:9.2f}"
     context['total_diname_an'] = f"{total_diname_an:9.2f}"
     context['total_general'] = f"{total_general:9.2f}"
+    context['total_diname_avant_ecretage'] = f"{total_diname_avant_ecretage:9.2f}"
 
     return JsonResponse(context)
