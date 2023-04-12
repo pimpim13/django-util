@@ -165,7 +165,6 @@ def recalcul(request):
         art30 = True
     else:
         art30 = False
-    print(art30 * 2)
 
     if request.POST.get('eligible_AMG') == 'true':
         eligible_AMG = True
@@ -181,6 +180,11 @@ def recalcul(request):
         agentGDP = True
     else:
         agentGDP = False
+
+    if request.POST.get('eligible_MR') == 'true':
+        MR = True
+    else:
+        MR = False
 
     ind_art30 = round(salaire1 * 2, 2) * art30
     surface = request.POST.get('famille', 77)
@@ -202,8 +206,6 @@ def recalcul(request):
         ecart_loyer_gdp = (loyer_destination * float(surface) - loyer_origine_gdp) * 12 * 2
         ecart_loyer_3 = ((loyer_destination - loyer_origine) * float(surface) * 12 * 3)
         indemnisation_ecart_loyer = (ecart_loyer_gdp + ecart_loyer_3) * eligible_AMG
-
-
 
     attractivite = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.couleur
     moisMGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.mois

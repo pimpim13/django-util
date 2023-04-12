@@ -33,6 +33,9 @@ class DinameForm(forms.Form):
     site_origine = forms.ChoiceField(label="Site Rte de départ", choices=SITES_CHOICE)
     site_destination = forms.ChoiceField(label="Site Rte d'arrivée", choices=SITES_CHOICE, initial=SITES_CHOICE[-1][-1])
     agentGDP = forms.BooleanField(label="Agent de GDP", required=False, initial=False)
+    eligible_MR = forms.BooleanField(label="Eligible MR", required=False, initial=False)
+    eligible_MGRa = forms.BooleanField(label="Eligible MGRa", required=False, initial=False)
+    eligible_MGRb = forms.BooleanField(label="Eligible MGRb", required=False, initial=False)
 
     # etablissement = forms.ChoiceField(label='Etablissement', choices=ETABLISSEMENT_CHOICE, required=True)
     emploi = forms.ChoiceField(label="Emplois encouragés", choices=EMPLOI_CHOICE, required=False)

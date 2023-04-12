@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="card-group">
-                            <div class="col-lg-6 col-sm-12 mt-4">
+                            <div class="col-lg-6 col-sm-12 mt-3">
                                 <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90">
                                     <div  id="js_color" class="card-header h4 {{ attractivite }}">
                                         <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGES_Modal">
@@ -121,7 +121,7 @@
                             </div>
                             <!--            </div>-->
                             <!--             <div class="card-group mt-4">-->
-                            <div class="col-lg-6 col-sm-12 mt-4">
+                            <div class="col-lg-6 col-sm-12 mt-3">
                                 <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
                                     <div id="js_color_MGEE" class="card-header h4">
                                         <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGEE_Modal">
@@ -139,7 +139,51 @@
                                 </div>
                             </div>
                         </div>
+                    </div><!-- Fin card group MGES MGEE -->
+            <div class="card-group mt-3">
+                <div class="col-lg-4 col-md-12">
+                    <div class="card h-100 text-white bg-success mt-3 mx-1 w-90" >
+                        <div  class="card-header h4">
+                            <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                                        MR
+                            </button>
+                            <span style="font-size:50%"> <-- En savoir plus</span>
+                        </div>
+                        <div class="card-body">
+                            {{ form.eligible_MR|as_crispy_field }}
+                        </div>
+                        <div class="card-footer"></div>
                     </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="card h-100 bg-warning mt-3 mx-1 w-90" >
+                        <div  class="card-header h4">
+                            <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                                        MGRa
+                            </button>
+                            <span style="font-size:50%"> <-- Plus</span>
+                        </div>
+                        <div class="card-body">
+                            {{ form.eligible_MGRa|as_crispy_field }}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="card h-100 text-dark bg-info mt-3 mx-1 w-90" >
+                        <div  class="card-header h4">
+                            <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                                        MGRb
+                            </button>
+                            <span style="font-size:50%"> <-- Plus</span>
+                        </div>
+                        <div class="card-body">
+                            {{ form.eligible_MGRb|as_crispy_field }}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+            </div>
                 </div>
                 <div class="container-fluid">
                     <div class="d-flex justify-content-end mt-4 invisible" >
@@ -154,9 +198,9 @@
     <div class="col-sm-6 " id="scroll">
         <div class="card-group">
             <div class="col-lg-12 col-sm-12">
-                <div class="card mt-4 mb-1 mx-1 w-90" style="background: #FAD7A0;">
+                <div class="card mt-4 mb-1 mx-1 w-90" style="background: DeepSkyBlue;">
                     <div  class="card-header h4">Article 30</div>
-                    <div class="card-body d-flex justify-content-between" style="background: #DAF7A6">
+                    <div class="card-body d-flex justify-content-between" style="background: LightSkyBlue">
                         <div class="h5">
                             2 mois de salaire
                         </div>
@@ -170,9 +214,9 @@
         </div>
         <div class="card-group">
             <div class="col-lg-12 col-sm-12">
-                <div class="card mt-4 mb-1 mx-1 w-90" style="background: #FAD7A0;">
+                <div class="card mt-4 mb-1 mx-1 w-90" style="background: Gold;">
                     <div  class="card-header h4">DiNAME Mobilité Géographique</div>
-                    <div class="card-body d-flex justify-content-between" style="background: #DAF7A6">
+                    <div class="card-body d-flex justify-content-between" style="background: LemonChiffon">
                         <div class="h5 col-lg-6">
                             AMG-MGES-LOYER
                         </div>
@@ -185,9 +229,9 @@
         </div>
         <div class="card-group">
             <div class="col-lg-12 col-sm-12">
-                <div class="card mt-4 mb-1 mx-1 w-90" style="background: #FAD7A0;">
+                <div class="card mt-4 mb-1 mx-1 w-90" style="background: LimeGreen;">
                     <div  class="card-header h4">DiNAME Mobilité Fonctionnelle</div>
-                    <div class="card-body d-flex justify-content-between" style="background: #DAF7A6">
+                    <div class="card-body d-flex justify-content-between" style="background: PaleGreen">
                         <div class="h5 col-lg-6">
                             MGEE
                         </div>
@@ -367,16 +411,38 @@
                 <h1 class="modal-title fs-5 modal-dialog-scrollable" id="ModalLabelAMG">AMG Accompagnement de la Mobilité Géographique</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">L'indemnisation de la mobilité géographique est composé de 2 partie :
+            <div class="modal-body">L'indemnisation de la mobilité géographique est composé de 2 parties :
                 <ul>
                     <li>Une prime de 5 mois de salaire (Plancher NR 130 ech 4, Plafond NR 280 ech 7)</li>
                     <li>Une compensation de l'écart de loyer.</li>
                 </ul>
-                <p>Si vous êtes agent de GDP et avez un loyer écrété à 15% du salaire, des dispositions particulières s'appliquent.</p>
+                <p>Si vous êtes agent de GDP et avez un loyer écrété à 15% du salaire, des dispositions particulières
+                    s'appliquent comme la prise en compte de votre loyer effectif les 2 premières années</p>
                 À chaque site correspond un loyer de base au m2. Une indemnisation de l'écart
                 de loyer est calculée sur 5 ans dans le cas où le loyer du site de destination est supérieur à
                 celui du site d'origine.</BR>
-                La surface retenue pour l'indemnisation est fonction de la composition familiale.
+                La surface retenue pour l'indemnisation est fonction de votre composition familiale.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MR_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabelMR">MR MGRa MGRb en cas de Réorganisation </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Dans le cas d'une réorganisation, des mesures spécifiques s'ajoutent aux précédentes.
+                <ul>
+                    <li>Si votre emploi disparait et que vous ne déménagez pas pour votre futur emploi,
+                    vous bénéficiez d'une indemnité d'un mois de salaire. Dans ce cas cochez la case "MR"</li>
+                </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -414,6 +480,10 @@
       const agentGDP = document.getElementById('id_agentGDP').checked
       const loyerPasgdp = document.getElementById('pas_gdp')
 
+      let eligible_MR = document.querySelector('#id_eligible_MR').checked
+      let eligible_MGRa = document.querySelector('#id_eligible_MGRa').checked
+      let eligible_MGRb = document.querySelector('#id_eligible_MGRb').checked
+
 
       form.append("Nr", Nr);
       form.append("maj_res", maj_res);
@@ -426,6 +496,9 @@
       form.append("site_origine", site_origine);
       form.append("site_destination", site_destination);
       form.append("agentGDP", agentGDP);
+      form.append("eligible_MR", eligible_MR);
+      form.append("eligible_MGRa", eligible_MGRa);
+      form.append("eligible_MGRb", eligible_MGRb);
 
 
 
@@ -440,6 +513,9 @@
       console.log(form.get("site_origine"))
       console.log(form.get("site_destination"))
       console.log(form.get("agentGDP"))
+      console.log("MR", form.get("eligible_MR"))
+      console.log("MGRa", form.get("eligible_MGRa"))
+      console.log("MGRb", form.get("eligible_MGRb"))
 
       let request = new Request("{% url 'recalcul' %}", {method: "POST",
                                                     body: form,
@@ -509,7 +585,31 @@
     document.querySelector('#id_agentGDP').addEventListener('change', event => {recalcul()});
     document.addEventListener('DOMContentLoaded', recalcul())
 
+    document.querySelector('#id_eligible_MR').addEventListener('change', event => {
+    if(document.querySelector('#id_eligible_MR').checked == true){
+        if(document.querySelector('#id_eligible_MGRa').checked == true){
+            document.querySelector('#id_eligible_MGRa').checked = false};
+        if(document.querySelector('#id_eligible_MGRb').checked == true){
+            document.querySelector('#id_eligible_MGRb').checked = false};
+        }
+    recalcul();
+    })
 
+    document.querySelector('#id_eligible_MGRa').addEventListener('change', event => {
+    if(document.querySelector('#id_eligible_MGRa').checked == true){
+        if(document.querySelector('#id_eligible_MR').checked == true){
+            document.querySelector('#id_eligible_MR').checked = false};
+        }
+    recalcul();
+    })
+
+    document.querySelector('#id_eligible_MGRb').addEventListener('change', event => {
+    if(document.querySelector('#id_eligible_MGRb').checked == true){
+        if(document.querySelector('#id_eligible_MR').checked == true){
+            document.querySelector('#id_eligible_MR').checked = false};
+        }
+    recalcul();
+    })
 
 </script>
 {% endblock content %}
