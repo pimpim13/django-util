@@ -73,10 +73,9 @@ def diname(request):
             base_diname = min(max(plancher, salaire1), plafond)
             prime_amg = base_diname * 5 * form.cleaned_data['eligible_AMG']
 
-            if form.cleaned_data['eligible_AMG']:
-                if form.cleaned_data['site_destination'] == form.cleaned_data['site_origine']:
-                    messages.error(request, "Les sites d'origine et de destination doivent être differents")
-                    return redirect('diname')
+            if form.cleaned_data['eligible_AMG'] and form.cleaned_data['site_destination'] == form.cleaned_data['site_origine']:
+                messages.error(request, "Les sites d'origine et de destination doivent être differents")
+                return redirect('diname')
 
             attractivite = Site.objects.get(localisation=form.cleaned_data['site_destination']).attractivite.couleur
             moisMGES = Site.objects.get(localisation=form.cleaned_data['site_destination']).attractivite.mois
@@ -99,25 +98,25 @@ def diname(request):
             total_general = min(total_diname, 100000) + ind_art30
 
             context['form'] = form
-            context["salaire_mensuel"] = f"{salaire1:9.2f}"
-            context['ind_art30'] = f"{ind_art30:9.2f}"
-            context['surface'] = surface
-            context["loyer_origine"] = f"{loyer_origine:9.2f}"
-            context["loyer_destination"] = f"{loyer_destination:9.2f}"
-            context["ecart_loyer"] = f"{ecart_loyer:9.2f}"
-            context['plancher'] = f"{plancher:9.2f}"
-            context['plafond'] = f"{plafond:9.2f}"
-            context['base_diname'] =f"{base_diname:9.2f}"
-            context['indemnisation_loyer'] = f"{indemnisation_ecart_loyer:9.2f}"
-            context['prime_amg'] = f"{prime_amg:9.2f}"
-            context['attractivite'] = attractivite
-            context['moisMGES'] = moisMGES
-            context['lbl_MGES'] = lbl_MGES
-            context['prime_MGES'] = f"{prime_MGES:9.2f}"
-            context['prime_MGEE'] = f"{prime_MGEE:9.2f}"
-            context['total_diname'] = f"{total_diname:9.2f}"
-            context['total_diname_an'] = f"{total_diname_an:9.2f}"
-            context['total_general'] = f"{total_general:9.2f}"
+            # context["salaire_mensuel"] = f"{salaire1:9.2f}"
+            # context['ind_art30'] = f"{ind_art30:9.2f}"
+            # context['surface'] = surface
+            # context["loyer_origine"] = f"{loyer_origine:9.2f}"
+            # context["loyer_destination"] = f"{loyer_destination:9.2f}"
+            # context["ecart_loyer"] = f"{ecart_loyer:9.2f}"
+            # context['plancher'] = f"{plancher:9.2f}"
+            # context['plafond'] = f"{plafond:9.2f}"
+            # context['base_diname'] =f"{base_diname:9.2f}"
+            # context['indemnisation_loyer'] = f"{indemnisation_ecart_loyer:9.2f}"
+            # context['prime_amg'] = f"{prime_amg:9.2f}"
+            # context['attractivite'] = attractivite
+            # context['moisMGES'] = moisMGES
+            # context['lbl_MGES'] = lbl_MGES
+            # context['prime_MGES'] = f"{prime_MGES:9.2f}"
+            # context['prime_MGEE'] = f"{prime_MGEE:9.2f}"
+            # context['total_diname'] = f"{total_diname:9.2f}"
+            # context['total_diname_an'] = f"{total_diname_an:9.2f}"
+            # context['total_general'] = f"{total_general:9.2f}"
 
     context["form"] = form
 
@@ -127,8 +126,6 @@ def diname(request):
 def recalcul(request):
 
     context = {}
-
-    print(request)
 
     echelon = float(request.POST.get('echelon', 4.0))
     maj_res = float(request.POST.get('maj_res', 1.24))
@@ -161,6 +158,13 @@ def recalcul(request):
                                            tps_trav=1,
                                            snb=snb1), 2)
 
+    limite50 = round(calcul_salaire_mensuel(coeff=coeff_nr1,
+                                            ech=echelon,
+                                            maj_res=maj_res,
+                                            tps_trav=tps_trav,
+                                            snb=snb1) * 13/2, 2)
+    print(limite50)
+
     if request.POST.get('art30') == 'true':
         art30 = True
     else:
@@ -185,6 +189,20 @@ def recalcul(request):
         MR = True
     else:
         MR = False
+
+    if request.POST.get('eligible_MGRa') == 'true':
+        MGRa = True
+    else:
+        MGRa = False
+
+    if request.POST.get('eligible_MGRb') == 'true':
+        MGRb = True
+    else:
+        MGRb = False
+
+    mois_MGRa = int(request.POST.get("mois_MGRa")) * MGRa
+    mois_MGRb = int(request.POST.get("mois_MGRb")) * MGRb
+    mois_MR = 1 * MR
 
     ind_art30 = round(salaire1 * 2, 2) * art30
     surface = request.POST.get('famille', 77)
@@ -212,9 +230,13 @@ def recalcul(request):
     lbl_MGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.lbl_MGES
 
     prime_MGES = round(base_diname * moisMGES, 2) * eligible_AMG
-    prime_MGES_ = f"{prime_MGES:9.2f}"
+    # prime_MGES_ = f"{prime_MGES:9.2f}"
     context['mois_MGEE'] = 0
     prime_MGEE = 0
+
+    prime_MR = round(mois_MR * base_diname, 2) * MR
+    prime_MGRa = round(mois_MGRa * base_diname, 2) * MGRa
+    prime_MGRb = round(mois_MGRb * base_diname, 2) * MGRb
 
     if eligible_MGEE:
         if art30:
@@ -224,11 +246,13 @@ def recalcul(request):
             prime_MGEE = base_diname
             context['mois_MGEE'] = 1
 
-    total_diname = round(min(prime_amg + indemnisation_ecart_loyer + prime_MGES + prime_MGEE, 100000), 2)
-    total_diname_mobilite_geo = round(prime_amg + indemnisation_ecart_loyer + prime_MGES, 2)
+    prime_reorg = prime_MR + prime_MGRa + prime_MGRb
+
+    total_diname = round(min(prime_amg + prime_MGES + indemnisation_ecart_loyer, 100000) + prime_MGEE + prime_reorg, 2)
+    total_diname_mobilite_geo = round(min(prime_amg + indemnisation_ecart_loyer + prime_MGES, 100000), 2)
     total_diname_mobilite_fonc = round(prime_MGEE, 2)
-    total_diname_avant_ecretage = round((prime_amg + indemnisation_ecart_loyer + prime_MGES + prime_MGEE), 2)
-    total_diname_an = round(total_diname / 5, 2)
+    total_diname_avant_ecretage = round((prime_amg + indemnisation_ecart_loyer + prime_MGES + prime_MGEE + prime_reorg), 2)
+    total_diname_an = round(min(total_diname / 5, limite50), 2)
 
     # total_general = min(total_diname, 100000) + ind_art30
     total_general = total_diname + ind_art30
@@ -257,6 +281,13 @@ def recalcul(request):
     context['lbl_MGES'] = lbl_MGES
     context['prime_MGES'] = f"{prime_MGES:9.2f}"
     context['prime_MGEE'] = f"{prime_MGEE:9.2f}"
+    context['mois_MR'] = mois_MR
+    context['mois_MGRa'] = mois_MGRa
+    context['mois_MGRb'] = mois_MGRb
+    context['prime_MR'] = f"{prime_MR:9.2f}"
+    context['prime_MGRa'] = f"{prime_MGRa:9.2f}"
+    context['prime_MGRb'] = f"{prime_MGRb:9.2f}"
+    context['prime_reorg'] = f"{prime_reorg:9.2f}"
     context['total_diname'] = f"{total_diname:9.2f}"
     context['total_diname_mobilite_geo'] = f"{total_diname_mobilite_geo:9.2f}"
     context['total_diname_mobilite_fonc'] = f"{total_diname_mobilite_fonc:9.2f}"

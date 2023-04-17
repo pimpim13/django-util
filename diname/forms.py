@@ -36,10 +36,12 @@ class DinameForm(forms.Form):
     eligible_MR = forms.BooleanField(label="Eligible MR", required=False, initial=False)
     eligible_MGRa = forms.BooleanField(label="Eligible MGRa", required=False, initial=False)
     eligible_MGRb = forms.BooleanField(label="Eligible MGRb", required=False, initial=False)
+    mois_MGRa = forms.ChoiceField(label="Mois de salaire :", choices=[(1, 1), (2, 2), (3, 3)], initial=(1,  1))
+    mois_MGRb = forms.ChoiceField(label="Mois de salaire :", choices=[(2, 2), (3, 3), (4, 4), (5, 5)], initial=(5, 5))
 
     # etablissement = forms.ChoiceField(label='Etablissement', choices=ETABLISSEMENT_CHOICE, required=True)
     emploi = forms.ChoiceField(label="Emplois encouragés", choices=EMPLOI_CHOICE, required=False)
 
-    eligible_MGEE = forms.BooleanField(label='Eligible MGEE', required=False, initial=False)
+    eligible_MGEE = forms.BooleanField(label='Eligible MEE', required=False, initial=False)
 
 

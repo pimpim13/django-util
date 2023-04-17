@@ -52,7 +52,12 @@
                     <div class="card-group">
                         <div class="col-lg-12 col-sm-12">
                             <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                                <div  class="card-header h4">Article 30</div>
+                                <div  class="card-header h4">
+                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#Art30_Modal">
+                                        Article 30
+                                    </button>
+                                    <span style="font-size:50%"> <-- En savoir plus</span>
+                                </div>
                                 <div class="card-body d-flex">
                                     <div class="col-lg-6">
                                         {{ form.art30|as_crispy_field }}
@@ -125,7 +130,7 @@
                                 <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
                                     <div id="js_color_MGEE" class="card-header h4">
                                         <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGEE_Modal">
-                                            MGEE
+                                            MEE
                                         </button>
                                         <span style="font-size:50%"> <-- En savoir plus</span>
                                     </div>
@@ -140,50 +145,54 @@
                             </div>
                         </div>
                     </div><!-- Fin card group MGES MGEE -->
-            <div class="card-group mt-3">
-                <div class="col-lg-4 col-md-12">
-                    <div class="card h-100 text-white bg-success mt-3 mx-1 w-90" >
-                        <div  class="card-header h4">
-                            <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                    <div class="card-group mt-3">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card h-100 text-white bg-success mt-3 mx-1 w-90" >
+                                <div  class="card-header h4">
+                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
                                         MR
-                            </button>
-                            <span style="font-size:50%"> <-- En savoir plus</span>
+                                    </button>
+                                    <span style="font-size:50%"> <-- En savoir plus</span>
+                                </div>
+                                <div class="card-body">
+                                    {{ form.eligible_MR|as_crispy_field }}
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            {{ form.eligible_MR|as_crispy_field }}
-                        </div>
-                        <div class="card-footer"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="card h-100 bg-warning mt-3 mx-1 w-90" >
-                        <div  class="card-header h4">
-                            <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card h-100 bg-warning mt-3 mx-1 w-90" >
+                                <div  class="card-header h4">
+                                    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MGRa_Modal">
                                         MGRa
-                            </button>
-                            <span style="font-size:50%"> <-- Plus</span>
+                                    </button>
+                                    <span style="font-size:50%"> <-- Plus</span>
+                                </div>
+                                <div class="card-body">
+                                    {{ form.eligible_MGRa|as_crispy_field }}
+                                    </br>
+                                    {{ form.mois_MGRa|as_crispy_field }}
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            {{ form.eligible_MGRa|as_crispy_field }}
-                        </div>
-                        <div class="card-footer"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="card h-100 text-dark bg-info mt-3 mx-1 w-90" >
-                        <div  class="card-header h4">
-                            <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card h-100 text-dark bg-info mt-3 mx-1 w-90" >
+                                <div  class="card-header h4">
+                                    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MGRb_Modal">
                                         MGRb
-                            </button>
-                            <span style="font-size:50%"> <-- Plus</span>
+                                    </button>
+                                    <span style="font-size:50%"> <-- Plus</span>
+                                </div>
+                                <div class="card-body">
+                                    {{ form.eligible_MGRb|as_crispy_field }}
+                                    </br>
+                                    {{ form.mois_MGRb|as_crispy_field }}
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            {{ form.eligible_MGRb|as_crispy_field }}
-                        </div>
-                        <div class="card-footer"></div>
                     </div>
-                </div>
-            </div>
                 </div>
                 <div class="container-fluid">
                     <div class="d-flex justify-content-end mt-4 invisible" >
@@ -196,6 +205,7 @@
 
     </div>
     <div class="col-sm-6 " id="scroll">
+
         <div class="card-group">
             <div class="col-lg-12 col-sm-12">
                 <div class="card mt-4 mb-1 mx-1 w-90" style="background: DeepSkyBlue;">
@@ -212,37 +222,72 @@
                 </div>
             </div>
         </div>
-        <div class="card-group">
-            <div class="col-lg-12 col-sm-12">
-                <div class="card mt-4 mb-1 mx-1 w-90" style="background: Gold;">
-                    <div  class="card-header h4">DiNAME Mobilité Géographique</div>
-                    <div class="card-body d-flex justify-content-between" style="background: LemonChiffon">
-                        <div class="h5 col-lg-6">
-                            AMG-MGES-LOYER
-                        </div>
-                        <div id="js_diname_geo" class="h5 col-lg-6 text-end">
-                            {{ total_diname_mobilite_geo }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-group">
-            <div class="col-lg-12 col-sm-12">
-                <div class="card mt-4 mb-1 mx-1 w-90" style="background: LimeGreen;">
-                    <div  class="card-header h4">DiNAME Mobilité Fonctionnelle</div>
-                    <div class="card-body d-flex justify-content-between" style="background: PaleGreen">
-                        <div class="h5 col-lg-6">
-                            MGEE
-                        </div>
-                        <div id="js_diname_fonc" class="h5 col-lg-6 text-end">
-                            {{ total_diname_mobilite_fonc }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="card bg-secondary my-3">
+            <div class="card-header h4 text-light">DiNAME</div>
 
+            <div class="card-group">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card mt-4 mb-1 mx-1 w-90" style="background: Gold;">
+                        <div  class="card-header h5">Mobilité Géographique</div>
+                        <div class="card-body d-flex justify-content-between" style="background: LemonChiffon">
+                            <div class="h5 col-lg-6">
+                                AMG-MGES
+                            </div>
+                            <div id="js_diname_geo" class="h5 col-lg-6 text-end">
+                                {{ total_diname_mobilite_geo }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card mt-4 mb-1 mx-1 w-90" style="background: LimeGreen;">
+                        <div  class="card-header h5">Mobilité Fonctionnelle</div>
+                        <div class="card-body d-flex justify-content-between" style="background: PaleGreen">
+                            <div class="h5 col-lg-6">
+                                MEE
+                            </div>
+                            <div id="js_diname_fonc" class="h5 col-lg-6 text-end">
+                                {{ total_diname_mobilite_fonc }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card mt-4 mb-1 mx-1 w-90" style="background: Coral;">
+                        <div  class="card-header h5">Réorganisation</div>
+                        <div class="card-body d-flex justify-content-between" style="background: PeachPuff">
+                            <div class="h5 col-lg-6">
+                                MR-MRGa-MGRb
+                            </div>
+                            <div id="js_diname_reorg" class="h5 col-lg-6 text-end">
+                                {{ prime_reorg }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="card bg-secondary my-3">
+            <div class="card-header h4 text-light">Résultats :</div>
+            <div class="card-group">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card mt-4 mb-1 mx-1 w-90" style="background: Violet;">
+                        <div  class="card-header h5">Total général</div>
+                        <div class="card-body d-flex justify-content-between" style="background: Plum">
+                            <div class="h5 col-lg-6">
+                                DiNAME + Art 30
+                            </div>
+                            <div id="js_total" class="h5 col-lg-6 text-end">
+                                {{ total_general }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="accordion mt-3" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -252,126 +297,151 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                            <table class="table table-striped table-hover table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th class="text-center" scope="col">Nb Mois</th>
-                <th scope="col" class="text-end">Base</th>
-                <th scope="col" class="text-end">Total</th>
-            </tr>
-            </thead>
-            <thead>
-            <tr>
-                <th scope="col">Statut</th>
-                <th class="text-center" scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td scope="row">Article 30</td>
-                <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
-                <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
-                <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
-            </tr>
-            <thead>
-            <tr>
-                <th scope="col">DiNaMe</th>
-                <th class="text-center" scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tr>
-                <td scope="row">AMG</td>
-                <td class="text-center">5</td>
-                <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
-                <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
-            </tr>
-            <tr>
-                <td scope="row">MGES</td>
-                <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
-                <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
-                <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
-            </tr>
-            <tr>
-                <td scope="row">MGEE</td>
-                <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
-                <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
-                <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
-            </tr>
-            <thead>
-            <tr>
-                <th scope="col">Surface</th>
-                <th class="text-center" scope="col">m2</th>
-                <th scope="col" class="text-end">Ecart/m2</th>
-                <th scope="col" class="text-end">Total/5ans</th>
-            </tr>
-            </thead>
-            <tr>
-                <td scope="row">Ecart Loyer</td>
-                <td class="text-center" id="js_surface2">{{ surface }}</td>
-                <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
-                <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
-            </tr>
-            <thead>
-            <tr>
-                <th scope="col">Totaux</th>
-                <th class="text-center" scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td scope="col">Total Statutaire</td>
-                <td class="" scope="col">Art 30</td>
-                <td scope="col"></td>
-                <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
-            </tr>
-            <tr>
-                <td scope="col">Total DiNaMe avant écrêtage</td>
-                <td class="" scope="col">AMG MGES MGEE LOYER</td>
-                <td scope="col"></td>
-                <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
-            </tr>
-            <tr>
-                <td scope="col">Total DiNaMe</td>
-                <td class="" scope="col">AMG MGES MGEE LOYER</td>
-                <td scope="col"> (écrêté à 100 000 €)</td>
-                <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
-            </tr>
-            <tr>
-                <td scope="col">Total Général</td>
-                <td class="" scope="col">Art30 + DiNaMe</td>
-                <td scope="col"></td>
-                <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
-            </tr>
-            <tr>
-                <td scope="col">Total DiNaMe / an </td>
-                <td class="" scope="col">pendant 5 ans en janvier</td>
-                <td scope="col">max 20 k€</td>
-                <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
-            </tr>
-            </tbody>
+                        <table class="table table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th class="text-center" scope="col">Nb Mois</th>
+                                <th scope="col" class="text-end">Base</th>
+                                <th scope="col" class="text-end">Total</th>
+                            </tr>
+                            </thead>
+                            <!--            <thead>-->
+                            <!--            <tr>-->
+                            <!--                <th scope="col">Statut</th>-->
+                            <!--                <th class="text-center" scope="col"></th>-->
+                            <!--                <th scope="col"></th>-->
+                            <!--                <th scope="col"></th>-->
+                            <!--            </tr>-->
+                            <!--            </thead>-->
+                            <tbody>
+                            <tr style="background: LightSkyBlue">
+                                <td scope="row">Article 30</td>
+                                <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
+                                <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
+                                <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col">DiNaMe</th>
+                                <th class="text-center" scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">AMG hors écart loyer</td>
+                                <td class="text-center">5</td>
+                                <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
+                            </tr>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">MGES</td>
+                                <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
+                                <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
+                            </tr>
+                            <tr style="background: PaleGreen">
+                                <td scope="row">MEE</td>
+                                <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
+                                <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
+                            </tr>
+                            <tr style="background: PeachPuff">
+                                <td scope="row">MR</td>
+                                <td class="text-center" id="js_mois_MR">{{ mois_MR }}</td>
+                                <td class="text-end" id="js_base_MR">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MR">{{ prime_MR }}</td>
+                            </tr>
+                            <tr style="background: PeachPuff">
+                                <td scope="row">MGRa</td>
+                                <td class="text-center" id="js_mois_MGRa">{{ mois_MGRa }}</td>
+                                <td class="text-end" id="js_base_MGRa">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGRa">{{ prime_MGRa }}</td>
+                            </tr>
+                            <tr style="background: PeachPuff">
+                                <td scope="row">MGRb</td>
+                                <td class="text-center" id="js_mois_MGRb">{{ mois_MGRb }}</td>
+                                <td class="text-end" id="js_base_MGRb">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGRb">{{ prime_MGRb }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col">Surface</th>
+                                <th class="text-center" scope="col">m2</th>
+                                <th scope="col" class="text-end">Ecart/m2</th>
+                                <th scope="col" class="text-end">Total/5ans</th>
+                            </tr>
+                            </thead>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">Ecart Loyer</td>
+                                <td class="text-center" id="js_surface2">{{ surface }}</td>
+                                <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
+                                <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col">Totaux</th>
+                                <th class="text-center" scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td scope="col">Total Statutaire</td>
+                                <td class="" scope="col">Art 30</td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"></td>
+                                <td class="" scope="col"></td>
+                                <td scope="col"></td>
+                                <td scope="col"></td>
+                            </tr>
+                            <tr>
+                                <td scope="col">Total DiNaMe avant écrêtage</td>
+                                <td class="" scope="col"></td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">Total DiNaMe</td>
+                                <td class="" scope="col">(Avec AMG+MGES écrêtés à 100 k€)</td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">Total Général</td>
+                                <td class="" scope="col">Art30 + DiNaMe</td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td id="id_din1" scope="col">Total DiNaMe / an </td>
+                                <td id="id_din2" class="" scope="col">pendant 5 ans en janvier</td>
+                                <td id="id_din3" scope="col">max 20 k€</td>
+                                <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
+                            </tr>
+                            </tbody>
 
-        </table>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+            </div> <!--end bilan card -->
 
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modals -->
 <div class="modal fade" id="MGEE_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="ModalLabelMGEE">MGEE Mobilité Encouragée vers certains Emplois</h1>
+                <h1 class="modal-title fs-5" id="ModalLabelMGEE">MEE Mobilité Encouragée vers certains Emplois</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -434,15 +504,91 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="ModalLabelMR">MR MGRa MGRb en cas de Réorganisation </h1>
+                <h1 class="modal-title fs-5" id="ModalLabelMR">MR en cas de Réorganisation </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Dans le cas d'une réorganisation, des mesures spécifiques s'ajoutent aux précédentes.
                 <ul>
-                    <li>Si votre emploi disparait et que vous ne déménagez pas pour votre futur emploi,
-                    vous bénéficiez d'une indemnité d'un mois de salaire. Dans ce cas cochez la case "MR"</li>
+                    <li>Si votre activité disparait et que vous ne déménagez pas pour votre futur emploi,
+                        vous bénéficiez d'une indemnité d'un mois de salaire. Dans ce cas cochez la case "MR"</li>
                 </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MGRa_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabelMGRa">MGRa en cas de Réorganisation </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Dans le cas d'une réorganisation, des mesures spécifiques s'ajoutent aux précédentes.
+                <ul>
+                    <li>Si votre activité disparait et que vous déménagez pour votre futur emploi,
+                        vous bénéficiez d'une indemnité comprise entre 1 et 3 mois de salaire. Dans ce cas cochez la case
+                        "MGRa"</li>
+                    <li>Dans le cadre du projet Impulsion et Vision cette indemnité a été fixée à 1 mois.</li>
+                    <li>En complément vous bénéficiez, des mesures AMG, MGES, de celles de compensation de l'écart
+                        de loyer et de l'article 30</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MGRb_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabelMGRb">MGRb en cas de Réorganisation </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Dans le cas d'une réorganisation, des mesures spécifiques s'ajoutent aux précédentes.
+                <ul>
+                    <li>Si vous gréez un emploi cible dans la nouvelle organisation, vous pouvez bénéficier
+                        d'une indemnité complémentaire comprise entre 2 et 5 mois de salaire.</li>
+                    <li>Si vous gréez un emploi cible secondaire, des dispositions sont aussi possible.</li>
+                    <li>Dans le projet Impulsion et Vision, ces valeurs sont respectivement portées à 5 et 2 mois
+                        de salaire, selon que l'emploi soit cible principale ou secondaire</li>
+                    <li>Dans ce cas les  cases MGRa et MGRb doivent être cochées.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Art30_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalArt30">Article 30 </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Dans le cas d'undéménagement faisant suite à une mutation, la Pers 309 qui traite de l'article 30
+                 prévoit une indemnité de 2 mois de salaire au salarié concerné.
+                Le salaire pris en référence est celui après la mutation. Il n'y a ni plancher, ni plafond appliqué
+                à cette indemnité..
+                Elle est versée au moment de la nomination en une fois.
+                Dans le cas de l'application de DiNAME, le versement de cette indemnité sera augmenté de la partie
+                 DiNAME correspondant au 1er versement :
+                <ul>
+                    <li>La prime MEE en cas de mobilité vers un emploi encouragé (non cumulable avec MGR*)</li>
+                    <li>1/5 des primes MGRa & MGRb dans le cas d'une réorganisation (non cumulable avec MEE)</li>
+                    <li>1/5 de la prime AMG & MGES</li>
+                </ul>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -484,6 +630,9 @@
       let eligible_MGRa = document.querySelector('#id_eligible_MGRa').checked
       let eligible_MGRb = document.querySelector('#id_eligible_MGRb').checked
 
+      const mois_MGRa = document.querySelector("#id_mois_MGRa").value
+      const mois_MGRb = document.querySelector("#id_mois_MGRb").value
+
 
       form.append("Nr", Nr);
       form.append("maj_res", maj_res);
@@ -499,23 +648,27 @@
       form.append("eligible_MR", eligible_MR);
       form.append("eligible_MGRa", eligible_MGRa);
       form.append("eligible_MGRb", eligible_MGRb);
+      form.append("mois_MGRa", mois_MGRa);
+      form.append("mois_MGRb", mois_MGRb);
 
 
 
-      console.log(form.get("Nr"))
-      console.log(form.get("echelon"))
-      console.log(form.get("maj_res"))
-      console.log(form.get("tps_trav"))
-      console.log(form.get("art30"))
-      console.log(form.get("eligible_AMG"))
-      console.log(form.get("eligible_MGEE"))
-      console.log(form.get("famille"))
-      console.log(form.get("site_origine"))
-      console.log(form.get("site_destination"))
-      console.log(form.get("agentGDP"))
-      console.log("MR", form.get("eligible_MR"))
-      console.log("MGRa", form.get("eligible_MGRa"))
-      console.log("MGRb", form.get("eligible_MGRb"))
+      console.log(form.get("Nr"));
+      console.log(form.get("echelon"));
+      console.log(form.get("maj_res"));
+      console.log(form.get("tps_trav"));
+      console.log(form.get("art30"));
+      console.log(form.get("eligible_AMG"));
+      console.log(form.get("eligible_MGEE"));
+      console.log(form.get("famille"));
+      console.log(form.get("site_origine"));
+      console.log(form.get("site_destination"));
+      console.log(form.get("agentGDP"));
+      console.log("MR", form.get("eligible_MR"));
+      console.log("MGRa", form.get("eligible_MGRa"));
+      console.log("MGRb", form.get("eligible_MGRb"));
+      console.log("Mois MGRa", form.get("mois_MGRa"));
+      console.log("Mois MGRb", form.get("mois_MGRb"));
 
       let request = new Request("{% url 'recalcul' %}", {method: "POST",
                                                     body: form,
@@ -549,9 +702,35 @@
             document.querySelector('#js_total_diname_avant_ecretage').innerHTML = context["total_diname_avant_ecretage"];
             document.querySelector('#js_total_diname').innerHTML = context["total_diname"];
             document.querySelector('#js_diname_geo').innerHTML = context["total_diname_mobilite_geo"];
-            document.querySelector('#js_diname_fonc').innerHTML = context["total_diname_mobilite_fonc"];
+            document.querySelector('#js_diname_fonc').innerHTML = context["total_diname_mobilite_fonc"]
+            document.querySelector('#js_diname_reorg').innerHTML = context["prime_reorg"]
+            document.querySelector('#js_mois_MR').innerHTML = context["mois_MR"]
+            document.querySelector('#js_base_MR').innerHTML = context["base_diname"]
+            document.querySelector('#js_prime_MR').innerHTML = context["prime_MR"]
+
+            document.querySelector('#js_mois_MGRa').innerHTML = context["mois_MGRa"]
+            document.querySelector('#js_base_MGRa').innerHTML = context["base_diname"]
+            document.querySelector('#js_prime_MGRa').innerHTML = context["prime_MGRa"]
+
+            document.querySelector('#js_mois_MGRb').innerHTML = context["mois_MGRb"]
+            document.querySelector('#js_base_MGRb').innerHTML = context["base_diname"]
+            document.querySelector('#js_prime_MGRb').innerHTML = context["prime_MGRb"]
+
             document.querySelector('#js_total_general').innerHTML = context["total_general"];
-            document.querySelector('#js_total_diname_an').innerHTML = context["total_diname_an"];
+            document.querySelector('#js_total').innerHTML = context["total_general"];
+
+            if(art30){
+                document.querySelector('#id_din1').innerHTML = "Total DiNAME / an";
+                document.querySelector('#id_din2').innerHTML = "pendant 5 ans en janvier";
+                document.querySelector('#id_din3').innerHTML = "";
+                document.querySelector('#js_total_diname_an').innerHTML = context["total_diname_an"];
+                       }
+             else {
+                document.querySelector('#id_din1').innerHTML = "Total DiNAME";
+                document.querySelector('#id_din2').innerHTML = "1 versement";
+                document.querySelector('#id_din3').innerHTML = "à la date de nomination";
+                document.querySelector('#js_total_diname_an').innerHTML = context["total_general"];
+                        }
             document.querySelector('#js_lbl_MGES').innerHTML = context["lbl_MGES"];
             document.querySelector('#js_moisMGES2').innerHTML = context["moisMGES"];
 
@@ -576,30 +755,59 @@
     document.querySelector('#id_echelon').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_maj_res').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_tps_trav').addEventListener('change', event => {recalcul()});
-    document.querySelector('#id_art30').addEventListener('change', event => {recalcul()});
+
     document.querySelector('#id_eligible_AMG').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_site_origine').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_site_destination').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_famille').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_agentGDP').addEventListener('change', event => {recalcul()});
+    document.querySelector("#id_mois_MGRa").addEventListener('change', event => {recalcul()});
+    document.querySelector("#id_mois_MGRb").addEventListener('change', event => {recalcul()});
     document.addEventListener('DOMContentLoaded', recalcul())
+
+    document.querySelector('#id_art30').addEventListener('change', event => {
+        if(document.querySelector('#id_art30').checked == true){
+            document.querySelector('#id_eligible_AMG').checked = true
+            }
+        else {
+            document.querySelector('#id_eligible_AMG').checked = false
+        }
+        recalcul()});
+
+    document.querySelector('#id_eligible_AMG').addEventListener('change', event => {
+        if(document.querySelector('#id_eligible_AMG').checked == true){
+            document.querySelector('#id_art30').checked = true
+            }
+        else {
+            document.querySelector('#id_art30').checked = false
+        }
+        recalcul()});
 
     document.querySelector('#id_eligible_MR').addEventListener('change', event => {
     if(document.querySelector('#id_eligible_MR').checked == true){
-        if(document.querySelector('#id_eligible_MGRa').checked == true){
-            document.querySelector('#id_eligible_MGRa').checked = false};
-        if(document.querySelector('#id_eligible_MGRb').checked == true){
-            document.querySelector('#id_eligible_MGRb').checked = false};
+            document.querySelector('#id_eligible_MGRa').checked = false;
+            document.querySelector('#id_eligible_MGRb').checked = false;
+            document.querySelector('#id_art30').checked = false;
+            document.querySelector('#id_eligible_AMG').checked = false;
+
         }
     recalcul();
     })
 
     document.querySelector('#id_eligible_MGRa').addEventListener('change', event => {
     if(document.querySelector('#id_eligible_MGRa').checked == true){
+        document.querySelector('#id_art30').checked = true;
+        document.querySelector('#id_eligible_AMG').checked = true;
+
         if(document.querySelector('#id_eligible_MR').checked == true){
             document.querySelector('#id_eligible_MR').checked = false};
         }
+    if(document.querySelector('#id_eligible_MGRa').checked == false){
+        if(document.querySelector('#id_eligible_MGRb').checked == true){
+            document.querySelector('#id_eligible_MGRb').checked = false};
+        }
+
     recalcul();
     })
 
@@ -607,6 +815,9 @@
     if(document.querySelector('#id_eligible_MGRb').checked == true){
         if(document.querySelector('#id_eligible_MR').checked == true){
             document.querySelector('#id_eligible_MR').checked = false};
+
+        if(document.querySelector('#id_eligible_MGRa').checked == false){
+            document.querySelector('#id_eligible_MGRa').checked = true};
         }
     recalcul();
     })
