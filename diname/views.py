@@ -45,6 +45,11 @@ def diname(request):
                                                     maj_res=maj_res,
                                                     tps_trav=tps_trav,
                                                     snb=snb1), 2)
+            salaire_art30 = round(calcul_salaire_mensuel(coeff=coeff_nr1,
+                                                         ech=echelon,
+                                                         maj_res=maj_res,
+                                                         tps_trav=1,
+                                                         snb=snb1), 2)
 
             plancher = round(calcul_salaire_mensuel(coeff=coeff_nr_plancher,
                                                     ech=echelon_plancher,
@@ -57,7 +62,7 @@ def diname(request):
                                                     tps_trav=1,
                                                     snb=snb1), 2)
 
-            ind_art30 = round(salaire1 * 2, 2) * form.cleaned_data['art30']
+            ind_art30 = round(salaire_art30 * 2, 2) * form.cleaned_data['art30']
 
             # if form.cleaned_data['art30'] == False:
             #     print('il passe par là')
@@ -147,6 +152,12 @@ def recalcul(request):
                                             tps_trav=tps_trav,
                                             snb=snb1), 2)
 
+    salaire_art30 = round(calcul_salaire_mensuel(coeff=coeff_nr1,
+                                                 ech=echelon,
+                                                 maj_res=maj_res,
+                                                 tps_trav=1,
+                                                 snb=snb1), 2)
+
     plancher = round(calcul_salaire_mensuel(coeff=coeff_nr_plancher,
                                             ech=echelon_plancher,
                                             maj_res=1.24,
@@ -204,13 +215,13 @@ def recalcul(request):
     mois_MGRb = int(request.POST.get("mois_MGRb")) * MGRb
     mois_MR = 1 * MR
 
-    ind_art30 = round(salaire1 * 2, 2) * art30
+    ind_art30 = round(salaire_art30 * 2, 2) * art30
     surface = request.POST.get('famille', 77)
-    print(request.POST.get('site_origine'))
 
     loyer_origine = Site.objects.get(localisation=request.POST.get('site_origine')).loyer
     loyer_destination = Site.objects.get(localisation=request.POST.get('site_destination')).loyer
     ecart_loyer = round(max((loyer_destination - loyer_origine), 0), 2)
+
     indemnisation_ecart_loyer = round(ecart_loyer * 12 * 5 * float(surface), 2) * eligible_AMG
     base_diname = min(max(plancher, salaire1), plafond)
     prime_amg = base_diname * 5 * eligible_AMG
@@ -224,6 +235,9 @@ def recalcul(request):
         ecart_loyer_gdp = (loyer_destination * float(surface) - loyer_origine_gdp) * 12 * 2
         ecart_loyer_3 = ((loyer_destination - loyer_origine) * float(surface) * 12 * 3)
         indemnisation_ecart_loyer = (ecart_loyer_gdp + ecart_loyer_3) * eligible_AMG
+
+    total_loyer_origine = round(loyer_origine * float(surface), 2)
+    total_loyer_destination = round(loyer_destination * float(surface), 2)
 
     attractivite = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.couleur
     moisMGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.mois
@@ -259,6 +273,7 @@ def recalcul(request):
 
     # context['form'] = form
     context["salaire_mensuel"] = f"{salaire1:9.2f}"
+    context["salaire_art30"] = f"{salaire_art30:9.2f}"
     context["mois_art30"] = 2 * art30
     context["art30"] = art30
     context['ind_art30'] = f"{ind_art30:9.2f}"
@@ -267,6 +282,8 @@ def recalcul(request):
     context["loyer_origine"] = f"{loyer_origine:9.2f}"
     context["loyer_origine_gdp"] = f"{loyer_origine_gdp:9.2f}"
     context["loyer_destination"] = f"{loyer_destination:9.2f}"
+    context["total_loyer_origine"] = f"{total_loyer_origine:9.2f}"
+    context["total_loyer_destination"] = f"{total_loyer_destination:9.2f}"
     context["ecart_loyer_gdp"] = f"{ecart_loyer_gdp:9.2f}"
     context["ecart_loyer_3"] = f"{ecart_loyer_3:9.2f}"
     context["ecart_loyer"] = f"{ecart_loyer:9.2f}"

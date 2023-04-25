@@ -11,7 +11,7 @@ class DinameForm(forms.Form):
     NR_CHOICE = [(a.NR, a.NR) for a in Coeff_New.objects.filter(date_application=date(1900, 1, 1))]
     ECHELON_CHOICE = [(a.coeff, a.echelon) for a in Echelon.objects.filter(echelon__gt=3)]
     MAJ_RES_CHOICE = [(1.24, '24%'), (1.245, '24,5%'), (1.25, '25%')]
-    TPS_TRAV_CHOICE = [(1, '35h ou CFJ'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'), (0.707, "24h")]
+    TPS_TRAV_CHOICE = [(1, '35h ou FJ'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'), (0.707, "24h")]
     ETABLISSEMENT_CHOICE = [('EXPLOITATION', 'EXPLOITATION'),
                             ('FC', 'FC'),
                             ('MAINTENANCE', 'MAINTENANCE'),

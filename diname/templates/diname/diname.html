@@ -25,8 +25,22 @@
     <h3 class="h3 bg-secondary text-light text-center" >Calculette DiNAME</h3>
 </div>
 
+
+
+
 <div class="row mt-4 d-flex justify-content-center">
-    <div class="col-md-4 col-lg-6">
+<!--    <ul class="nav nav-tabs">-->
+<!--<li class="nav-item">-->
+<!--    <a class="nav-link active" aria-current="page" href="#ici">DiNAME</a>-->
+<!--</li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" href="#">Célibat Géographique</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" href="#">Éligibilité</a>-->
+<!--  </li>-->
+<!--</ul>-->
+    <div class="col-md-4 col-lg-6" id="ici">
 
         <form action="#scroll" method="post" class="form">
             {% csrf_token %}
@@ -170,7 +184,7 @@
                                 </div>
                                 <div class="card-body">
                                     {{ form.eligible_MGRa|as_crispy_field }}
-                                    </br>
+                                    <br>
                                     {{ form.mois_MGRa|as_crispy_field }}
                                 </div>
                                 <div class="card-footer"></div>
@@ -203,7 +217,10 @@
         </form>
 
 
-    </div>
+    </div><!--  end of forms-->
+
+
+
     <div class="col-sm-6 " id="scroll">
 
         <div class="card-group">
@@ -270,8 +287,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-            <div class="card bg-secondary my-3">
+      </div>
+
+        <div class="card bg-secondary my-3">
             <div class="card-header h4 text-light">Résultats :</div>
             <div class="card-group">
                 <div class="col-lg-12 col-sm-12">
@@ -288,151 +306,169 @@
                     </div>
                 </div>
             </div>
-        <div class="accordion mt-3" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Détail des résultats
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <table class="table table-hover table-sm">
-                            <thead>
-                            <tr>
-                                <th scope="col">Item</th>
-                                <th class="text-center" scope="col">Nb Mois</th>
-                                <th scope="col" class="text-end">Base</th>
-                                <th scope="col" class="text-end">Total</th>
-                            </tr>
-                            </thead>
-                            <!--            <thead>-->
-                            <!--            <tr>-->
-                            <!--                <th scope="col">Statut</th>-->
-                            <!--                <th class="text-center" scope="col"></th>-->
-                            <!--                <th scope="col"></th>-->
-                            <!--                <th scope="col"></th>-->
-                            <!--            </tr>-->
-                            <!--            </thead>-->
-                            <tbody>
-                            <tr style="background: LightSkyBlue">
-                                <td scope="row">Article 30</td>
-                                <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
-                                <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
-                                <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
-                            </tr>
-                            <thead>
-                            <tr>
-                                <th scope="col">DiNaMe</th>
-                                <th class="text-center" scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                            </thead>
-                            <tr style="background: LemonChiffon">
-                                <td scope="row">AMG hors écart loyer</td>
-                                <td class="text-center">5</td>
-                                <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
-                                <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
-                            </tr>
-                            <tr style="background: LemonChiffon">
-                                <td scope="row">MGES</td>
-                                <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
-                                <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
-                                <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
-                            </tr>
-                            <tr style="background: PaleGreen">
-                                <td scope="row">MEE</td>
-                                <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
-                                <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
-                                <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
-                            </tr>
-                            <tr style="background: PeachPuff">
-                                <td scope="row">MR</td>
-                                <td class="text-center" id="js_mois_MR">{{ mois_MR }}</td>
-                                <td class="text-end" id="js_base_MR">{{ base_diname }}</td>
-                                <td class="text-end" id="js_prime_MR">{{ prime_MR }}</td>
-                            </tr>
-                            <tr style="background: PeachPuff">
-                                <td scope="row">MGRa</td>
-                                <td class="text-center" id="js_mois_MGRa">{{ mois_MGRa }}</td>
-                                <td class="text-end" id="js_base_MGRa">{{ base_diname }}</td>
-                                <td class="text-end" id="js_prime_MGRa">{{ prime_MGRa }}</td>
-                            </tr>
-                            <tr style="background: PeachPuff">
-                                <td scope="row">MGRb</td>
-                                <td class="text-center" id="js_mois_MGRb">{{ mois_MGRb }}</td>
-                                <td class="text-end" id="js_base_MGRb">{{ base_diname }}</td>
-                                <td class="text-end" id="js_prime_MGRb">{{ prime_MGRb }}</td>
-                            </tr>
-                            <thead>
-                            <tr>
-                                <th scope="col">Surface</th>
-                                <th class="text-center" scope="col">m2</th>
-                                <th scope="col" class="text-end">Ecart/m2</th>
-                                <th scope="col" class="text-end">Total/5ans</th>
-                            </tr>
-                            </thead>
-                            <tr style="background: LemonChiffon">
-                                <td scope="row">Ecart Loyer</td>
-                                <td class="text-center" id="js_surface2">{{ surface }}</td>
-                                <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
-                                <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
-                            </tr>
-                            <thead>
-                            <tr>
-                                <th scope="col">Totaux</th>
-                                <th class="text-center" scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td scope="col">Total Statutaire</td>
-                                <td class="" scope="col">Art 30</td>
-                                <td scope="col"></td>
-                                <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col"></td>
-                                <td class="" scope="col"></td>
-                                <td scope="col"></td>
-                                <td scope="col"></td>
-                            </tr>
-                            <tr>
-                                <td scope="col">Total DiNaMe avant écrêtage</td>
-                                <td class="" scope="col"></td>
-                                <td scope="col"></td>
-                                <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">Total DiNaMe</td>
-                                <td class="" scope="col">(Avec AMG+MGES écrêtés à 100 k€)</td>
-                                <td scope="col"></td>
-                                <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">Total Général</td>
-                                <td class="" scope="col">Art30 + DiNaMe</td>
-                                <td scope="col"></td>
-                                <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
-                            </tr>
-                            <tr>
-                                <td id="id_din1" scope="col">Total DiNaMe / an </td>
-                                <td id="id_din2" class="" scope="col">pendant 5 ans en janvier</td>
-                                <td id="id_din3" scope="col">max 20 k€</td>
-                                <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
-                            </tr>
-                            </tbody>
 
-                        </table>
+        </div> <!--end bilan card -->
+        <div class="accordion mt-3 mb-3" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Détail des résultats
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th class="text-center" scope="col">Nb Mois</th>
+                                    <th scope="col" class="text-end">Base</th>
+                                    <th scope="col" class="text-end">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="background: LightSkyBlue">
+                                    <td scope="row">Article 30</td>
+                                    <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
+                                    <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
+                                    <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
+                                </tr>
+                                <thead>
+                                <tr>
+                                    <th scope="col">DiNAME</th>
+                                    <th class="text-center" scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tr style="background: LemonChiffon">
+                                    <td scope="row">AMG hors écart loyer</td>
+                                    <td class="text-center">5</td>
+                                    <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
+                                    <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
+                                </tr>
+                                <tr style="background: LemonChiffon">
+                                    <td scope="row">MGES</td>
+                                    <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
+                                    <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
+                                    <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
+                                </tr>
+                                <tr style="background: PaleGreen">
+                                    <td scope="row">MEE</td>
+                                    <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
+                                    <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
+                                    <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
+                                </tr>
+                                <tr style="background: PeachPuff">
+                                    <td scope="row">MR</td>
+                                    <td class="text-center" id="js_mois_MR">{{ mois_MR }}</td>
+                                    <td class="text-end" id="js_base_MR">{{ base_diname }}</td>
+                                    <td class="text-end" id="js_prime_MR">{{ prime_MR }}</td>
+                                </tr>
+                                <tr style="background: PeachPuff">
+                                    <td scope="row">MGRa</td>
+                                    <td class="text-center" id="js_mois_MGRa">{{ mois_MGRa }}</td>
+                                    <td class="text-end" id="js_base_MGRa">{{ base_diname }}</td>
+                                    <td class="text-end" id="js_prime_MGRa">{{ prime_MGRa }}</td>
+                                </tr>
+                                <tr style="background: PeachPuff">
+                                    <td scope="row">MGRb</td>
+                                    <td class="text-center" id="js_mois_MGRb">{{ mois_MGRb }}</td>
+                                    <td class="text-end" id="js_base_MGRb">{{ base_diname }}</td>
+                                    <td class="text-end" id="js_prime_MGRb">{{ prime_MGRb }}</td>
+                                </tr>
+                                <thead>
+                                <tr>
+                                    <th scope="col">Logement</th>
+                                    <th class="text-center" scope="col">Surface</th>
+                                    <th scope="col" class="text-end"></th>
+                                    <th scope="col" class="text-end">Loyer</th>
+                                </tr>
+                                </thead>
+                                <tr style="background: LemonChiffon">
+                                    <td scope="row" id="js_loyer_deux_ans"></td>
+                                    <td class="text-center" id="js_origine_gdp_surface">{{ surface }}</td>
+                                    <td class="text-end" id="js_text_gdp"></td>
+                                    <td class="text-end" id="js_total_loyer_origine_gdp">{{ loyer_origine_gdp }}</td>
+                                </tr>
+                                <tr style="background: LemonChiffon">
+                                    <td scope="row">Loyer origine</td>
+                                    <td class="text-center" id="js_origine_surface">{{ surface }}</td>
+                                    <td class="text-end" id=""></td>
+                                    <td class="text-end" id="js_total_loyer_origine">{{ total_loyer_origine }}</td>
+                                </tr>
+                                <tr style="background: LemonChiffon">
+                                    <td scope="row">Loyer destination</td>
+                                    <td class="text-center" id="js_destination_surface">{{ surface }}</td>
+                                    <td class="text-end" id=""></td>
+                                    <td class="text-end" id="js_total_loyer_destination">{{ total_loyer_destination }}</td>
+                                </tr>
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th class="text-center" scope="col"></th>
+                                    <th scope="col" class="text-end">Ecart/m2</th>
+                                    <th scope="col" class="text-end">Total/5ans</th>
+                                </tr>
+                                </thead>
+                                <tr style="background: LemonChiffon">
+                                    <td scope="row">Ecart Loyer</td>
+                                    <td class="text-center" id="js_surface2">{{ surface }}</td>
+                                    <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
+                                    <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
+                                </tr>
+                                <thead>
+                                <tr>
+                                    <th scope="col">Totaux</th>
+                                    <th class="text-center" scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td scope="col">Total Statutaire</td>
+                                    <td class="" scope="col">Art 30</td>
+                                    <td scope="col"></td>
+                                    <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col"></td>
+                                    <td class="" scope="col"></td>
+                                    <td scope="col"></td>
+                                    <td scope="col"></td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">Total DiNAME avant écrêtage</td>
+                                    <td class="" scope="col"></td>
+                                    <td scope="col"></td>
+                                    <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">Total DiNAME</td>
+                                    <td class="" scope="col">(Avec AMG+MGES écrêtés à 100 k€)</td>
+                                    <td scope="col"></td>
+                                    <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">Total général</td>
+                                    <td class="" scope="col">Art30 + DiNAME</td>
+                                    <td scope="col"></td>
+                                    <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td id="id_din1" scope="col">Total DiNAME / an </td>
+                                    <td id="id_din2" class="" scope="col">pendant 5 ans en janvier</td>
+                                    <td id="id_din3" scope="col">max 20 k€</td>
+                                    <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-            </div> <!--end bilan card -->
-
     </div>
 </div>
 
@@ -464,7 +500,7 @@
             <div class="modal-body">Les sites de Rte sont classés en fonction de leur attractivité
                 en 4 catégories du plus au moins attractif. La prime d'installation dans un de ces sites
                 est de 8, 5 ou 0 mois de salaire pour les sites des moins attractifs aux plus attractifs,
-                ou 7 mois pour un site de la région parisienne. </BR>
+                ou 7 mois pour un site de la région parisienne. <BR>
 
 
             </div>
@@ -486,11 +522,12 @@
                     <li>Une prime de 5 mois de salaire (Plancher NR 130 ech 4, Plafond NR 280 ech 7)</li>
                     <li>Une compensation de l'écart de loyer.</li>
                 </ul>
-                <p>Si vous êtes agent de GDP et avez un loyer écrété à 15% du salaire, des dispositions particulières
-                    s'appliquent comme la prise en compte de votre loyer effectif les 2 premières années</p>
+                <p>Si vous êtes agent de GDP bénéficiant  de la politique logement de Rte (Pers 530), des dispositions
+                particulières s'appliquent. Ainsi, le loyer du site d'origine est fixé forfaitairement à 15% du salaire
+                en lieu et place du loyer "marché" pour les  2 premières années.</p>
                 À chaque site correspond un loyer de base au m2. Une indemnisation de l'écart
                 de loyer est calculée sur 5 ans dans le cas où le loyer du site de destination est supérieur à
-                celui du site d'origine.</BR>
+                celui du site d'origine.<BR>
                 La surface retenue pour l'indemnisation est fonction de votre composition familiale.
             </div>
             <div class="modal-footer">
@@ -576,13 +613,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Dans le cas d'undéménagement faisant suite à une mutation, la Pers 309 qui traite de l'article 30
-                 prévoit une indemnité de 2 mois de salaire au salarié concerné.
+                Dans le cas d'un déménagement faisant suite à une mutation, la Pers 309 qui traite de l'article 30
+                prévoit une indemnité de 2 mois de salaire (à temps plein) au salarié concerné.
                 Le salaire pris en référence est celui après la mutation. Il n'y a ni plancher, ni plafond appliqué
                 à cette indemnité..
                 Elle est versée au moment de la nomination en une fois.
                 Dans le cas de l'application de DiNAME, le versement de cette indemnité sera augmenté de la partie
-                 DiNAME correspondant au 1er versement :
+                DiNAME correspondant au 1er versement :
                 <ul>
                     <li>La prime MEE en cas de mobilité vers un emploi encouragé (non cumulable avec MGR*)</li>
                     <li>1/5 des primes MGRa & MGRb dans le cas d'une réorganisation (non cumulable avec MEE)</li>
@@ -663,7 +700,7 @@
       console.log(form.get("famille"));
       console.log(form.get("site_origine"));
       console.log(form.get("site_destination"));
-      console.log(form.get("agentGDP"));
+      console.log("agent GdP", form.get("agentGDP"));
       console.log("MR", form.get("eligible_MR"));
       console.log("MGRa", form.get("eligible_MGRa"));
       console.log("MGRb", form.get("eligible_MGRb"));
@@ -677,7 +714,7 @@
       fetch(request)
         .then(response => response.json())
         .then(context => {
-            document.querySelector('#js_salaire_mensuel').innerHTML = context["salaire_mensuel"];
+            document.querySelector('#js_salaire_mensuel').innerHTML = context["salaire_art30"];
             document.querySelector('#js_mois_art30').innerHTML = context["mois_art30"];
             document.querySelector('#js_ind_art30').innerHTML = context["ind_art30"];
             document.querySelector('#js_art30').innerHTML = context["ind_art30"];
@@ -697,6 +734,8 @@
 
             document.querySelector('#js_indemnisation_loyer').innerHTML = context["indemnisation_loyer"];
             document.querySelector('#js_indemnisation_loyer2').innerHTML = context["indemnisation_loyer"];
+            document.querySelector('#js_total_loyer_origine').innerHTML = context["total_loyer_origine"];
+            document.querySelector('#js_total_loyer_destination').innerHTML = context["total_loyer_destination"];
 
             document.querySelector('#js_tot_art30').innerHTML = context["ind_art30"];
             document.querySelector('#js_total_diname_avant_ecretage').innerHTML = context["total_diname_avant_ecretage"];
@@ -719,6 +758,21 @@
             document.querySelector('#js_total_general').innerHTML = context["total_general"];
             document.querySelector('#js_total').innerHTML = context["total_general"];
 
+            console.log('tagName', document.querySelector('#id_din1').tagName)
+            console.log('classList', document.querySelector('#id_din1').classList)
+
+            if(agentGDP){
+                document.querySelector('#js_loyer_deux_ans').innerHTML = "Loyer origine GDP (2 ans)";
+                document.querySelector('#js_origine_gdp_surface').innerHTML = context["surface"];
+                document.querySelector('#js_total_loyer_origine_gdp').innerHTML = context["loyer_origine_gdp"];
+                }
+            else{
+                document.querySelector('#js_loyer_deux_ans').innerHTML = "-------";
+                document.querySelector('#js_origine_gdp_surface').innerHTML = "-------";
+                document.querySelector('#js_total_loyer_origine_gdp').innerHTML = "-------";
+                }
+
+
             if(art30){
                 document.querySelector('#id_din1').innerHTML = "Total DiNAME / an";
                 document.querySelector('#id_din2').innerHTML = "pendant 5 ans en janvier";
@@ -736,6 +790,8 @@
 
             document.querySelector('#js_surface').innerHTML = context["surface"];
             document.querySelector('#js_surface2').innerHTML = context["surface"];
+            document.querySelector('#js_origine_surface').innerHTML = context["surface"];
+            document.querySelector('#js_destination_surface').innerHTML = context["surface"];
 
             document.querySelector('#js_color').className = "card-header h4 " + context["attractivite"]
 
