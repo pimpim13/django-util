@@ -196,6 +196,11 @@ def recalcul(request):
     else:
         agentGDP = False
 
+    if request.POST.get('GDP_loge') == 'true':
+        GDP_loge = True
+    else:
+        GDP_loge = False
+
     if request.POST.get('eligible_MR') == 'true':
         MR = True
     else:
@@ -219,8 +224,8 @@ def recalcul(request):
     surface = request.POST.get('famille', 77)
 
     loyer_origine = Site.objects.get(localisation=request.POST.get('site_origine')).loyer
-    loyer_destination = Site.objects.get(localisation=request.POST.get('site_destination')).loyer
-    ecart_loyer = round(max((loyer_destination - loyer_origine), 0), 2)
+    loyer_destination = Site.objects.get(localisation=request.POST.get('site_destination')).loyer * int(not GDP_loge)
+    ecart_loyer = round(max((loyer_destination - loyer_origine), 0), 2) 
 
     indemnisation_ecart_loyer = round(ecart_loyer * 12 * 5 * float(surface), 2) * eligible_AMG
     base_diname = min(max(plancher, salaire1), plafond)
@@ -233,17 +238,20 @@ def recalcul(request):
     if agentGDP:
         loyer_origine_gdp = round(min(salaire1 * 0.15, loyer_origine * float(surface)), 2)
         ecart_loyer_gdp = (loyer_destination * float(surface) - loyer_origine_gdp) * 12 * 2
-        ecart_loyer_3 = ((loyer_destination - loyer_origine) * float(surface) * 12 * 3)
-        indemnisation_ecart_loyer = (ecart_loyer_gdp + ecart_loyer_3) * eligible_AMG
+        ecart_loyer_3 = max(((loyer_destination - loyer_origine) * float(surface) * 12 * 3), 0)
+        indemnisation_ecart_loyer = (max(ecart_loyer_gdp, 0) + max(ecart_loyer_3, 0)) * eligible_AMG
 
     total_loyer_origine = round(loyer_origine * float(surface), 2)
     total_loyer_destination = round(loyer_destination * float(surface), 2)
 
     attractivite = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.couleur
-    moisMGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.mois
+    moisMGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.mois * int(not GDP_loge)
     lbl_MGES = Site.objects.get(localisation=request.POST.get('site_destination')).attractivite.lbl_MGES
 
-    prime_MGES = round(base_diname * moisMGES, 2) * eligible_AMG
+    if GDP_loge:
+        prime_MGES = float(0)
+    else:
+        prime_MGES = round(base_diname * moisMGES, 2) * eligible_AMG
     # prime_MGES_ = f"{prime_MGES:9.2f}"
     context['mois_MGEE'] = 0
     prime_MGEE = 0
@@ -279,6 +287,7 @@ def recalcul(request):
     context['ind_art30'] = f"{ind_art30:9.2f}"
     context['surface'] = surface
     context['agentGDP'] = agentGDP
+    context['GDP_loge'] = GDP_loge
     context["loyer_origine"] = f"{loyer_origine:9.2f}"
     context["loyer_origine_gdp"] = f"{loyer_origine_gdp:9.2f}"
     context["loyer_destination"] = f"{loyer_destination:9.2f}"
@@ -313,3 +322,4 @@ def recalcul(request):
     context['total_diname_avant_ecretage'] = f"{total_diname_avant_ecretage:9.2f}"
 
     return JsonResponse(context)
+

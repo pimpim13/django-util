@@ -29,17 +29,7 @@
 
 
 <div class="row mt-4 d-flex justify-content-center">
-<!--    <ul class="nav nav-tabs">-->
-<!--<li class="nav-item">-->
-<!--    <a class="nav-link active" aria-current="page" href="#ici">DiNAME</a>-->
-<!--</li>-->
-<!--  <li class="nav-item">-->
-<!--    <a class="nav-link" href="#">Célibat Géographique</a>-->
-<!--  </li>-->
-<!--  <li class="nav-item">-->
-<!--    <a class="nav-link" href="#">Éligibilité</a>-->
-<!--  </li>-->
-<!--</ul>-->
+
     <div class="col-md-4 col-lg-6" id="ici">
 
         <form action="#scroll" method="post" class="form">
@@ -65,9 +55,9 @@
                     </div>
                     <div class="card-group">
                         <div class="col-lg-12 col-sm-12">
-                            <div class="card text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                                <div  class="card-header h4">
-                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#Art30_Modal">
+                            <div class="card text-light mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4 text-dark" style="background: DeepSkyBlue;">
+                                    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#Art30_Modal">
                                         Article 30
                                     </button>
                                     <span style="font-size:50%"> <-- En savoir plus</span>
@@ -82,14 +72,14 @@
                     </div>
                     <div class="card-group">
                         <div class="col-lg-6 col-sm-12">
-                            <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                                <div  class="card-header h4">
-                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
+                            <div class="card h-100 text-dark mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4" style="background: Gold;">
+                                    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
                                         AMG
                                     </button>
                                     <span style="font-size:50%"> <-- En savoir plus</span>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body text-light">
 
                                     {{ form.eligible_AMG|as_crispy_field }}
                                     {{ form.famille|as_crispy_field }}
@@ -97,58 +87,58 @@
                                     {{ form.site_destination|as_crispy_field }}
                                     <br>
                                     {{ form.agentGDP|as_crispy_field }}
+                                    {{ form.GDP_loge|as_crispy_field }}
 
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
-                            <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                                <div  class="card-header h4">
-                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
+                            <div class="card h-100 text-dark mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                <div  class="card-header h4" style="background: Gold;">
+                                    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#AMG_Modal">
                                         Logement
                                     </button>
                                     <span style="font-size:50%"> <-- En savoir plus</span>
                                 </div>
-                                <div class="card-body">
-                                    <p>La surface correspondant à votre composition familiale est fixée à :
-                                        <strong id="js_surface">{{ surface }}</strong> m2
-
-                                    <p>L'écart de loyer entre l'ancienne et la nouvelle localisation est de :
-                                        <strong id="js_ecart_loyer2">{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de
-                                        <strong id="js_indemnisation_loyer2">{{ indemnisation_loyer }}</strong> € sur 5 ans</p>
-                                    <p>En complément l'AMG vous permet d'obtenir une prime de 5 mois de salaire soit
-                                        <strong id="js_prime_amg2">{{ prime_amg }}</strong> € </p>
+                               <div class="card-body text-light" id="AMG_text">
+                                   
                                 </div>
                             </div>
                         </div>
                         <div class="card-group">
                             <div class="col-lg-6 col-sm-12 mt-3">
-                                <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90">
-                                    <div  id="js_color" class="card-header h4 {{ attractivite }}">
-                                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGES_Modal">
+                                <div class="card h-100 text-dark mt-4 mb-1 mx-1 w-90">
+                                    <div  id="js_color" class="card-header h4" style="background: Gold;">
+                                        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MGES_Modal">
                                             MGES
                                         </button>
                                         <span style="font-size:50%"> <-- En savoir plus</span>
                                     </div>
-                                    <div class="card-body bg-secondary">
-                                        <p>Le site destination est considéré comme
-                                            <strong id="js_lbl_MGES">{{ lbl_MGES}}</strong>
-                                        <p>et ajoute <strong id="js_moisMGES2">{{ moisMGES }}</strong> mois de salaire</p>
+
+                                    <div class="card-body bg-secondary text-light">
+                                        <p  id="MGES_text">Le site destination est considéré comme
+                                            <strong id="js_lbl_MGES">{{ lbl_MGES }}</strong>
+                                        et ajoute <strong id="js_moisMGES2">{{ moisMGES }}</strong> mois de salaire</p>
+                                        <a class="btn btn-primary bg-info"
+                                           target="_blank"
+                                           href="https://www.google.com/maps/d/u/0/viewer?mid=1cD_8XlN_6kVX3vBgye7olkotL9T5zRss&ll=46.246796592824865%2C0.8231988365693255&z=6"
+                                           role="button">Carte des sites</a>
                                     </div>
+
                                 </div>
                                 <!--                </div>-->
                             </div>
                             <!--            </div>-->
                             <!--             <div class="card-group mt-4">-->
                             <div class="col-lg-6 col-sm-12 mt-3">
-                                <div class="card h-100 text-white mt-4 mb-1 mx-1 w-90 bg-secondary">
-                                    <div id="js_color_MGEE" class="card-header h4">
-                                        <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MGEE_Modal">
+                                <div class="card h-100 text-dark mt-4 mb-1 mx-1 w-90 bg-secondary">
+                                    <div id="js_color_MGEE" class="card-header h4" style="background: LimeGreen;">
+                                        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MGEE_Modal">
                                             MEE
                                         </button>
                                         <span style="font-size:50%"> <-- En savoir plus</span>
                                     </div>
-                                    <div class="card-body d-flex">
+                                    <div class="card-body d-flex text-light">
                                         <div class="col-lg-12">
                                             {{ form.emploi|as_crispy_field }}
                                             <br>
@@ -161,49 +151,49 @@
                     </div><!-- Fin card group MGES MGEE -->
                     <div class="card-group mt-3">
                         <div class="col-lg-4 col-md-12">
-                            <div class="card h-100 text-white bg-success mt-3 mx-1 w-90" >
-                                <div  class="card-header h4">
-                                    <button type="button" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
+                            <div class="card h-100 text-dark bg-success mt-3 mx-1 w-90" >
+                                <div  class="card-header h4" style="background: Coral;">
+                                    <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MR_Modal">
                                         MR
                                     </button>
                                     <span style="font-size:50%"> <-- En savoir plus</span>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body text-light bg-secondary">
                                     {{ form.eligible_MR|as_crispy_field }}
                                 </div>
-                                <div class="card-footer"></div>
+<!--                                <div class="card-footer"></div>-->
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="card h-100 bg-warning mt-3 mx-1 w-90" >
-                                <div  class="card-header h4">
+                                <div  class="card-header h4" style="background: Coral;">
                                     <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MGRa_Modal">
                                         MGRa
                                     </button>
                                     <span style="font-size:50%"> <-- Plus</span>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body text-light bg-secondary">
                                     {{ form.eligible_MGRa|as_crispy_field }}
                                     <br>
                                     {{ form.mois_MGRa|as_crispy_field }}
                                 </div>
-                                <div class="card-footer"></div>
+<!--                                <div class="card-footer"></div>-->
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="card h-100 text-dark bg-info mt-3 mx-1 w-90" >
-                                <div  class="card-header h4">
+                                <div  class="card-header h4" style="background: Coral;">
                                     <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#MGRb_Modal">
                                         MGRb
                                     </button>
                                     <span style="font-size:50%"> <-- Plus</span>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body text-light bg-secondary">
                                     {{ form.eligible_MGRb|as_crispy_field }}
                                     </br>
                                     {{ form.mois_MGRb|as_crispy_field }}
                                 </div>
-                                <div class="card-footer"></div>
+<!--                                <div class="card-footer"></div>-->
                             </div>
                         </div>
                     </div>
@@ -287,7 +277,7 @@
                     </div>
                 </div>
             </div>
-      </div>
+        </div>
 
         <div class="card bg-secondary my-3">
             <div class="card-header h4 text-light">Résultats :</div>
@@ -309,166 +299,166 @@
 
         </div> <!--end bilan card -->
         <div class="accordion mt-3 mb-3" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            Détail des résultats
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <table class="table table-hover table-sm">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Item</th>
-                                    <th class="text-center" scope="col">Nb Mois</th>
-                                    <th scope="col" class="text-end">Base</th>
-                                    <th scope="col" class="text-end">Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr style="background: LightSkyBlue">
-                                    <td scope="row">Article 30</td>
-                                    <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
-                                    <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
-                                    <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
-                                </tr>
-                                <thead>
-                                <tr>
-                                    <th scope="col">DiNAME</th>
-                                    <th class="text-center" scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                                </thead>
-                                <tr style="background: LemonChiffon">
-                                    <td scope="row">AMG hors écart loyer</td>
-                                    <td class="text-center">5</td>
-                                    <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
-                                    <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
-                                </tr>
-                                <tr style="background: LemonChiffon">
-                                    <td scope="row">MGES</td>
-                                    <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
-                                    <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
-                                    <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
-                                </tr>
-                                <tr style="background: PaleGreen">
-                                    <td scope="row">MEE</td>
-                                    <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
-                                    <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
-                                    <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
-                                </tr>
-                                <tr style="background: PeachPuff">
-                                    <td scope="row">MR</td>
-                                    <td class="text-center" id="js_mois_MR">{{ mois_MR }}</td>
-                                    <td class="text-end" id="js_base_MR">{{ base_diname }}</td>
-                                    <td class="text-end" id="js_prime_MR">{{ prime_MR }}</td>
-                                </tr>
-                                <tr style="background: PeachPuff">
-                                    <td scope="row">MGRa</td>
-                                    <td class="text-center" id="js_mois_MGRa">{{ mois_MGRa }}</td>
-                                    <td class="text-end" id="js_base_MGRa">{{ base_diname }}</td>
-                                    <td class="text-end" id="js_prime_MGRa">{{ prime_MGRa }}</td>
-                                </tr>
-                                <tr style="background: PeachPuff">
-                                    <td scope="row">MGRb</td>
-                                    <td class="text-center" id="js_mois_MGRb">{{ mois_MGRb }}</td>
-                                    <td class="text-end" id="js_base_MGRb">{{ base_diname }}</td>
-                                    <td class="text-end" id="js_prime_MGRb">{{ prime_MGRb }}</td>
-                                </tr>
-                                <thead>
-                                <tr>
-                                    <th scope="col">Logement</th>
-                                    <th class="text-center" scope="col">Surface</th>
-                                    <th scope="col" class="text-end"></th>
-                                    <th scope="col" class="text-end">Loyer</th>
-                                </tr>
-                                </thead>
-                                <tr style="background: LemonChiffon">
-                                    <td scope="row" id="js_loyer_deux_ans"></td>
-                                    <td class="text-center" id="js_origine_gdp_surface">{{ surface }}</td>
-                                    <td class="text-end" id="js_text_gdp"></td>
-                                    <td class="text-end" id="js_total_loyer_origine_gdp">{{ loyer_origine_gdp }}</td>
-                                </tr>
-                                <tr style="background: LemonChiffon">
-                                    <td scope="row">Loyer origine</td>
-                                    <td class="text-center" id="js_origine_surface">{{ surface }}</td>
-                                    <td class="text-end" id=""></td>
-                                    <td class="text-end" id="js_total_loyer_origine">{{ total_loyer_origine }}</td>
-                                </tr>
-                                <tr style="background: LemonChiffon">
-                                    <td scope="row">Loyer destination</td>
-                                    <td class="text-center" id="js_destination_surface">{{ surface }}</td>
-                                    <td class="text-end" id=""></td>
-                                    <td class="text-end" id="js_total_loyer_destination">{{ total_loyer_destination }}</td>
-                                </tr>
-                                <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th class="text-center" scope="col"></th>
-                                    <th scope="col" class="text-end">Ecart/m2</th>
-                                    <th scope="col" class="text-end">Total/5ans</th>
-                                </tr>
-                                </thead>
-                                <tr style="background: LemonChiffon">
-                                    <td scope="row">Ecart Loyer</td>
-                                    <td class="text-center" id="js_surface2">{{ surface }}</td>
-                                    <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
-                                    <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
-                                </tr>
-                                <thead>
-                                <tr>
-                                    <th scope="col">Totaux</th>
-                                    <th class="text-center" scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td scope="col">Total Statutaire</td>
-                                    <td class="" scope="col">Art 30</td>
-                                    <td scope="col"></td>
-                                    <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="col"></td>
-                                    <td class="" scope="col"></td>
-                                    <td scope="col"></td>
-                                    <td scope="col"></td>
-                                </tr>
-                                <tr>
-                                    <td scope="col">Total DiNAME avant écrêtage</td>
-                                    <td class="" scope="col"></td>
-                                    <td scope="col"></td>
-                                    <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="col">Total DiNAME</td>
-                                    <td class="" scope="col">(Avec AMG+MGES écrêtés à 100 k€)</td>
-                                    <td scope="col"></td>
-                                    <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="col">Total général</td>
-                                    <td class="" scope="col">Art30 + DiNAME</td>
-                                    <td scope="col"></td>
-                                    <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td id="id_din1" scope="col">Total DiNAME / an </td>
-                                    <td id="id_din2" class="" scope="col">pendant 5 ans en janvier</td>
-                                    <td id="id_din3" scope="col">max 20 k€</td>
-                                    <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
-                                </tr>
-                                </tbody>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Détail des résultats
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th class="text-center" scope="col">Nb Mois</th>
+                                <th scope="col" class="text-end">Base</th>
+                                <th scope="col" class="text-end">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="background: LightSkyBlue">
+                                <td scope="row">Article 30</td>
+                                <td class="text-center" id="js_mois_art30">{{ mois_art30 }}</td>
+                                <td class="text-end" id="js_salaire_mensuel">{{ salaire_mensuel }}</td>
+                                <td class="text-end" id="js_ind_art30">{{ ind_art30 }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col">DiNAME</th>
+                                <th class="text-center" scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">AMG hors écart loyer</td>
+                                <td class="text-center">5</td>
+                                <td class="text-end" id="js_base_diname_AMG">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_AMG">{{ prime_amg }}</td>
+                            </tr>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">MGES</td>
+                                <td class="text-center" id="js_moisMGES">{{ moisMGES }}</td>
+                                <td class="text-end" id="js_base_diname_MGES">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGES">{{ prime_MGES }}</td>
+                            </tr>
+                            <tr style="background: PaleGreen">
+                                <td scope="row">MEE</td>
+                                <td class="text-center" id="js_moisMGEE">{{ mois_MGEE }}</td>
+                                <td class="text-end" id="js_base_diname_MGEE">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGEE">{{ prime_MGEE }}</td>
+                            </tr>
+                            <tr style="background: PeachPuff">
+                                <td scope="row">MR</td>
+                                <td class="text-center" id="js_mois_MR">{{ mois_MR }}</td>
+                                <td class="text-end" id="js_base_MR">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MR">{{ prime_MR }}</td>
+                            </tr>
+                            <tr style="background: PeachPuff">
+                                <td scope="row">MGRa</td>
+                                <td class="text-center" id="js_mois_MGRa">{{ mois_MGRa }}</td>
+                                <td class="text-end" id="js_base_MGRa">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGRa">{{ prime_MGRa }}</td>
+                            </tr>
+                            <tr style="background: PeachPuff">
+                                <td scope="row">MGRb</td>
+                                <td class="text-center" id="js_mois_MGRb">{{ mois_MGRb }}</td>
+                                <td class="text-end" id="js_base_MGRb">{{ base_diname }}</td>
+                                <td class="text-end" id="js_prime_MGRb">{{ prime_MGRb }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col">Logement</th>
+                                <th class="text-center" scope="col">Surface</th>
+                                <th scope="col" class="text-end"></th>
+                                <th scope="col" class="text-end">Loyer</th>
+                            </tr>
+                            </thead>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row" id="js_loyer_deux_ans"></td>
+                                <td class="text-center" id="js_origine_gdp_surface">{{ surface }}</td>
+                                <td class="text-end" id="js_text_gdp"></td>
+                                <td class="text-end" id="js_total_loyer_origine_gdp">{{ loyer_origine_gdp }}</td>
+                            </tr>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">Loyer origine</td>
+                                <td class="text-center" id="js_origine_surface">{{ surface }}</td>
+                                <td class="text-end" id=""></td>
+                                <td class="text-end" id="js_total_loyer_origine">{{ total_loyer_origine }}</td>
+                            </tr>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">Loyer destination</td>
+                                <td class="text-center" id="js_destination_surface">{{ surface }}</td>
+                                <td class="text-end" id=""></td>
+                                <td class="text-end" id="js_total_loyer_destination">{{ total_loyer_destination }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th class="text-center" scope="col"></th>
+                                <th scope="col" class="text-end">Ecart/m2</th>
+                                <th scope="col" class="text-end">Total/5ans</th>
+                            </tr>
+                            </thead>
+                            <tr style="background: LemonChiffon">
+                                <td scope="row">Ecart Loyer</td>
+                                <td class="text-center" id="js_surface2">{{ surface }}</td>
+                                <td class="text-end" id="js_ecart_loyer">{{ ecart_loyer }}</td>
+                                <td class="text-end" id="js_indemnisation_loyer">{{ indemnisation_loyer }}</td>
+                            </tr>
+                            <thead>
+                            <tr>
+                                <th scope="col">Totaux</th>
+                                <th class="text-center" scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td scope="col">Total Statutaire</td>
+                                <td class="" scope="col">Art 30</td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end" id="js_tot_art30">{{ ind_art30 }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"></td>
+                                <td class="" scope="col"></td>
+                                <td scope="col"></td>
+                                <td scope="col"></td>
+                            </tr>
+                            <tr>
+                                <td scope="col">Total DiNAME avant écrêtage</td>
+                                <td class="" scope="col"></td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end" id="js_total_diname_avant_ecretage">{{ total_diname_avant_ecretage }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">Total DiNAME</td>
+                                <td class="" scope="col">(Avec AMG+MGES écrêtés à 100 k€)</td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end" id="js_total_diname">{{ total_diname }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">Total général</td>
+                                <td class="" scope="col">Art30 + DiNAME</td>
+                                <td scope="col"></td>
+                                <td scope="col" class="text-end"><strong id="js_total_general">{{ total_general }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td id="id_din1" scope="col">Total DiNAME / an </td>
+                                <td id="id_din2" class="" scope="col">pendant 5 ans en janvier</td>
+                                <td id="id_din3" scope="col">max 20 k€</td>
+                                <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
+                            </tr>
+                            </tbody>
 
-                            </table>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 
@@ -497,10 +487,12 @@
                 <h1 class="modal-title fs-5" id="ModalLabelMGES">MGES Mobilité Encouragée vers certains Sites</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">Les sites de Rte sont classés en fonction de leur attractivité
-                en 4 catégories du plus au moins attractif. La prime d'installation dans un de ces sites
-                est de 8, 5 ou 0 mois de salaire pour les sites des moins attractifs aux plus attractifs,
-                ou 7 mois pour un site de la région parisienne. <BR>
+            <div class="modal-body">Les sites de travail de Rte sont classés en 4 catégories du plus au moins attractif.
+                La prime d'installation est de 0 mois de salaire pour les sites les plus attractifs, 5 mois pour les sites
+                moyennement attractifs, jusqu'à 8 mois pour les sites les moins attractifs, et de 7 mois pour les sites
+                de la région Parisienne. Les sièges régionnaux sont jugés "attractifs" et n'ouvrent pas droit à la prime
+                MGES, sauf Lille et Nancy
+                <BR>
 
 
             </div>
@@ -522,9 +514,9 @@
                     <li>Une prime de 5 mois de salaire (Plancher NR 130 ech 4, Plafond NR 280 ech 7)</li>
                     <li>Une compensation de l'écart de loyer.</li>
                 </ul>
-                <p>Si vous êtes agent de GDP bénéficiant  de la politique logement de Rte (Pers 530), des dispositions
-                particulières s'appliquent. Ainsi, le loyer du site d'origine est fixé forfaitairement à 15% du salaire
-                en lieu et place du loyer "marché" pour les  2 premières années.</p>
+                <p>Si vous êtes agent de Groupement De Poste bénéficiant  de la politique logement de Rte (Pers 530), des dispositions
+                    particulières s'appliquent. Ainsi, le loyer du site d'origine est fixé forfaitairement à 15% du salaire
+                    en lieu et place du loyer "marché" pour les  2 premières années.</p>
                 À chaque site correspond un loyer de base au m2. Une indemnisation de l'écart
                 de loyer est calculée sur 5 ans dans le cas où le loyer du site de destination est supérieur à
                 celui du site d'origine.<BR>
@@ -614,17 +606,12 @@
             </div>
             <div class="modal-body">
                 Dans le cas d'un déménagement faisant suite à une mutation, la Pers 309 qui traite de l'article 30
-                prévoit une indemnité de 2 mois de salaire (à temps plein) au salarié concerné.
-                Le salaire pris en référence est celui après la mutation. Il n'y a ni plancher, ni plafond appliqué
-                à cette indemnité..
+                prévoit une indemnité de 2 mois de salaire (à temps plein) au salarié concerné. <br>
+                Le salaire pris en référence est celui après la mutation. <br> Il n'y a ni plancher, ni plafond appliqué
+                à cette indemnité.
                 Elle est versée au moment de la nomination en une fois.
                 Dans le cas de l'application de DiNAME, le versement de cette indemnité sera augmenté de la partie
-                DiNAME correspondant au 1er versement :
-                <ul>
-                    <li>La prime MEE en cas de mobilité vers un emploi encouragé (non cumulable avec MGR*)</li>
-                    <li>1/5 des primes MGRa & MGRb dans le cas d'une réorganisation (non cumulable avec MEE)</li>
-                    <li>1/5 de la prime AMG & MGES</li>
-                </ul>
+                DiNAME correspondant au 1er versement.
 
             </div>
             <div class="modal-footer">
@@ -633,12 +620,63 @@
         </div>
     </div>
 </div>
-<!--<script defer src="{% static 'js/script_snb.js' %}"></script>-->
 <script>
-
     document.querySelector('#fetch-call2').addEventListener('click', event => {
           event.preventDefault();
           recalcul();});
+
+    function Aff_GDP_loge(){
+        document.querySelector('#MGES_text').innerHTML=""
+        document.querySelector('#AMG_text').innerHTML=""
+        document.querySelector('#MGES_text').innerHTML="Le bénéfice de la politique logement de Rte ne vous permet pas d'ouvrir droit à la prime MGES"
+        document.querySelector('#AMG_text').innerHTML="Le bénéfice de la politique logement de Rte ne vous permet pas d'ouvrir droit à compensation de loyer"
+        const textAMG = document.createElement('p')
+        textAMG.innerHTML = "<br>En revanche, l\'AMG vous permet d'obtenir une prime de 5 mois de salaire soit <strong id='js_prime_amg2'></strong> €"
+        document.querySelector('#AMG_text').append(textAMG)
+    } 
+
+    function Aff_GDP_Non_loge(){
+        document.querySelector('#AMG_text').innerHTML=""
+        document.querySelector('#MGES_text').innerHTML="Le site de destination est considéré comme <strong id='js_lbl_MGES'></strong> et ajoute <strong id='js_moisMGES2'></strong> mois de salaire";
+        const textAMG_surface = document.createElement('p');
+        textAMG_surface.innerHTML = "La surface correspondant à votre composition familiale est fixée à : <strong id='js_surface'>{{ surface }}</strong> m2";
+        document.querySelector('#AMG_text').append(textAMG_surface);
+        if (document.querySelector('#id_agentGDP').checked == true){
+            const text_AMG_loyer_GDP = document.createElement('p');
+            text_AMG_loyer_GDP.innerHTML =  "Pendant les 2 premières années, le loyer d'origine pris en compte est réduit à 15% du salaire"
+            const textAMG_loyer = document.createElement('p');
+            textAMG_loyer.innerHTML = "Les 3 années suivantes,l\'écart de loyer entre l'ancienne et la nouvelle localisation est de :<strong id='js_ecart_loyer2'>{{ ecart_loyer }}</strong> € par m2 par mois.<br>Au total sur 5 ans l\'indemnisation est de <strong id='js_indemnisation_loyer2'>{{ indemnisation_loyer }}</strong> €";
+            document.querySelector('#AMG_text').append(text_AMG_loyer_GDP);
+            document.querySelector('#AMG_text').append(textAMG_loyer);
+        }
+        else{
+            const textAMG_loyer = document.createElement('p');
+            textAMG_loyer.innerHTML = "L\'écart de loyer entre l'ancienne et la nouvelle localisation est de :<strong id='js_ecart_loyer2'>{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de <strong id='js_indemnisation_loyer2'>{{ indemnisation_loyer }}</strong> € sur 5 ans";
+            document.querySelector('#AMG_text').append(textAMG_loyer);
+        }
+        const textAMG2 = document.createElement('p');
+        textAMG2.innerHTML = "En complément, l\'AMG vous permet d'obtenir une prime de 5 mois de salaire soit <strong id='js_prime_amg2'></strong> €";
+        
+    
+        document.querySelector('#AMG_text').append(textAMG2);
+    }
+
+    function Aff_GDP(){
+        document.querySelector('#AMG_text').innerHTML=""
+        document.querySelector('#MGES_text').innerHTML="Le site de destination est considéré comme <strong id='js_lbl_MGES'></strong> et ajoute <strong id='js_moisMGES2'></strong> mois de salaire";
+        const textAMG_surface = document.createElement('p');
+        textAMG_surface.innerHTML = "La surface correspondant à votre composition familiale est fixée à : <strong id='js_surface'>{{ surface }}</strong> m2";
+        const text_AMG_loyer_GDP = document.createElement('p');
+        text_AMG_loyer_GDP.innerHTML =  "Pendant les 2 premières années, le loyer d'origine pris en compte est réduit à 15% du salaire"
+        const textAMG_loyer = document.createElement('p');
+        textAMG_loyer.innerHTML = "Les 3 années suivantes,l\'écart de loyer entre l'ancienne et la nouvelle localisation est de :<strong id='js_ecart_loyer2'>{{ ecart_loyer }}</strong> € par m2 par mois, ce qui correspond à une indemnisation de <strong id='js_indemnisation_loyer2'>{{ indemnisation_loyer }}</strong> € sur 5 ans";
+        const textAMG2 = document.createElement('p');
+        textAMG2.innerHTML = "En complément, l\'AMG vous permet d'obtenir une prime de 5 mois de salaire soit <strong id='js_prime_amg2'></strong> €";
+    
+    
+        document.querySelector('#AMG_text').append(textAMG_loyer);
+        document.querySelector('#AMG_text').append(textAMG2); 
+    }
 
     function recalcul(){
 
@@ -661,6 +699,8 @@
       const site_destination = listeDest.options[listeDest.selectedIndex].text
 
       const agentGDP = document.getElementById('id_agentGDP').checked
+      const GDP_loge = document.getElementById('id_GDP_loge').checked
+
       const loyerPasgdp = document.getElementById('pas_gdp')
 
       let eligible_MR = document.querySelector('#id_eligible_MR').checked
@@ -682,6 +722,7 @@
       form.append("site_origine", site_origine);
       form.append("site_destination", site_destination);
       form.append("agentGDP", agentGDP);
+      form.append("GDP_loge", GDP_loge);
       form.append("eligible_MR", eligible_MR);
       form.append("eligible_MGRa", eligible_MGRa);
       form.append("eligible_MGRb", eligible_MGRb);
@@ -689,18 +730,9 @@
       form.append("mois_MGRb", mois_MGRb);
 
 
-
-      console.log(form.get("Nr"));
-      console.log(form.get("echelon"));
-      console.log(form.get("maj_res"));
-      console.log(form.get("tps_trav"));
-      console.log(form.get("art30"));
-      console.log(form.get("eligible_AMG"));
-      console.log(form.get("eligible_MGEE"));
-      console.log(form.get("famille"));
-      console.log(form.get("site_origine"));
       console.log(form.get("site_destination"));
       console.log("agent GdP", form.get("agentGDP"));
+      console.log("GDP_Loge", form.get("GDP_loge"));
       console.log("MR", form.get("eligible_MR"));
       console.log("MGRa", form.get("eligible_MGRa"));
       console.log("MGRb", form.get("eligible_MGRb"));
@@ -722,18 +754,15 @@
             document.querySelector('#js_base_diname_MGES').innerHTML = context["base_diname"];
             document.querySelector('#js_base_diname_MGEE').innerHTML = context["base_diname"];
             document.querySelector('#js_prime_AMG').innerHTML = context["prime_amg"];
-//            document.querySelector('#js_amg2').innerHTML = context["total_diname"];
-//            document.querySelector('#js_mges').innerHTML = context["prime_MGES"];
-            document.querySelector('#js_prime_amg2').innerHTML = context["prime_amg"];
             document.querySelector('#js_prime_MGES').innerHTML = context["prime_MGES"];
             document.querySelector('#js_prime_MGEE').innerHTML = context["prime_MGEE"];
             document.querySelector('#js_moisMGES').innerHTML = context["moisMGES"];
             document.querySelector('#js_moisMGEE').innerHTML = context["mois_MGEE"];
             document.querySelector('#js_ecart_loyer').innerHTML = context["ecart_loyer"];
-            document.querySelector('#js_ecart_loyer2').innerHTML = context["ecart_loyer"];
+        
 
             document.querySelector('#js_indemnisation_loyer').innerHTML = context["indemnisation_loyer"];
-            document.querySelector('#js_indemnisation_loyer2').innerHTML = context["indemnisation_loyer"];
+        
             document.querySelector('#js_total_loyer_origine').innerHTML = context["total_loyer_origine"];
             document.querySelector('#js_total_loyer_destination').innerHTML = context["total_loyer_destination"];
 
@@ -757,9 +786,6 @@
 
             document.querySelector('#js_total_general').innerHTML = context["total_general"];
             document.querySelector('#js_total').innerHTML = context["total_general"];
-
-            console.log('tagName', document.querySelector('#id_din1').tagName)
-            console.log('classList', document.querySelector('#id_din1').classList)
 
             if(agentGDP){
                 document.querySelector('#js_loyer_deux_ans').innerHTML = "Loyer origine GDP (2 ans)";
@@ -785,27 +811,31 @@
                 document.querySelector('#id_din3').innerHTML = "à la date de nomination";
                 document.querySelector('#js_total_diname_an').innerHTML = context["total_general"];
                         }
-            document.querySelector('#js_lbl_MGES').innerHTML = context["lbl_MGES"];
-            document.querySelector('#js_moisMGES2').innerHTML = context["moisMGES"];
 
-            document.querySelector('#js_surface').innerHTML = context["surface"];
+            if(GDP_loge){
+                Aff_GDP_loge();
+                document.querySelector('#js_prime_amg2').innerHTML = context["prime_amg"];
+            }
+            else {
+                Aff_GDP_Non_loge();
+                document.querySelector('#js_lbl_MGES').innerHTML = context["lbl_MGES"];
+                document.querySelector('#js_moisMGES2').innerHTML = context["moisMGES"];
+
+                document.querySelector('#js_surface').innerHTML = context["surface"];
+                document.querySelector('#js_ecart_loyer2').innerHTML = context["ecart_loyer"];
+                document.querySelector('#js_indemnisation_loyer2').innerHTML = context["indemnisation_loyer"];
+                document.querySelector('#js_prime_amg2').innerHTML = context["prime_amg"];
+
+            }
+       
             document.querySelector('#js_surface2').innerHTML = context["surface"];
             document.querySelector('#js_origine_surface').innerHTML = context["surface"];
             document.querySelector('#js_destination_surface').innerHTML = context["surface"];
-
-            document.querySelector('#js_color').className = "card-header h4 " + context["attractivite"]
-
-            if (eligible_MGEE){
-                console.log("MGEE T", eligible_MGEE)
-                document.querySelector('#js_color_MGEE').className = "card-header h4 bg-success"
-            }
-            else {
-                console.log("MGEE F", eligible_MGEE)
-                document.querySelector('#js_color_MGEE').className = "card-header h4 bg-secondary"
-            }
         }
         )
         }
+
+    document.addEventListener('DOMContentLoaded', recalcul())
 
     document.querySelector('#id_Nr').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_echelon').addEventListener('change', event => {recalcul()});
@@ -813,14 +843,16 @@
     document.querySelector('#id_tps_trav').addEventListener('change', event => {recalcul()});
 
     document.querySelector('#id_eligible_AMG').addEventListener('change', event => {recalcul()});
-    document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_famille').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_site_origine').addEventListener('change', event => {recalcul()});
     document.querySelector('#id_site_destination').addEventListener('change', event => {recalcul()});
-    document.querySelector('#id_famille').addEventListener('change', event => {recalcul()});
-    document.querySelector('#id_agentGDP').addEventListener('change', event => {recalcul()});
+ 
+
+    document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {recalcul()});
+
     document.querySelector("#id_mois_MGRa").addEventListener('change', event => {recalcul()});
     document.querySelector("#id_mois_MGRb").addEventListener('change', event => {recalcul()});
-    document.addEventListener('DOMContentLoaded', recalcul())
+
 
     document.querySelector('#id_art30').addEventListener('change', event => {
         if(document.querySelector('#id_art30').checked == true){
@@ -878,6 +910,20 @@
     recalcul();
     })
 
+    document.querySelector('#id_GDP_loge').addEventListener('change', event => {
+            document.querySelector('#id_agentGDP').checked = false;
+        recalcul();                    
+    })
+
+    document.querySelector('#id_agentGDP').addEventListener('change', event => {
+        if(document.querySelector('#id_agentGDP').checked == true){
+            document.querySelector('#id_GDP_loge').checked = false;
+        }
+        recalcul()});
+
 </script>
+
+
+
 {% endblock content %}
 

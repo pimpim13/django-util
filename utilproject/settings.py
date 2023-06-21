@@ -19,14 +19,25 @@ PDF_TABLE_API_KEY = env('PDF_TABLE_API_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = env.bool("DEBUG", False)
 DEBUG = True
-# ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-ALLOWED_HOSTS = ['127.0.0.1', 'spiro6.hopto.org', '77.205.22.237', ]
-#
-# Application definition
 
+# ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+# ALLOWED_HOSTS = ['127.0.0.1', 'https://f198-2a01-cb1c-17d-3b00-64c9-6453-da7e-7e3b.ngrok-free.app', 'f198-2a01-cb1c-17d-3b00-64c9-6453-da7e-7e3b.ngrok-free.app']
+ALLOWED_HOSTS = ['*']
+#
+CSRF_TRUSTED_ORIGINS = ['https://f198-2a01-cb1c-17d-3b00-64c9-6453-da7e-7e3b.ngrok-free.app', ]
+
+"""  EMAIL CONFIG """
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PORT = env('EMAIL_HOST_PORT')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -125,10 +136,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
-
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
