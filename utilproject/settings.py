@@ -10,9 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(env_file=str(BASE_DIR / "utilproject" / ".env"))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
 SECRET_KEY = env("SECRET_KEY")
 PDF_TABLE_API_KEY = env('PDF_TABLE_API_KEY')
 
@@ -21,7 +18,6 @@ PDF_TABLE_API_KEY = env('PDF_TABLE_API_KEY')
 DEBUG = True
 
 # ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-# ALLOWED_HOSTS = ['127.0.0.1', 'https://f198-2a01-cb1c-17d-3b00-64c9-6453-da7e-7e3b.ngrok-free.app', 'f198-2a01-cb1c-17d-3b00-64c9-6453-da7e-7e3b.ngrok-free.app']
 ALLOWED_HOSTS = ['*']
 #
 CSRF_TRUSTED_ORIGINS = ['https://f198-2a01-cb1c-17d-3b00-64c9-6453-da7e-7e3b.ngrok-free.app', ]

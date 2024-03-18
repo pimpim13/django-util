@@ -1,6 +1,5 @@
 from django.db import models
 from datetime import date
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 annee_en_cours = date.today().year
 annee_min = 2021
@@ -12,7 +11,7 @@ class ursaffModel(models.Model):
     taux_cs_non_soumise = models.DecimalField(max_digits=4, decimal_places=2)
 
     class Meta:
-        ordering = ('annee',)
+        ordering = ('-annee',)
 
     def __str__(self):
         return str(self.annee)
@@ -30,13 +29,3 @@ class Bareme(models.Model):
 
     def __str__(self):
         return f'{self.annee} - {self.localisation} - {self.college} - {self.Repas} - {self.Nuit_Pdj}'
-
-
-# class NewBareme(models.Model):
-#     date = models.DateTimeField(auto_now=True)
-#     annee = models.IntegerField()
-#     file = models.FileField(upload_to='static/datas')
-#
-#
-#     def __str__(self):
-#         return f"{self.annee} - {self.localisation}"

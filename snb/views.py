@@ -10,13 +10,9 @@ from snb.api_snb import create_table, test as pdf_gen
 
 from datetime import datetime
 
-EVOL_SNB = "0.3"
-INFLATION = "5.1"
-TAUX_BRUT_NET = 0.75
-
-DATE_1 = '2021-01-01'
-DATE_2 = '2022-07-01'
-DATE_3 = '2023-01-01'
+EVOL_SNB = "2"    # valeur par défaut du curseur d'évolution du SNB
+INFLATION = "5.1"  # valeur par défaut du curseur d'évolution de l'inflation
+TAUX_BRUT_NET = 0.75  # valeur par défaut du niveau de charges sociales
 
 
 def snb(request):
@@ -35,6 +31,9 @@ def snb(request):
         if form.is_valid():
             annee_previous = int(form.cleaned_data['date_application'][:4]) - 1
             annee_next = int(form.cleaned_data['date_application'][:4]) + 1
+
+            print('annee_previous', annee_previous)
+            print('annee_next', annee_next)
 
             snb = float(Snb_ref_New.objects.filter(date_application=form.cleaned_data['date_application'])[0].snb)
             date_application = Snb_ref_New.objects.filter(date_application=form.cleaned_data['date_application'])[0].date_application
@@ -164,6 +163,10 @@ def calculate_perte(salaire, salaire_futur, inflation):
 
 
 def snb_evol(request):
+
+    DATE_1 = '2021-01-01'
+    DATE_2 = '2022-07-01'
+    DATE_3 = '2023-01-01'
 
     context = {}
     form = EvolSnbForm()

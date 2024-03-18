@@ -31,7 +31,8 @@ def frais(request):
 
 def frais_an(request, an):
 
-    list_taux = ursaffModel.objects.get(annee=an)
+    # list_taux = ursaffModel.objects.get(annee=an)
+    list_taux = ursaffModel.objects.all()[0]
     taux_cs_ecart = float(list_taux.taux_cs)/100
     taux_cs_non_soumises = float(list_taux.taux_cs_non_soumise)/100
 

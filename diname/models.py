@@ -29,7 +29,7 @@ class Site(models.Model):
     attractivite = models.ForeignKey(Attractivite, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.localisation
+        return f"{self.localisation} - loyer de reference = {self.loyer}"
 
 
 class Emplois(models.Model):
