@@ -1,14 +1,14 @@
-from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
-from django.contrib import messages
+from django.shortcuts import render
+from django.http import JsonResponse
 
 from snb.models import Snb_ref_New, Coeff_New, Echelon
-from diname.models import Site, Famille, Attractivite
+from diname.models import Site
 
 from snb.api_snb import calcul_salaire_mensuel
 from diname.forms import DinameForm
 
-DATE = '2023-01-01'  # A REVOIR
+DATE = Snb_ref_New.objects.first().date_application
+
 
 NR_PLANCHER = 130
 NR_PLAFOND = 280

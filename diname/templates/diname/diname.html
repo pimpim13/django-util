@@ -238,7 +238,7 @@
                         <div  class="card-header h5">Mobilité Géographique</div>
                         <div class="card-body d-flex justify-content-between" style="background: LemonChiffon">
                             <div class="h5 col-lg-6">
-                                AMG-MGES
+                                AMG + MGES
                             </div>
                             <div id="js_diname_geo" class="h5 col-lg-6 text-end">
                                 {{ total_diname_mobilite_geo }}
@@ -268,7 +268,7 @@
                         <div  class="card-header h5">Réorganisation</div>
                         <div class="card-body d-flex justify-content-between" style="background: PeachPuff">
                             <div class="h5 col-lg-6">
-                                MR-MRGa-MGRb
+                                MR + MRGa + MGRb
                             </div>
                             <div id="js_diname_reorg" class="h5 col-lg-6 text-end">
                                 {{ prime_reorg }}
@@ -448,7 +448,7 @@
                             </tr>
                             <tr>
                                 <td id="id_din1" scope="col">Total DiNAME / an </td>
-                                <td id="id_din2" class="" scope="col">pendant 5 ans en janvier</td>
+                                <td id="id_din2" class="" scope="col">pendant 5 ans</td>
                                 <td id="id_din3" scope="col">max 20 k€</td>
                                 <td scope="col" class="text-end" id="js_total_diname_an">{{ total_diname_an }}</td>
                             </tr>
@@ -490,7 +490,7 @@
             <div class="modal-body">Les sites de travail de Rte sont classés en 4 catégories du plus au moins attractif.
                 La prime d'installation est de 0 mois de salaire pour les sites les plus attractifs, 5 mois pour les sites
                 moyennement attractifs, jusqu'à 8 mois pour les sites les moins attractifs, et de 7 mois pour les sites
-                de la région Parisienne. Les sièges régionnaux sont jugés "attractifs" et n'ouvrent pas droit à la prime
+                de la région Parisienne. Les sièges régionaux sont jugés "attractifs" et n'ouvrent pas droit à la prime
                 MGES, sauf Lille et Nancy
                 <BR>
 
@@ -517,6 +517,7 @@
                 <p>Si vous êtes agent de Groupement De Poste bénéficiant  de la politique logement de Rte (Pers 530), des dispositions
                     particulières s'appliquent. Ainsi, le loyer du site d'origine est fixé forfaitairement à 15% du salaire
                     en lieu et place du loyer "marché" pour les  2 premières années.</p>
+                <p>Si vous êtes en colocation, le logement en colocation est accepté à condition que vous soyez en mesure de présenter un bail à votre nom en tant que co-locataire, avec mention de votre quote-part de loyer.</p>
                 À chaque site correspond un loyer de base au m2. Une indemnisation de l'écart
                 de loyer est calculée sur 5 ans dans le cas où le loyer du site de destination est supérieur à
                 celui du site d'origine.<BR>
@@ -605,9 +606,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Dans le cas d'un déménagement faisant suite à une mutation, la Pers 309 qui traite de l'article 30
-                prévoit une indemnité de 2 mois de salaire (à temps plein) au salarié concerné. <br>
-                Le salaire pris en référence est celui après la mutation. <br> Il n'y a ni plancher, ni plafond appliqué
+                <p> Si une mutation conduit à porter la durée de votre trajet ancien domicile-nouveau lieu de travail à plus d’une heure en transport en commun et en voiture (sans péage) et que vous déménagez, vous percevez une indemnité de 2 mois de salaire (à temps plein). Pour percevoir l’accompagnement financier à la mobilité géographique, vous devez vous reloger dans un périmètre situé à moins d’une heure du nouveau lieu de travail (l’un des deux modes de transport cités ci-dessus doit permettre un trajet ≤ 1h).<br>
+                Pour la région parisienne, ce seuil est de 1h15 dans la mesure où vous réduisez votre temps de trajet. Ce critère de localisation est vérifié à chaque échéance de versement.</p>
+                <p>Le salaire pris en référence est celui après la mutation.</p> Il n'y a ni plancher, ni plafond appliqué
                 à cette indemnité.
                 Elle est versée au moment de la nomination en une fois.
                 Dans le cas de l'application de DiNAME, le versement de cette indemnité sera augmenté de la partie
@@ -801,7 +802,7 @@
 
             if(art30){
                 document.querySelector('#id_din1').innerHTML = "Total DiNAME / an";
-                document.querySelector('#id_din2').innerHTML = "pendant 5 ans en janvier";
+                document.querySelector('#id_din2').innerHTML = "pendant 5 ans";
                 document.querySelector('#id_din3').innerHTML = "";
                 document.querySelector('#js_total_diname_an').innerHTML = context["total_diname_an"];
                        }
