@@ -850,7 +850,19 @@
     document.querySelector('#id_site_destination').addEventListener('change', event => {recalcul()});
  
 
-    document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {recalcul()});
+    // document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_eligible_MGEE').addEventListener('change', event => {
+        if(document.querySelector("#id_eligible_MGEE").checked == true){
+            if(document.querySelector('#id_eligible_MR').checked == true){ alert('Incompatible avec MR');
+                }
+            if(document.querySelector('#id_eligible_MGRa').checked == true){ alert('Incompatible avec MGRa ou MGRb');
+                console.log('test MGRa');
+                }
+            document.querySelector('#id_eligible_MR').checked = false;
+            document.querySelector('#id_eligible_MGRa').checked = false;
+            document.querySelector('#id_eligible_MGRb').checked = false;
+        }
+        recalcul()});
 
     document.querySelector("#id_mois_MGRa").addEventListener('change', event => {recalcul()});
     document.querySelector("#id_mois_MGRb").addEventListener('change', event => {recalcul()});
@@ -880,6 +892,8 @@
             document.querySelector('#id_eligible_MGRb').checked = false;
             document.querySelector('#id_art30').checked = false;
             document.querySelector('#id_eligible_AMG').checked = false;
+            if(document.querySelector('#id_eligible_MGEE').checked == true){ alert('Incompatible avec MEE');}
+            document.querySelector('#id_eligible_MGEE').checked = false 
 
         }
     recalcul();
@@ -889,6 +903,8 @@
     if(document.querySelector('#id_eligible_MGRa').checked == true){
         document.querySelector('#id_art30').checked = true;
         document.querySelector('#id_eligible_AMG').checked = true;
+        if(document.querySelector('#id_eligible_MGEE').checked == true){ alert('Incompatible avec MEE');}
+        document.querySelector('#id_eligible_MGEE').checked = false;
 
         if(document.querySelector('#id_eligible_MR').checked == true){
             document.querySelector('#id_eligible_MR').checked = false};
@@ -903,6 +919,8 @@
 
     document.querySelector('#id_eligible_MGRb').addEventListener('change', event => {
     if(document.querySelector('#id_eligible_MGRb').checked == true){
+        if(document.querySelector('#id_eligible_MGEE').checked == true){ alert('Incompatible avec MEE');}
+        document.querySelector('#id_eligible_MGEE').checked = false;
         if(document.querySelector('#id_eligible_MR').checked == true){
             document.querySelector('#id_eligible_MR').checked = false};
 

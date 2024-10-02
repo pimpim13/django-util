@@ -6,6 +6,9 @@ class DataForm(forms.Form):
     CHOICES = [(194, '5J / sem'),
                (184, '4J / sem'),
                (190, 'CFJ'),
+               (197, 'CFJ 197'),
+               (203, 'CFJ 203'),
+               (209, 'CFJ 209'),
                ]
 
     NBJOURTT = [(0, "0"),
