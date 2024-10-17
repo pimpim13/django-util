@@ -39,35 +39,23 @@
                 <div class="col-6">
                     {{ form.aller_futur_mn|as_crispy_field }}
                 </div>
-                <div class="col-6">
-                    {{ form.retour_actuel_mn|as_crispy_field }}
-                </div>
-                <div class="col-6">
-                    {{ form.retour_futur_mn|as_crispy_field }}
-                </div>
 
-                <div id = "marseille" class="col-12">
-                    {{ form.residant_marseille|as_crispy_field}}
+                <div class="col-6">
+                    {{ form.aller_actuel_km|as_crispy_field }}
                 </div>
-
-                    <div class="col-6">
-                        {{ form.aller_actuel_km|as_crispy_field }}
-                    </div>
-                    <div class="col-6">
-                        {{ form.aller_futur_km|as_crispy_field }}
-                    </div>
-                    <div class="col-6">
-                        {{ form.retour_actuel_km|as_crispy_field }}
-                    </div>
-                    <div class="col-6">
-                        {{ form.retour_futur_km|as_crispy_field }}
-                    </div>
+                <div class="col-6">
+                    {{ form.aller_futur_km|as_crispy_field }}
+                </div>
+                <br>
+                <div class="col-3">
+                    {{ form.eligible_tt|as_crispy_field }}
+                </div>
+                <div class="col-3">
+                    {{ form.nb_jours_tt|as_crispy_field }}
+                </div>
 
                 <div class="col-6">
                     {{ form.duree_tx_future|as_crispy_field }}
-                </div>
-                <div class="col-6" id="teletravail">
-                    {{ form.teletravail_futur|as_crispy_field }}
                 </div>
 
             </div>

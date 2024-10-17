@@ -11,7 +11,7 @@ def index(request):
     if reset != 0:
         data = {"aller_actuel_mn": 15, "aller_futur_mn": 50, "retour_actuel_mn": 15, "retour_futur_mn": 50,
                 "aller_actuel_km": 0, "retour_actuel_km": 0, "aller_futur_km": 0, "retour_futur_km": 0,
-                "duree_tx_future": 194, "teletravail_futur": 0, "residant_marseille": True}
+                "duree_tx_future": 194, "eligible_tt": False, "nb_jours_tt": 108}
     else:
         data = {}
 
@@ -22,15 +22,12 @@ def index(request):
         if form.is_valid():
             data["aller_actuel_mn"] = form.cleaned_data["aller_actuel_mn"]
             data["aller_futur_mn"] = form.cleaned_data["aller_futur_mn"]
-            data["retour_actuel_mn"] = form.cleaned_data["retour_actuel_mn"]
-            data["retour_futur_mn"] = form.cleaned_data["retour_futur_mn"]
             data["aller_actuel_km"] = form.cleaned_data["aller_actuel_km"]
             data["aller_futur_km"] = form.cleaned_data["aller_futur_km"]
-            data["retour_actuel_km"] = form.cleaned_data["retour_actuel_km"]
-            data["retour_futur_km"] = form.cleaned_data["retour_futur_km"]
             data["duree_tx_future"] = form.cleaned_data["duree_tx_future"]
-            data["teletravail_futur"] = form.cleaned_data["teletravail_futur"]
-            data["residant_marseille"] = form.cleaned_data["residant_marseille"]
+            data["eligible_tt"] = form.cleaned_data["eligible_tt"]
+            data["nb_jours_tt"] = form.cleaned_data["nb_jours_tt"]
+
 
 
             indemnisation = Indemnisation(data).compute()
@@ -40,6 +37,8 @@ def index(request):
             del indemnisation["indem_tps_tt"]
             del indemnisation["indem_km_tt"]
 
+        # else:
+        #     tt = {"indem_tt_tps": 0, "indem_tt_km": 0, }
 
 
     else:

@@ -1,3 +1,5 @@
+from email.policy import default
+
 from django import forms
 
 
@@ -17,21 +19,25 @@ class DataForm(forms.Form):
                 (3, "3"),
                 ]
 
+    ELIGIBLE_TT = [(True, 'Oui'),
+                   (False, 'Non'),
+               ]
+
+    NB_JOURS_TT = [(108, "108 jours/an"),
+                   (20, "20 jours/an"),
+                   (10, "10 jours/an")]
+
+
     CHOIXTC = [(True, 'Oui'),
                (False, 'Non'),
                ]
 
-    aller_actuel_mn = forms.IntegerField(label='Durée trajet "Aller" actuel', max_value=240, min_value=0)
-    aller_futur_mn = forms.IntegerField(label='Durée trajet "Aller" futur', max_value=240, min_value=0)
-    retour_actuel_mn = forms.IntegerField(label='Durée trajet "Retour" actuel', max_value=240, min_value=0)
-    retour_futur_mn = forms.IntegerField(label='Durée trajet "Retour" futur', max_value=240, min_value=0)
-    aller_actuel_km = forms.IntegerField(label='Distance km "Aller" actuel', max_value=200, min_value=0)
-    aller_futur_km = forms.IntegerField(label='Distance km "Aller" futur', max_value=200, min_value=0)
-    retour_actuel_km = forms.IntegerField(label='Distance km "Retour" actuel', max_value=200, min_value=0)
-    retour_futur_km = forms.IntegerField(label='Distance km "Retour" futur', max_value=200, min_value=0)
+    aller_actuel_mn = forms.IntegerField(label='Durée trajet actuel', max_value=240, min_value=0)
+    aller_futur_mn = forms.IntegerField(label='Durée trajet futur', max_value=240, min_value=0)
+    aller_actuel_km = forms.IntegerField(label='Distance km actuel', max_value=200, min_value=0)
+    aller_futur_km = forms.IntegerField(label='Distance km futur', max_value=200, min_value=0)
     duree_tx_future = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    residant_marseille = forms.ChoiceField(label="Résident Marseille", choices=CHOIXTC,
-                                           widget=forms.RadioSelect, initial=True)
+    eligible_tt = forms.BooleanField(label="Eligible au Télétravail ?", widget=forms.CheckboxInput, required=False)
+    nb_jours_tt = forms.ChoiceField(choices=NB_JOURS_TT, widget=forms.RadioSelect)
 
-    teletravail_futur = forms.ChoiceField(label='Nombre de jours télétravaillés par semaine futur', choices=NBJOURTT)
 
