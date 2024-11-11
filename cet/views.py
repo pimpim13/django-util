@@ -13,7 +13,7 @@ def index_cet(request):
 
 
 # @login_required
-def cet_choix(request, choix=""):
+def cet_choix(request, choix="timedate"):
 
     if choix == "timetodate":
         dico = {}

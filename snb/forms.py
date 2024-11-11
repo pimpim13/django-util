@@ -59,7 +59,8 @@ class EvolSnbForm(forms.Form):
 
     NR_CHOICE = [(a.NR, a.NR) for a in Coeff_New.objects.filter(date_application=date(1900, 1, 1))]
     ECHELON_CHOICE = [(a.coeff, a.echelon) for a in Echelon.objects.filter(echelon__gt=3)]
-    MAJ_RES_CHOICE = [(1.24, '24%'), (1.245, '24,5%'), (1.25, '25%')]
+    # MAJ_RES_CHOICE = [(1.24, '24%'), (1.245, '24,5%'), (1.25, '25%')]
+    MAJ_RES_CHOICE = [(1.25, '25%'), (1.245, '24,5%'), (1.24, '24%')]
     TPS_TRAV_CHOICE = [(1, '35h'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'), (0.707, "24h")]
 
     Nr = forms.ChoiceField(label='Nr ', choices=NR_CHOICE)
@@ -67,3 +68,12 @@ class EvolSnbForm(forms.Form):
     maj_res = forms.ChoiceField(label='Maj rés', choices=MAJ_RES_CHOICE)
     tps_trav = forms.ChoiceField(label='ATT', choices=TPS_TRAV_CHOICE)
     toto = forms.BooleanField(widget=forms.HiddenInput, initial=True, required=False)  # champs caché pour selection de formulaire
+
+class TranspositionForm(EvolSnbForm):
+
+    TPS_TRAV_CHOICE_TRANSPO = [(1, '35h ou CFJ'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'),]
+    tps_trav = forms.ChoiceField(label='ATT', choices=TPS_TRAV_CHOICE_TRANSPO)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+

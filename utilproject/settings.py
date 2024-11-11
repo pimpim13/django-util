@@ -47,10 +47,10 @@ INSTALLED_APPS = [
     'frais',
     'ind_dep',
     'accounts',
-    'bootstrap_datepicker_plus',
+ #   'bootstrap_datepicker_plus',
     'snb',
     'diname',
-    'testapp',
+ #   'testapp',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

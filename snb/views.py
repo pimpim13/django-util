@@ -2,9 +2,10 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
+from pandas.core.dtypes.cast import astype_array
 
 from snb.models import Snb_ref, Inflation, Coeff_New, Snb_ref_New
-from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm
+from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm, TranspositionForm
 from frais.parse_xl import populate_nr
 from snb.api_snb import create_table, test as pdf_gen
 
@@ -235,6 +236,9 @@ def snb_evol(request):
 
 
 def compute(request):
+    DATE_1 = '2021-01-01'
+    DATE_2 = '2022-07-01'
+    DATE_3 = '2023-01-01'
 
     date1 = DATE_1
     date2 = DATE_2
@@ -253,13 +257,12 @@ def compute(request):
     coeff_nr_sup = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[1].valeur
     nr_sup = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[1].NR
 
-    print(nr_sup)
-
 
 
     echelon = float(request.POST.get('echelon', 4.0))
     maj_res = float(request.POST.get('maj_res', 24.0))
     tps_trav = float(request.POST.get('tps_trav', 1.0))
+
 
     salaire1 = round(calculate_mensuel(Nr=coeff_nr1,
                                        echelon=echelon,
@@ -332,10 +335,140 @@ def compute(request):
 
     return JsonResponse(context)
 
+def snb_transpose(request):
+
+    DATE1 = '2024-01-01'
+    # form = EvolSnbForm
+    form = TranspositionForm()
+
+    context = {}
+    context['form'] = form
+    # context['salaire1'] = 10000
+    return render(request, 'snb/snb_transposition.html/', context = context)
+
+
+def transpose_compute(request):
+    DATE1 = '2024-01-01'
+    context = {}
+
+    nr = request.POST.get('Nr', 30)
+    echelon = float(request.POST.get('echelon', 4.0))
+    maj_res = float(request.POST.get('maj_res', 25.0))
+    tps_trav = float(request.POST.get('tps_trav', 1.0))
+
+
+    coeff_nr1 = Coeff_New.objects.filter(date_application__lte=DATE1, NR=nr)[0].valeur
+    snb1 = float(Snb_ref_New.objects.filter(date_application=DATE1)[0].snb)
+
+    coeff_nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr)[1].valeur
+    nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr)[1].NR
+
+    coeff_2nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr_sup)[1].valeur
+    nr2_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr_sup)[1].NR
+
+
+
+    salaire_tp = round(calculate_mensuel(Nr=coeff_nr1,
+                                       echelon=echelon,
+                                       maj_res=maj_res,
+                                       tps_trav=1,
+                                       snb=snb1), 2)
+
+    salaire1 = round(calculate_mensuel(Nr=coeff_nr1,
+                                       echelon=echelon,
+                                       maj_res=maj_res,
+                                       tps_trav=tps_trav,
+                                       snb=snb1), 2)
+
+    salaire_nr_sup = round(calculate_mensuel(Nr=coeff_nr_sup,
+                                       echelon=echelon,
+                                       maj_res=maj_res,
+                                       tps_trav=tps_trav,
+                                       snb=snb1), 2)
+
+    salaire_2nr_sup = round(calculate_mensuel(Nr=coeff_2nr_sup,
+                                       echelon=echelon,
+                                       maj_res=maj_res,
+                                       tps_trav=tps_trav,
+                                       snb=snb1), 2)
+
+
+    p27orTalon = salaire_tp * 0.027 if salaire_tp * 0.027 >= 100 else 100
+    p27 = salaire1 * 0.027
+
+
+
+    annuel1 = round((salaire1 * 13) + (p27orTalon * 12), 2)
+    annuel_nr_sup = round(salaire_nr_sup * 13,2)
+    annuel_2nr_sup = round(salaire_2nr_sup * 13, 2)
+
+
+
+    if annuel_2nr_sup != annuel_nr_sup:
+        msg="..."
+        if annuel_2nr_sup <= annuel1:
+            nb_nr = 2
+            annuel_nr = annuel_2nr_sup
+        else:
+            nb_nr = 1
+            annuel_nr = annuel_nr_sup
+    else:
+        msg = "Vous avez atteint la butée de NR"
+
+        if nr == "370":
+            nb_nr = 0
+            annuel_nr = annuel_nr_sup
+            msg += ' Vous conservez la prime de 2,7%'
+
+        elif nr == "365":
+            nb_nr = 1
+            annuel_nr = annuel_nr_sup
+
+        elif nr_sup == "370":
+            nb_nr = 1
+            annuel_nr = annuel_nr_sup
+
+
+    residu_annuel = round(annuel1 - annuel_nr, 2)
+
+    nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr)[nb_nr].NR
+
+    taux_residuel = residu_annuel/annuel_nr
+
+    if nr == "370":
+        taux_residuel_arrrondi = 0.027
+    else:
+        taux_residuel_arrrondi = int((taux_residuel*1000)+1)/1000
+
+    prime_annuelle = round(annuel_nr * taux_residuel_arrrondi,2)
+
+
+
+
+    context['nr1'] = nr
+    context['mensuel1'] = salaire1
+    context['mensuel_tp'] = salaire_tp
+    context['p27'] = round(p27orTalon,2)
+    context['annuel1'] = annuel1
+    context['annuel_nr'] = annuel_nr
+    context['nb_nr'] = nb_nr
+    context['nr_sup'] = nr_sup
+    context['taux_residuel_arrondi'] = str(round(taux_residuel_arrrondi*100,2)) +'%'
+    context['residu_annuel'] = residu_annuel
+    context['prime_annuelle'] = prime_annuelle
+    context['msg'] = msg
+
+
+
+
+
+
+
+    return JsonResponse(context)
+
 
 def test(request):
-
     pdf_gen()
-    texte = f"paf généré à {datetime.now()}"
+    texte = f"pdf généré à {datetime.now()}"
 
     return HttpResponse(texte)

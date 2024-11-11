@@ -1,5 +1,5 @@
 from django import forms
-from bootstrap_datepicker_plus.widgets import DatePickerInput
+#from bootstrap_datepicker_plus.widgets import DatePickerInput
 
 
 class DateToTimeForm(forms.Form):
