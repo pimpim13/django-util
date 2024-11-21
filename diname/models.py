@@ -33,7 +33,13 @@ class Site(models.Model):
 
 
 class Emplois(models.Model):
-    etablissement = models.CharField(max_length=50)
+
+    ETABLISSEMENT_CHOICE = [('EXPLOITATION', 'EXPLOITATION'),
+                            ('FC', 'FC'),
+                            ('MAINTENANCE', 'MAINTENANCE'),
+                            ('DI', 'DI')]
+
+    etablissement = models.CharField(max_length=50, choices=ETABLISSEMENT_CHOICE)
     libelle_emploi = models.CharField(max_length=128)
     actif = models.BooleanField(default=True)
 
@@ -42,3 +48,5 @@ class Emplois(models.Model):
 
     def __str__(self):
         return f'{self.etablissement} - {self.libelle_emploi}'
+
+

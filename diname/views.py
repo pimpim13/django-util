@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.views.generic import ListView, UpdateView
 
 from snb.models import Snb_ref_New, Coeff_New, Echelon
-from diname.models import Site
+from diname.models import Site, Emplois
 
 from snb.api_snb import calcul_salaire_mensuel
-from diname.forms import DinameForm
+from diname.forms import DinameForm, MEEUpdateForm, MEECreateForm
 
 DATE = Snb_ref_New.objects.first().date_application
 
@@ -21,7 +23,9 @@ def diname(request):
 
     context['attractivite'] = "bg-secondary"
     form = DinameForm()
+
     context["form"] = form
+
 
     return render(request, 'diname/diname.html/', context=context)
 
@@ -221,3 +225,56 @@ def recalcul(request):
 
     return JsonResponse(context)
 
+""" vues de mise à jour des emplois MEE """
+
+class MEEListView(ListView):
+    model = Emplois
+    template_name = 'diname/mee_update.html'
+    context_object_name = 'list_mee'
+
+
+class MEEUpdate(UpdateView):
+    model = Emplois
+    form_class = MEEUpdateForm
+    template_name = 'diname/mee_update.html'
+    success_url = reverse_lazy('mee_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['maj'] = True
+        # context['new'] = False
+        context['list_mee'] = Emplois.objects.all()
+        return context
+
+
+def mee_new(request):
+
+    context = {}
+
+    list_mee = Emplois.objects.all()
+    context['list_mee'] = list_mee
+
+    form = MEECreateForm()
+
+    if request.method == 'POST':
+        form = MEECreateForm(request.POST)
+
+    if form.is_valid():
+        form.save()
+        success = True
+        return redirect('mee_list')
+    else:
+        success = False
+
+    context['success'] = success
+    context['form'] = form
+    context['maj'] = True
+    context['new'] = True
+    # pdf_view(request)
+    # return render(request, 'frais/ursaff_new.html', context=context)
+    return render(request, 'diname/mee_update.html', context=context)
+
+
+def mee_delete_item(request, item):
+    Emplois.objects.get(libelle_emploi=item).delete()
+    return redirect('mee_list')

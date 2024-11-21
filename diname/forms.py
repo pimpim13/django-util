@@ -5,6 +5,9 @@ from datetime import date
 
 
 class DinameForm(forms.Form):
+
+
+
     ART_30_CHOICE = [(True, True), (False, False)]
     SITES_CHOICE = [(a.localisation, a.localisation) for a in Site.objects.all()]
     FAMILLE_CHOICE = [(a.surface, a.situation) for a in Famille.objects.all()]
@@ -46,3 +49,35 @@ class DinameForm(forms.Form):
     eligible_MGEE = forms.BooleanField(label='Eligible MEE', required=False, initial=False)
 
 
+
+""" Formulaires de mise à jour MEE """
+
+class MEEUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Emplois
+        fields = ['etablissement', 'libelle_emploi']
+        labels = {'etablissement': 'Etablissement', 'emploi': "Emploi"}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['etablissement'].disabled = True
+
+
+class MEECreateForm(forms.ModelForm):
+
+
+    # etablissement = forms.CharField(choices=ETABLISSEMENT_CHOICE, required=False)
+    # libelle_emploi=forms.CharField(max_length=255)
+
+
+    class Meta:
+        # model = Snb_ref
+        model = Emplois
+        fields = ['etablissement', 'libelle_emploi']
+        labels = {'etablissement': 'Etablissement', 'emploi': "Emploi"}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['etablissement'].disabled = False
+        self.fields['etablissement'].queryset = Emplois.objects.filter(actif=True)

@@ -1,0 +1,25 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+<div class="row my-3 d-flex justify-content-center">
+    <div class="col-4">
+        <form action="" method="POST" class="form">
+
+                <p>Mise à jour d'emploi MEE {% if form.instance.pk %} pour l'emploi {{ libelle_emploi }} {% endif %}</p>
+
+            {% csrf_token %}
+
+            <div>
+                {{ form.etablissement|as_crispy_field }}
+            </div>
+
+            <div>
+                {{ form.libelle_emploi|as_crispy_field }}
+            </div>
+
+
+            <input class="btn btn-primary my-4" type="submit"
+                   value="{% if not form.instance.pk %}Créer{% else %}Modifier{% endif %}">
+        </form>
+    </div>
+</div>

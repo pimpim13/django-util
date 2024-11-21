@@ -7,7 +7,7 @@ from pandas.core.dtypes.cast import astype_array
 from snb.models import Snb_ref, Inflation, Coeff_New, Snb_ref_New
 from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm, TranspositionForm
 from frais.parse_xl import populate_nr
-from snb.api_snb import create_table, test as pdf_gen
+from snb.api_snb import create_table, test as pdf_gen, spumoni
 
 from datetime import datetime
 
@@ -165,9 +165,15 @@ def calculate_perte(salaire, salaire_futur, inflation):
 
 def snb_evol(request):
 
-    DATE_1 = '2021-01-01'
-    DATE_2 = '2022-07-01'
-    DATE_3 = '2023-01-01'
+    # DATE_1 = '2021-01-01'
+    # DATE_2 = '2022-07-01'
+    # DATE_3 = '2023-01-01'
+
+
+    DATE_1 = Snb_ref_New.objects.all()[2].date_application
+    DATE_2 = Snb_ref_New.objects.all()[1].date_application
+    DATE_3 = Snb_ref_New.objects.all()[0].date_application
+
 
     context = {}
     form = EvolSnbForm()
@@ -257,8 +263,6 @@ def compute(request):
     coeff_nr_sup = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[1].valeur
     nr_sup = Coeff_New.objects.filter(date_application__lte=date3, NR__gte=nr)[1].NR
 
-
-
     echelon = float(request.POST.get('echelon', 4.0))
     maj_res = float(request.POST.get('maj_res', 24.0))
     tps_trav = float(request.POST.get('tps_trav', 1.0))
@@ -337,27 +341,25 @@ def compute(request):
 
 def snb_transpose(request):
 
-    DATE1 = '2024-01-01'
-    # form = EvolSnbForm
     form = TranspositionForm()
+    context = {'form': form}
 
-    context = {}
-    context['form'] = form
-    # context['salaire1'] = 10000
     return render(request, 'snb/snb_transposition.html/', context = context)
 
 
 def transpose_compute(request):
-    DATE1 = '2024-01-01'
+
+    DATE1 = Snb_ref_New.objects.first().date_application
     context = {}
 
-    nr = request.POST.get('Nr', 30)
-    echelon = float(request.POST.get('echelon', 4.0))
+    nr = request.POST.get('Nr', 130)
+    echelon = float(request.POST.get('echelon', 7.0))
     maj_res = float(request.POST.get('maj_res', 25.0))
     tps_trav = float(request.POST.get('tps_trav', 1.0))
 
 
     coeff_nr1 = Coeff_New.objects.filter(date_application__lte=DATE1, NR=nr)[0].valeur
+
     snb1 = float(Snb_ref_New.objects.filter(date_application=DATE1)[0].snb)
 
     coeff_nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr)[1].valeur
@@ -365,7 +367,6 @@ def transpose_compute(request):
 
     coeff_2nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr_sup)[1].valeur
     nr2_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr_sup)[1].NR
-
 
 
     salaire_tp = round(calculate_mensuel(Nr=coeff_nr1,
@@ -397,11 +398,9 @@ def transpose_compute(request):
     p27 = salaire1 * 0.027
 
 
-
     annuel1 = round((salaire1 * 13) + (p27orTalon * 12), 2)
     annuel_nr_sup = round(salaire_nr_sup * 13,2)
     annuel_2nr_sup = round(salaire_2nr_sup * 13, 2)
-
 
 
     if annuel_2nr_sup != annuel_nr_sup:
@@ -430,19 +429,15 @@ def transpose_compute(request):
 
 
     residu_annuel = round(annuel1 - annuel_nr, 2)
-
     nr_sup = Coeff_New.objects.filter(date_application__lte=DATE1, NR__gte=nr)[nb_nr].NR
-
     taux_residuel = residu_annuel/annuel_nr
 
-    if nr == "370":
+    if nr == "370": # Traitement du cas NR 3770 qy-ui conserve la prime
         taux_residuel_arrrondi = 0.027
-    else:
+    else: # traitement de tous les autres cas
         taux_residuel_arrrondi = int((taux_residuel*1000)+1)/1000
 
     prime_annuelle = round(annuel_nr * taux_residuel_arrrondi,2)
-
-
 
 
     context['nr1'] = nr
@@ -459,16 +454,13 @@ def transpose_compute(request):
     context['msg'] = msg
 
 
-
-
-
-
-
     return JsonResponse(context)
 
 
 def test(request):
+
     pdf_gen()
     texte = f"pdf généré à {datetime.now()}"
+
 
     return HttpResponse(texte)

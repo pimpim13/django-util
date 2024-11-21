@@ -1,8 +1,11 @@
 from datetime import date
+
+
+
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus import Table, TableStyle
-from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
 
 from snb.models import Snb_ref_New, Coeff_New, Echelon
 
@@ -13,14 +16,15 @@ def calcul_salaire_mensuel(ech, maj_res, tps_trav, coeff, snb):
 
 def test():
 
-    from reportlab.pdfgen import canvas
-
     data = create_table()
     filename = "test_grille.pdf"
     pdf = SimpleDocTemplate(
         filename,
-        pagesize=letter,
+        pagesize=A4,
     )
+
+    lg, ht = A4
+
     table = Table(data)
 
     # create style
@@ -76,19 +80,38 @@ def create_table():
     table.append(echelon)
     table.append(coeff)                     # Création des 2 premières lignes du tableau
 
-    Nrs = Coeff_New.objects.filter(date_application=date(1900, 1, 1))
-    snb = Snb_ref_New.objects.get(date_application=date(2023, 1, 1)).snb
+    Nrs = Coeff_New.objects.filter(date_application=date(2023, 1, 1))
+    snb = Snb_ref_New.objects.get(date_application=date(2024, 1, 1)).snb
     lstNr = [x.NR for x in Nrs]
 
     for nr in lstNr:
         ligne = [nr, ]
         coeff_nr = Coeff_New.objects.get(date_application=date(2023, 1, 1), NR=nr).valeur
         for coeff_ech in coeff2[3:]:
-            salaire = calcul_salaire_mensuel(coeff_ech, 1, 1, coeff_nr, snb)
+            salaire = calcul_salaire_mensuel(coeff_ech, 1.25, 1, coeff_nr, snb)
             ligne.append(salaire)
         table.append(ligne)
 
     return table
+
+
+def spumoni():
+    from reportlab.pdfgen import canvas
+    canvas = canvas.Canvas("hello")
+    from reportlab.lib.units import cm
+    from reportlab.lib.colors import pink, green, brown, white
+    x = 0;
+    dx = 1 * cm
+    for i in range(4):
+        for color in (pink, green, brown):
+            canvas.setFillColor(color)
+    canvas.rect(x, 0, dx, 3 * cm, stroke=0, fill=1)
+    x = x + dx
+    canvas.setFillColor(white)
+    canvas.setStrokeColor(white)
+    canvas.setFont("Helvetica-Bold", 85)
+    canvas.drawCentredString(2.75 * cm, 1.3 * cm, "SPUMONI")
+
 
 
 if __name__ == '__main__':
