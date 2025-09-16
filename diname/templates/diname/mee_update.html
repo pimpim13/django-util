@@ -27,7 +27,7 @@
                     <td><button type="button" class="btn btn-primary btn-sm" value="{{ x.libelle_emploi }}">
                         <a class="text-light" href="{% url 'mee_update_item' x.pk %}">Modifier</a></button>
                         <button type="button" class="btn btn-danger btn-sm" value="{{ x.libelle_emploi }}">
-                            <a class="text-light" href="{% url 'mee_delete_item' x.libelle_emploi %}">Supprimer</a></button></td>
+                            <a class="text-light" href="{% url 'mee_delete_item' x.pk %}">Supprimer</a></button></td>
                 </tr>
                 {% endfor %}
                 <tr>

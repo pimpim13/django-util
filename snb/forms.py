@@ -71,9 +71,11 @@ class EvolSnbForm(forms.Form):
 
 class TranspositionForm(EvolSnbForm):
 
-    TPS_TRAV_CHOICE_TRANSPO = [(1, '35h ou CFJ'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'),]
-    tps_trav = forms.ChoiceField(label='ATT', choices=TPS_TRAV_CHOICE_TRANSPO)
+    # TPS_TRAV_CHOICE_TRANSPO = [(1, '35h ou CFJ'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'),]
+    TPS_TRAV_CHOICE_TRANSPO = [(1, 'Indifferent'), (0.9714285714, '32h Coll.'), (0.9428571429, '32h Indiv.'),]
+    tps_trav = forms.ChoiceField(label='ATT', choices=TPS_TRAV_CHOICE_TRANSPO,)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['tps_trav'].disabled = True
 

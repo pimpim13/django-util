@@ -1,15 +1,19 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
-from pandas.core.dtypes.cast import astype_array
+from django.core.files.storage import FileSystemStorage
 
-from snb.models import Snb_ref, Inflation, Coeff_New, Snb_ref_New
+from pathlib import Path
+
+from snb.models import Snb_ref, Coeff_New, Snb_ref_New
 from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm, TranspositionForm
 from frais.parse_xl import populate_nr
-from snb.api_snb import create_table, test as pdf_gen, spumoni
+from snb.api_snb import test as pdf_gen
 
 from datetime import datetime
+
+from utilproject.settings import MEDIA_ROOT
 
 EVOL_SNB = "2"    # valeur par défaut du curseur d'évolution du SNB
 INFLATION = "5.1"  # valeur par défaut du curseur d'évolution de l'inflation
@@ -22,19 +26,15 @@ def snb(request):
         populate_db_nr()
 
     context = {}
-    # evol_snb = "0.3"
     evol_snb = EVOL_SNB
     inflation = INFLATION
-    # inflation = "5.1"
+
     form = CalculSalaireForm()
     if request.method == 'POST':
         form = CalculSalaireForm(request.POST)
         if form.is_valid():
             annee_previous = int(form.cleaned_data['date_application'][:4]) - 1
             annee_next = int(form.cleaned_data['date_application'][:4]) + 1
-
-            print('annee_previous', annee_previous)
-            print('annee_next', annee_next)
 
             snb = float(Snb_ref_New.objects.filter(date_application=form.cleaned_data['date_application'])[0].snb)
             date_application = Snb_ref_New.objects.filter(date_application=form.cleaned_data['date_application'])[0].date_application
@@ -138,8 +138,7 @@ def snb_new(request):
     context['form'] = form
     context['maj'] = True
     context['new'] = True
-    # pdf_view(request)
-    # return render(request, 'frais/ursaff_new.html', context=context)
+
     return render(request, 'snb/snb_update.html', context=context)
 
 
@@ -342,14 +341,20 @@ def compute(request):
 def snb_transpose(request):
 
     form = TranspositionForm()
+    DATE1 = Snb_ref_New.objects.first().date_application
+
     context = {'form': form}
+    context['date_ref'] = DATE1.strftime('%d-%m-%Y')
 
     return render(request, 'snb/snb_transposition.html/', context = context)
 
 
 def transpose_compute(request):
 
-    DATE1 = Snb_ref_New.objects.first().date_application
+    # DATE1 = Snb_ref_New.objects.first().date_application
+    DATE1 = datetime.strptime('01/01/2024','%d/%m/%Y')
+    print(type(DATE1))
+    print(DATE1.strftime('%d-%m-%Y'))
     context = {}
 
     nr = request.POST.get('Nr', 130)
@@ -461,6 +466,21 @@ def test(request):
 
     pdf_gen()
     texte = f"pdf généré à {datetime.now()}"
+
+
+    # location = Path(MEDIA_ROOT / 'pdf')
+    # fs = FileSystemStorage(location=location)
+    #
+    # filename = 'test_grille.pdf'
+    #
+    # if fs.exists(filename):
+    #     with fs.open(filename) as pdf:
+    #         response =HttpResponse(pdf, content_type='application/pdf')
+    #         response['Content-Disposition'] = 'inline; fimename="test_grille.pdf"'
+    #         return response
+    # else:
+    #     return HttpResponseNotFound("Le fichier pdf n'a pas été trouvé sur le serveur")
+
 
 
     return HttpResponse(texte)

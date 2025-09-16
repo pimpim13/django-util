@@ -1,4 +1,6 @@
-from datetime import date
+from datetime import date, datetime
+from io import BytesIO
+from django.http import HttpResponse
 
 
 
@@ -18,6 +20,7 @@ def test():
 
     data = create_table()
     filename = "test_grille.pdf"
+
     pdf = SimpleDocTemplate(
         filename,
         pagesize=A4,
@@ -44,7 +47,9 @@ def test():
     elems = [table]
     pdf.build(elems)
 
+
     return
+
 
 
 def drawMyRuler(pdf):
@@ -66,6 +71,10 @@ def drawMyRuler(pdf):
 
 def create_table():
     DATE_3 = '2023-01-01'
+    date_3 = datetime.strptime(DATE_3, '%Y-%m-%d')
+
+    print(date_3)
+
 
     table = []
     echelons = Echelon.objects.all()
@@ -80,38 +89,26 @@ def create_table():
     table.append(echelon)
     table.append(coeff)                     # Création des 2 premières lignes du tableau
 
-    Nrs = Coeff_New.objects.filter(date_application=date(2023, 1, 1))
-    snb = Snb_ref_New.objects.get(date_application=date(2024, 1, 1)).snb
+    # Nrs = Coeff_New.objects.filter(date_application=date(2023, 1, 1))
+    Nrs = Coeff_New.objects.filter(date_application=date_3)
+    print(Nrs)
+    # snb = Snb_ref_New.objects.get(date_application=date(2024, 1, 1)).snb
+    snb = Snb_ref_New.objects.get(date_application=datetime.strptime('2025-01-01', '%Y-%m-%d')).snb
     lstNr = [x.NR for x in Nrs]
 
     for nr in lstNr:
         ligne = [nr, ]
-        coeff_nr = Coeff_New.objects.get(date_application=date(2023, 1, 1), NR=nr).valeur
+        # coeff_nr = Coeff_New.objects.get(date_application=date(2023, 1, 1), NR=nr).valeur
+        # coeff_nr = Coeff_New.objects.get(date_application=date_3, NR=nr).valeur
+        coeff_nr = Nrs.get(NR=nr).valeur
         for coeff_ech in coeff2[3:]:
             salaire = calcul_salaire_mensuel(coeff_ech, 1.25, 1, coeff_nr, snb)
-            ligne.append(salaire)
+            cotis = round(salaire*13*0.75*0.00759/12, 2)
+            ligne.append(cotis)
         table.append(ligne)
 
+
     return table
-
-
-def spumoni():
-    from reportlab.pdfgen import canvas
-    canvas = canvas.Canvas("hello")
-    from reportlab.lib.units import cm
-    from reportlab.lib.colors import pink, green, brown, white
-    x = 0;
-    dx = 1 * cm
-    for i in range(4):
-        for color in (pink, green, brown):
-            canvas.setFillColor(color)
-    canvas.rect(x, 0, dx, 3 * cm, stroke=0, fill=1)
-    x = x + dx
-    canvas.setFillColor(white)
-    canvas.setStrokeColor(white)
-    canvas.setFont("Helvetica-Bold", 85)
-    canvas.drawCentredString(2.75 * cm, 1.3 * cm, "SPUMONI")
-
 
 
 if __name__ == '__main__':

@@ -6,10 +6,10 @@
 
 <main class="container-fluid mb-4">
     <section class="row my-4">
-        {% if user.is_staff %}
+
         <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/cover-aticle-pim-730x487.jpg' %}" alt="pim" class="card-img-top"/>
+                <a href="{% url 'index' %}"><img src=" {% static 'images/cover-aticle-pim-730x487.jpg' %}" alt="pim" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         Projet Immo Marseille
@@ -25,9 +25,10 @@
             </section>
 
         </div><!--End first element-->
+        {% if user.is_staff %}
         <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/cet.jpg' %}" alt="pim" class="card-img-top"/>
+                <a href="{% url 'cet_index' %}"><img src=" {% static 'images/cet.jpg' %}" alt="pim" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         Utilitaires CET
@@ -48,7 +49,7 @@
         {% endif %}
         <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/frais-de-deplacement.png' %}" alt="pim" class="card-img-top"/>
+                <a href="{% url 'frais' %}"><img src=" {% static 'images/frais-de-deplacement.png' %}" alt="pim" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         Frais de déplacement
@@ -66,7 +67,7 @@
         </div><!--End third element-->
         <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/Indemnites.png' %}" alt="pim" class="card-img-top"/>
+                <a href="{% url 'ind_dep' %}"><img src=" {% static 'images/Indemnites.png' %}" alt="pim" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         Indemnités de déplacement
@@ -85,7 +86,7 @@
 
             <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/bandit-manchot.png' %}" alt="pim" class="card-img-top"/>
+                <a href="{% url 'snb' %}"><img src=" {% static 'images/bandit-manchot.png' %}" alt="pim" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         Rémunération / SNB / Inflation
@@ -105,7 +106,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/container-moving-artdem.jpg' %}" alt="diname" class="card-img-top"/>
+                <a href="{% url 'diname' %}"><img src=" {% static 'images/container-moving-artdem.jpg' %}" alt="diname" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         DiNaMe
@@ -122,7 +123,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3 mb-3">
             <section class="card h-100">
-                <img src=" {% static 'images/prime_partage.png' %}" alt="transposition" class="card-img-top"/>
+                <a href="{% url 'snb_transposition' %}"><img src=" {% static 'images/prime_partage.png' %}" alt="transposition" class="card-img-top"/></a>
                 <div class="card-body">
                     <h1 class="h3 card-title">
                         Transposition de la prime 2,7% en NR + prime

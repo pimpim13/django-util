@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Calcul {% endblock %}
+{% block head%}
+    <script defer src="{% static 'js/script.js' %}"></script>
+{% endblock head%}
+{% block navitems %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'index' %}">RAZ</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Calcul d'itinéraire
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="https://www.google.com/maps?authuser=0" target="_blank">Google Maps</a></li>
+            <li><a class="dropdown-item" href="https://fr.mappy.com/itineraire" target="_blank">Mappy</a></li>
+            <li><a class="dropdown-item" href="https://www.lepilote.com/fr/itineraires/4/JourneyPlanner/Index" target="_blank">Le Pilote</a></li>
+          </ul>
+        </li>
+{% endblock navitems %}
+
+
+{% block content %}
+<div class="row">
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette Mesures d'accompagnement PIM</h3>
+</div>
+<div class="row mt-4">
+
+    <div class="col-sm-6">
+        <form action="" method="post" class="form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    {{ form.aller_actuel_mn|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.aller_futur_mn|as_crispy_field }}
+                </div>
+
+<!--                <div class="col-6">-->
+<!--                    {{ form.aller_actuel_km|as_crispy_field }}-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                    {{ form.aller_futur_km|as_crispy_field }}-->
+<!--                </div>-->
+                <br>
+                <div class="col-3">
+                    {{ form.eligible_tt|as_crispy_field }}
+                </div>
+                <div class="col-3">
+                    {{ form.nb_jours_tt|as_crispy_field }}
+                </div>
+
+                <div class="col-6">
+                    {{ form.duree_tx_future|as_crispy_field }}
+                </div>
+
+            </div>
+            <br>
+            <input type="submit" value="Calculer" class="btn btn-primary mb-4" />
+
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th class="text-center" scope="col">Valeur</th>
+                <th scope="col">Unité</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for k,v in indemnisation.items %}
+            <tr>
+                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>
+<!--                <td scope="row">{{ v.label }}</a></td>-->
+                <td class="text-end">{{ v.valeur }}</td>
+                <td> {{ v.unite }}</td>
+            </tr>
+            {% endfor%}
+            </tbody>
+
+        </table>
+
+        <h4 class="h4">Variante avec Télétravail</h4>
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th class="text-center" scope="col">Valeur</th>
+                <th scope="col">Unité</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% for k,v in tt.items %}
+            <tr>
+                {% if v.url %}
+<!--                <td scope="row">{{ v.label }}</a></td>-->
+                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>
+                <td class="text-end">{{ v.valeur }}</td>
+                <td> {{ v.unite }}</td>
+                {% endif %}
+            </tr>
+            {% endfor%}
+
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

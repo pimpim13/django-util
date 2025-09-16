@@ -276,5 +276,6 @@ def mee_new(request):
 
 
 def mee_delete_item(request, item):
-    Emplois.objects.get(libelle_emploi=item).delete()
+    # Emplois.objects.get(libelle_emploi=item).delete()
+    Emplois.objects.get(pk=item).delete()
     return redirect('mee_list')
