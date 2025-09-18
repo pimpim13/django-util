@@ -6,3 +6,4 @@ __pycache__/
 TestJS/
 settings.py
 static/plugins/fontawesome-free/
+.DS_Store
