@@ -461,26 +461,3 @@ def transpose_compute(request):
 
     return JsonResponse(context)
 
-
-def test(request):
-
-    pdf_gen()
-    texte = f"pdf généré à {datetime.now()}"
-
-
-    # location = Path(MEDIA_ROOT / 'pdf')
-    # fs = FileSystemStorage(location=location)
-    #
-    # filename = 'test_grille.pdf'
-    #
-    # if fs.exists(filename):
-    #     with fs.open(filename) as pdf:
-    #         response =HttpResponse(pdf, content_type='application/pdf')
-    #         response['Content-Disposition'] = 'inline; fimename="test_grille.pdf"'
-    #         return response
-    # else:
-    #     return HttpResponseNotFound("Le fichier pdf n'a pas été trouvé sur le serveur")
-
-
-
-    return HttpResponse(texte)
