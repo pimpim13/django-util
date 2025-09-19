@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Transposition prime {% endblock title %}
+
+{% block navitems %}
+{% if user.is_staff %}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+       aria-expanded="false">
+        Parametres
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'snb_list' %}">SNB...</a></li>
+    </ul>
+</li>
+{% endif %}
+{% endblock navitems %}
+
+{% block content %}
+
+<div class="row d-flex">
+    <h3 class="h3 bg-secondary text-light text-center" >Transposition prime 2,7 % ou 100€ en NR + prime</h3>
+</div>
+
+<div class="row mt-4 d-flex justify-content-center">
+<!--    <div class="col-md-4 col-lg-12">-->
+    <div class="col-lg-12">
+        <form action="#scroll" method="post" class="form">
+            {% csrf_token %}
+            <div class="row">
+                <h3 class="h4 bg-secondary text-light" >Situation au 31/12/2024</h3>
+            </div>
+            <div class="container-fluid">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-3 col-sm-12">
+                    {{ form.Nr|as_crispy_field }}
+                </div>
+                <div class="col-lg-3 col-sm-12">
+                    {{ form.maj_res|as_crispy_field }}
+                </div>
+                <div class="col-lg-3 col-sm-12">
+                    {{ form.echelon|as_crispy_field }}
+                </div>
+                <div class="col-lg-3 col-sm-12">
+                    {{ form.tps_trav|as_crispy_field }}
+                </div>
+            </div>
+<!--            <div class="d-flex justify-content-end" >-->
+<!--            <input id="fetch-call" type="submit" value="Calculer" class="btn btn-primary mt-3" />-->
+<!--            </div>-->
+            </div>
+        </form>
+    </div>
+</div><!-- end of row -->
+
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-12 ">
+        <ul class="list-group list-group-horizontal mt-3">
+<!--            <li class="list-group-item list-group-item-info col-4" >Situation au : {{ date_ref }}</li>-->
+            <li class="list-group-item list-group-item-info col-4" >Situation au : 31/12/2024</li>
+            <li class="list-group-item list-group-item-info col-4 text-end" >Votre NR :</li>
+            <li class="list-group-item list-group-item-info col-4"><span id="nr1" style="font-weight:bold">{{ nr1 }}</span></li>
+        </ul>
+
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-primary col-8" >Mensuel temps plein : </li>
+            <li class="list-group-item list-group-item-primary col-4 text-end" id="mensuel1">{{ mensuel1 }}</li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-primary col-8">Prime 2,7% ou 100 € : </li>
+            <li class="list-group-item list-group-item-primary col-4 text-end" id="p27">{{ p27 }}</li>
+        </ul>
+
+        <ul class="list-group list-group-horizontal mb-3">
+            <li class="list-group-item list-group-item-primary col-8">Salaire annuel actuel + prime : </li>
+            <li class="list-group-item list-group-item-primary col-4 text-end" id="annuel1">{{ annuel1 }}</li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-warning col-4" >Situation future</li>
+            <li class="list-group-item list-group-item-warning col-4" id="nb_nr" style="font-weight:bold">{{ nb_nr }} </li>
+            <li class="list-group-item list-group-item-warning col-4" id="msg" >...</li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-success col-8 text-end" > Nouvel NR: </li>
+            <li class="list-group-item list-group-item-success col-4" ><span id="nr_sup" style="font-weight:bold">{{ nr_sup }}</span></li>
+        </ul>
+
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-success col-8">Salaire annuel futur : </li>
+            <li class="list-group-item list-group-item-success col-4 text-end" id="annuel_nr">{{ annuel_nr }}</li>
+        </ul>
+
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-success col-8" >Ecart annuel entre la situation actuelle salaire + prime et la situation future salaire seul : </li>
+            <li class="list-group-item list-group-item-success col-4 text-end" id="residu_annuel">{{ residu_annuel }}</li>
+        </ul>
+
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item list-group-item-success col-8">Taux de reliquat arrondi à la première décimale supérieure : </li >
+            <li class="list-group-item list-group-item-success col-4 text-end" id="taux_reliquat">{{ taux_residuel_arrondi }}</li>
+        </ul>
+        <ul class="list-group list-group-horizontal mb-1">
+            <li class="list-group-item list-group-item-success col-8">Prime annuelle perçue en application de ce taux de reliquat :</li >
+            <li class="list-group-item list-group-item-success col-4 text-end" id="prime_annuelle">{{ prime_annuelle }}</li>
+        </ul>
+        <ul class="list-group list-group-horizontal mb-3">
+            <li class="list-group-item list-group-item-success col-12">Cette prime annuelle sera versée semestriellement : 50% en juin et 50% en décembre</li >
+
+        </ul>
+    </div>
+</div>
+
+<script>
+
+<!--    document.querySelector('#fetch-call').addEventListener('click', event => {-->
+<!--          event.preventDefault();-->
+<!--          recalcul();});-->
+
+    document.addEventListener('DOMContentLoaded', event => {
+          recalcul()});
+
+    function recalcul(){
+
+      let form = new FormData();
+      let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+
+      form.append("Nr", document.querySelector('#id_Nr').value);
+      form.append('echelon', document.querySelector('#id_echelon').value);
+      form.append('maj_res', document.querySelector('#id_maj_res').value);
+      form.append('tps_trav', document.querySelector('#id_tps_trav').value);
+<!--      form.append('tps_trav', 1);-->
+
+      let request = new Request("{% url 'transpose_compute' %}", {method: "POST",
+                                                    body: form,
+                                                    headers: {"X-CSRFToken": csrfTokenValue}});
+
+      fetch(request)
+        .then(response => response.json())
+        .then(context => {
+          document.querySelector('#nr1').innerHTML = context["nr1"];
+          document.querySelector('#mensuel1').innerHTML = context["mensuel_tp"] + ' €';
+          document.querySelector('#p27').innerHTML = context["p27"] + ' €';
+          document.querySelector('#annuel1').innerHTML = context["annuel1"] + ' €';
+          document.querySelector('#nb_nr').innerHTML = '+ ' + context["nb_nr"] +' NR'
+          document.querySelector('#msg').innerHTML = context["msg"]
+          document.querySelector('#nr_sup').innerHTML = context["nr_sup"];
+          document.querySelector('#annuel_nr').innerHTML = context["annuel_nr"] + ' €';
+          document.querySelector('#residu_annuel').innerHTML = context["residu_annuel"] + ' €';
+          document.querySelector('#taux_reliquat').innerHTML = context["taux_residuel_arrondi"];
+          document.querySelector('#prime_annuelle').innerHTML = context["prime_annuelle"] +' €';
+          });
+    }
+
+
+
+
+    document.querySelector('#id_Nr').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_echelon').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_maj_res').addEventListener('change', event => {recalcul()});
+    document.querySelector('#id_tps_trav').addEventListener('change', event => {recalcul()});
+
+
+
+</script>
+
+{% endblock content %}
