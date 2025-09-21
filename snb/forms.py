@@ -1,6 +1,7 @@
 #snb/forms.py
 from django import forms
-from snb.models import Echelon, Coeff_New, Snb_ref_New
+#from snb.models import Echelon, Coeff_New, Snb_ref_New
+from snb.models import Echelon, Coeff, Snb_ref
 from datetime import date
 
 
