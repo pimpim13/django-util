@@ -12,15 +12,6 @@ class Snb_ref(models.Model):
         return f'{self.annee} - {self.snb}'
 
 
-class Coeff(models.Model):
-
-    NR = models.IntegerField()
-    valeur = models.FloatField()
-
-    def __str__(self):
-        return f'{self.NR} -- {self.valeur}'
-
-
 class TempsDeTravail(models.Model):
     duree = models.CharField(max_length=10)
     coeff = models.FloatField()
@@ -45,3 +36,25 @@ class Inflation(models.Model):
         return f'Année : {self.annee} - {self.valeur}'
 
 
+class Coeff_New(models.Model):
+    NR = models.IntegerField()
+    valeur = models.FloatField()
+    date_application = models.DateField(blank=True, null=True)
+
+    class Meta:
+        ordering = ('-date_application', 'NR')
+
+    def __str__(self):
+        return f'{self.date_application} -- {self.NR} -- {self.valeur}'
+
+
+class Snb_ref_New(models.Model):
+    annee = models.IntegerField()
+    snb = models.FloatField()
+    date_application = models.DateField(blank=True, null=True, unique=True)
+
+    class Meta:
+        ordering = ('-annee', '-date_application')
+
+    def __str__(self):
+        return f'{self.date_application} - {self.snb}'

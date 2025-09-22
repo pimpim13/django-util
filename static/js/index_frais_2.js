@@ -28,48 +28,6 @@ const impotNRef = parseFloat(impotN.textContent.replace(',','.'))
 let nombreRepas = 1
 let nombreNuit = 1
 
-// plusR.addEventListener('click',() => {
-//   nbR.value = parseInt(nbR.value) + 1
-//   nombreRepas = parseInt(nbR.value)
-//   recalcul()
-// })
-
-// moinsR.addEventListener('click',() => {
-//   if(nbR.value >= 1)
-//     nbR.value = parseInt(nbR.value) - 1
-//     nombreRepas = parseInt(nbR.value)
-//     recalcul()
-// })
-
-// plusN.addEventListener('click',() => {
-//   nbN.value = parseInt(nbN.value) + 1
-//   nombreNuit = parseInt(nbN.value)
-//   recalcul()
-// })
-
-// moinsN.addEventListener('click',() => {
-//   if(nbN.value >= 1)
-//     nbN.value = parseInt(nbN.value) - 1
-//     nombreNuit = parseInt(nbN.value)
-//     recalcul()
-// })
-
-// nbR.addEventListener('keydown', e => {
-//     if(e.key === 'Enter'){
-//       nombreRepas = parseInt(nbR.value)
-//       console.log(e.key, nombreRepas)
-//       recalcul()
-//       }
-//   })
-//
-// nbN.addEventListener('keydown', e => {
-//     if(e.key === 'Enter'){
-//       nombreNuit = parseInt(nbN.value)
-//       console.log(e.key, nombreNuit)
-//       recalcul()
-//       }
-//   })
-
 
 const textResult = document.getElementById("textResult")
 const resultat = document.createElement('p')
@@ -118,6 +76,7 @@ function setMemo() {
 function memocheck(){
 
   if(memo.checked){
+    console.log("checked")
     setMemo()
   }
   else {

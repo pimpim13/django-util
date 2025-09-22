@@ -1,21 +1,42 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/calculatrice.png' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script defer src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <title>{% block title %}{% endblock %}</title>
+    <style type="text/css">
+    .asteriskField {
+      display: none;
+    }
+
+    form .alert ul li {
+      list-style: none;
+    }
+
+    form .alert ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    small.hint_id_new_password1 ul li {
+        list-style: none;
+    }
+
+  </style>
+
 </head>
 
-<nav class="navbar sticky-top navbar-expand-sm navbar-light" style="background-color: #FF6600;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to left, #FF934C, #FF6600);">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">
             <img src="{% static 'images/logo_cfdt_rte.jpg' %}" alt="logo" width="96" height="96">
+<!--            <img src="{% static 'images/CFDT_FEDE_RTE_2023.png' %}" alt="logo" width="96" height="96">-->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -23,48 +44,75 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav navbar-nav-scroll me-auto amb-2 mb-lg-0">
+            <ul class="navbar-nav navbar-nav-scroll amb-2 me-auto mb-lg-0">
                 {% block navitems %}
                 {% endblock navitems %}
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="https://rte.cfdt.app" target="_blank">AppRTE</a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="mailto:rte-cfdt-med@rte-france.com?subject=contact%20depuis%20le%20site">Nous contacter</a>
+                </li>
+            </ul>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="https://rte.cfdt.app" target="_blank">AppRTE</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="mailto:rte-cfdt-mediterranee@rte-france.com?subject=contact%20depuis%20le%20site">Nous contacter</a>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.username|capfirst }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'password_change' %}">Changer de mot de passe</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Se deconnecter</a></li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
-            <ul class="navbar-nav navbar-nav-scroll amb-2 mb-lg-0 ml-auto">
-                {% if user.is_authenticated %}
-                <li>
-                        <span class="navbar-text">
-                            Bienvenue {{ user.username|capfirst }}
-                        </span>
-                    <a class="nav-link text-end" href="{% url 'logout' %}" >se deconnecter</a>
-                </li>
-                {% else %}
-                <li><a class="nav-link text-end" href="{% url 'signup' %}" >s'inscrire</a></li>
-                <li><a class="nav-link text-end" href="{% url 'login' %}" >se connecter</a></li>
-                {% endif %}
-            </ul>
+            {% else %}
+            <form class="form-inline my-2 my-lg-0">
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Connexion</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Inscription</a>
+            </form>
+            {% endif %}
         </div>
+
     </div>
 </nav>
 
-<!-- <body class="bg-secondary text-light"> -->
+<!-- <body class="bg-secondary text-light">-->
 <body class="bg-light text-dark">
+<!--<body class="bg-dark text-dark">-->
 <div class="container-fluid">
-
     {% include 'messages.html' %}
     {% block content%}
-
     {% endblock content%}
-
 </div>
-<!--<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>-->
+
+<div class="container-fluid">
+    <footer class="row">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background: linear-gradient(to left, #FF934C, #FF6600);">
+          <div class="col-xs-6 col-md-6">
+              <p class="px-3">
+                Mise à jour des barêmes de frais de déplacement au 01/01/2024
+              </p>
+          </div>
+          <div class="col-xs-6 col-md-6">
+            <div id="Copyright">
+              <p class="text-end px-3">
+                Copyright © Rte CFDT
+              </p>
+            </div>
+          </div>
+        </nav>
+    </footer>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
+
+

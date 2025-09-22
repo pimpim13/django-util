@@ -3,7 +3,7 @@ import json
 import openpyxl
 # import pdftables_api
 from pathlib import Path
-# from utilproject.settings import PDF_TABLE_API_KEY
+from utilproject.settings import PDF_TABLE_API_KEY
 
 
 def __init__():

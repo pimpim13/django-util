@@ -1,16 +1,20 @@
 from django.contrib import admin
-from snb.models import Snb_ref, Coeff, TempsDeTravail, Inflation, Echelon
+from snb.models import Snb_ref, TempsDeTravail, Inflation, Echelon, Coeff_New, Snb_ref_New
 
 
-@admin.register(Coeff)
+@admin.register(Coeff_New)
 class Coeff(admin.ModelAdmin):
-    list_display = ('NR', 'valeur')
+    list_display = ('date_application', 'NR', 'valeur')
 
 
 @admin.register(Snb_ref)
 class Snb_ref(admin.ModelAdmin):
     list_display = ('annee', 'snb')
 
+
+@admin.register(Snb_ref_New)
+class Snb_ref(admin.ModelAdmin):
+    list_display = ('annee', 'snb', 'date_application')
 
 @admin.register(TempsDeTravail)
 class TempsDeTravail(admin.ModelAdmin):

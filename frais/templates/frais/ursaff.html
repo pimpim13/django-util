@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-4 d-flex justify-content-center">
+        <div class="col-lg-8">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Année</th>
+                    <th scope="col">Taux Ursaff</th>
+                    <th scope="col">Taux Impôts</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for x in list_taux %}
+                <tr>
+                    <th scope="row">{{ x.annee }}</th>
+                    <td> {{ x.taux_cs }} %</td>
+                    <td> {{ x.taux_cs_non_soumise  }} %</td>
+
+                    <td><button type="button" class="btn btn-primary btn-sm" value="{{ x.annee }}">
+                        <a class="text-light" href="{% url 'ursaff_item' x.annee %}">Modifier</a></button>
+                        <button type="button" class="btn btn-danger btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'ursaff_del_item' x.annee %}">Supprimer</a></button></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th>
+                        <button type="button" class="btn btn-success btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'ursaff_new_item' %}">Nouveau</a>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" value="{{ x.annee }}">
+                            <a class="text-light" href="{% url 'frais' %}">Retour</a>
+                        </button>
+                    </th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if new %}
+{% include 'frais/ursaff_new.html' %}
+{% endif %}
+
+
+{% endblock content %}

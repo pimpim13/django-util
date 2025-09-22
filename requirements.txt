@@ -1,5 +1,5 @@
 asgiref==3.4.1
-Django==4.0
+Django~=4.0.3
 django-crispy-forms==1.13.0
 et-xmlfile==1.1.0
 jours-feries-france==0.7.0
@@ -12,3 +12,9 @@ pytz==2021.3
 six==1.16.0
 sqlparse==0.4.2
 xlrd==2.0.1
+
+requests~=2.27.1
+pytesseract~=0.3.10
+Pillow~=9.1.1
+reportlab~=3.6.12
+oauthlib~=3.2.2

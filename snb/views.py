@@ -1,5 +1,3 @@
-#snb/views.py
-
 from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy

@@ -15,7 +15,11 @@
             Calcul d'itinéraire
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+<<<<<<< HEAD
             <li><a class="dropdown-item" href="https://www.viamichelin.fr/" target="_blank">Via Michelin</a></li>
+=======
+            <li><a class="dropdown-item" href="https://www.google.com/maps?authuser=0" target="_blank">Google Maps</a></li>
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
             <li><a class="dropdown-item" href="https://fr.mappy.com/itineraire" target="_blank">Mappy</a></li>
             <li><a class="dropdown-item" href="https://www.lepilote.com/fr/itineraires/4/JourneyPlanner/Index" target="_blank">Le Pilote</a></li>
           </ul>
@@ -39,6 +43,7 @@
                 <div class="col-6">
                     {{ form.aller_futur_mn|as_crispy_field }}
                 </div>
+<<<<<<< HEAD
                 <div class="col-6">
                     {{ form.retour_actuel_mn|as_crispy_field }}
                 </div>
@@ -62,13 +67,32 @@
                     <div class="col-6">
                         {{ form.retour_futur_km|as_crispy_field }}
                     </div>
+=======
+
+<!--                <div class="col-6">-->
+<!--                    {{ form.aller_actuel_km|as_crispy_field }}-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                    {{ form.aller_futur_km|as_crispy_field }}-->
+<!--                </div>-->
+                <br>
+                <div class="col-3">
+                    {{ form.eligible_tt|as_crispy_field }}
+                </div>
+                <div class="col-3">
+                    {{ form.nb_jours_tt|as_crispy_field }}
+                </div>
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
 
                 <div class="col-6">
                     {{ form.duree_tx_future|as_crispy_field }}
                 </div>
+<<<<<<< HEAD
                 <div class="col-6" id="teletravail">
                     {{ form.teletravail_futur|as_crispy_field }}
                 </div>
+=======
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
 
             </div>
             <br>
@@ -89,8 +113,13 @@
             <tbody>
             {% for k,v in indemnisation.items %}
             <tr>
+<<<<<<< HEAD
                 <!--<td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>-->
                 <td scope="row">{{ v.label }}</a></td>
+=======
+                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>
+<!--                <td scope="row">{{ v.label }}</a></td>-->
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
                 <td class="text-end">{{ v.valeur }}</td>
                 <td> {{ v.unite }}</td>
             </tr>
@@ -114,8 +143,13 @@
             {% for k,v in tt.items %}
             <tr>
                 {% if v.url %}
+<<<<<<< HEAD
                 <td scope="row">{{ v.label }}</a></td>
 <!--                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>-->
+=======
+<!--                <td scope="row">{{ v.label }}</a></td>-->
+                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
                 <td class="text-end">{{ v.valeur }}</td>
                 <td> {{ v.unite }}</td>
                 {% endif %}

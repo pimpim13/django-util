@@ -15,7 +15,7 @@
             Calcul d'itinéraire
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="https://www.viamichelin.fr/" target="_blank">Via Michelin</a></li>
+            <li><a class="dropdown-item" href="https://www.google.com/maps?authuser=0" target="_blank">Google Maps</a></li>
             <li><a class="dropdown-item" href="https://fr.mappy.com/itineraire" target="_blank">Mappy</a></li>
             <li><a class="dropdown-item" href="https://www.lepilote.com/fr/itineraires/4/JourneyPlanner/Index" target="_blank">Le Pilote</a></li>
           </ul>
@@ -25,108 +25,114 @@
 
 {% block content %}
 <div class="row">
-    <h3 class="h3 bg-secondary text-light text-center" >Calculette Mesures d'accompagnement PIM</h3>
+    <h3 class="h3 bg-secondary text-light text-center" >Calculette Mesures d'accompagnement Massilia</h3>
 </div>
 <div class="row mt-4">
 
-    <div class="col-sm-6">
+    <div class="col-6 col-sm-4 col-lg-6">
         <form action="" method="post" class="form">
             {% csrf_token %}
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     {{ form.aller_actuel_mn|as_crispy_field }}
-                </div>
-                <div class="col-6">
                     {{ form.aller_futur_mn|as_crispy_field }}
                 </div>
-                <div class="col-6">
-                    {{ form.retour_actuel_mn|as_crispy_field }}
+                <div class="col-lg-6 col-sm-2">
+                    {{ form.eligible_tt|as_crispy_field }}
                 </div>
-                <div class="col-6">
-                    {{ form.retour_futur_mn|as_crispy_field }}
+                <div class="col-lg-6 col-sm-2">
+                    {{ form.nb_jours_tt|as_crispy_field }}
                 </div>
-
-                <div id = "marseille" class="col-12">
-                    {{ form.residant_marseille|as_crispy_field}}
-                </div>
-
-                    <div class="col-6">
-                        {{ form.aller_actuel_km|as_crispy_field }}
-                    </div>
-                    <div class="col-6">
-                        {{ form.aller_futur_km|as_crispy_field }}
-                    </div>
-                    <div class="col-6">
-                        {{ form.retour_actuel_km|as_crispy_field }}
-                    </div>
-                    <div class="col-6">
-                        {{ form.retour_futur_km|as_crispy_field }}
-                    </div>
-
-                <div class="col-6">
+                <div class="col-12">
                     {{ form.duree_tx_future|as_crispy_field }}
-                </div>
-                <div class="col-6" id="teletravail">
-                    {{ form.teletravail_futur|as_crispy_field }}
                 </div>
 
             </div>
             <br>
             <input type="submit" value="Calculer" class="btn btn-primary mb-4" />
 
+
         </form>
     </div>
-    <div class="col-sm-6">
-        <table class="table table-striped table-hover table-sm">
+    <div class="col-6 col-sm-6 col-lg-6">
+        <h4 class="h4">Sans Télétravail</h4>
+        <table id="table_sans_tt" class="table table-striped table-hover table-sm">
             <thead>
             <tr>
                 <th scope="col">Item</th>
-                <th class="text-center" scope="col">Valeur</th>
+                <th class="text-end" scope="col">Valeur</th>
                 <th scope="col">Unité</th>
             </tr>
             </thead>
-
             <tbody>
-            {% for k,v in indemnisation.items %}
-            <tr>
-                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>
-<!--                <td scope="row">{{ v.label }}</a></td>-->
-                <td class="text-end">{{ v.valeur }}</td>
-                <td> {{ v.unite }}</td>
-            </tr>
-            {% endfor%}
+                <tr>
+                    <td scope="row"><a href="/pim/help/helptps/">Durée de Travail</a></td>
+                    <td class="text-end" id="r1">{{ indemnisation.tps_travail.valeur }}</td>
+                    <td> Jours /an</td>
+                </tr>
+                <tr>
+                    <td scope="row"><a href="/pim/help/tpsret/">Ecart retenu</a></td>
+                    <td class="text-end" id="r2">{{ indemnisation.ecart_tps.valeur }}</td>
+                    <td> mn /Jour</td>
+                </tr>
+                <tr>
+                    <td scope="row"><a href="/pim/help/indtps/">Indemnisation</a></td>
+                    <td class="text-end" id="r3">{{ indemnisation.indem_tps.valeur }}</td>
+                    <td> €</td>
+                </tr>
             </tbody>
 
         </table>
 
-        <h4 class="h4">Variante avec Télétravail</h4>
-        <table class="table table-striped table-hover table-sm">
+        <h4 class="h4">Abattement Télétravail</h4>
+        <table id="table_avec_tt" class="table table-striped table-hover table-sm">
             <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th class="text-center" scope="col">Valeur</th>
-                <th scope="col">Unité</th>
-            </tr>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th class="text-center" scope="col">Valeur</th>
+                    <th scope="col">Unité</th>
+                </tr>
             </thead>
 
             <tbody>
-
-            {% for k,v in tt.items %}
-            <tr>
-                {% if v.url %}
-<!--                <td scope="row">{{ v.label }}</a></td>-->
-                <td scope="row"><a href="{% url 'help' v.url %}">{{ v.label }}</a></td>
-                <td class="text-end">{{ v.valeur }}</td>
-                <td> {{ v.unite }}</td>
-                {% endif %}
-            </tr>
-            {% endfor%}
-
+                <tr>
+                    <td scope="row"><a href="/pim/help/helptt/">Indemnisation direction avec TT (-75%)</a></td>
+                    <td class="text-end" id="r4">{{ tt.indem_tps_tt_75.valeur }}</td>
+                    <td> €</td>
+                </tr>
 
             </tbody>
 
         </table>
     </div>
 </div>
+
+<script>
+    const form = document.querySelector('.form')
+    form.addEventListener('change',clearResult)
+
+    const formLoad = document.querySelector('.form')
+    form.addEventListener('DOMContentLoaded',memocheck())
+
+    const r1 = document.querySelector('#r1')
+    const r2 = document.querySelector('#r2')
+    const r3 = document.querySelector('#r3')
+    const r4 = document.querySelector('#r4')
+    const r5 = document.querySelector('#r5')
+
+
+    function memocheck(){
+      console.log('memecheck')}
+
+    function clearResult(){
+      console.log('clearResult')
+      r1.innerHTML="---"
+      r2.innerHTML="---"
+      r3.innerHTML="---"
+      r4.innerHTML="---"
+      r5.innerHTML="---"
+
+    }
+</script>
 
 {% endblock content %}

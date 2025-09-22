@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} MAJ-Ursaff {% endblock title %}
+
+{% block content %}
+<div class="row my-3 d-flex justify-content-center">
+    <div class="col-4">
+        <form action="" method="POST" class="form">
+            <h1 class="h4">
+                annee : {{ an }}
+            </h1>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-primary my-4" type="submit" value="Modifier">
+        </form>
+    </div>
+
+
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Année : {{ an }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Modification des taux</h6>
+            <p class="card-text">
+                Entrez les taux de cotisation Ursaff ainsi que le taux d'imposition.
+                Pour créer une nouvelle année choisissez <a href="{% url 'ursaff_new_item' %}">Nouveau</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

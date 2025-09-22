@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--  <body class="login-page" cz-shortcut-listen="true" style="min-height: 512.391px;">-->
+  <body class="login-page" style="min-height: 512.391px;">
+  <div class="row mt-4 d-flex justify-content-center">
+  <div class="login-box col-lg-6">
+    <div class="login-logo h4">
+      Entrez vos identifiants
+    </div>
+    <!-- /.login-logo -->
+    <div class="card" style="background:#DDD">
+      <div class="card-body login-card-body">
+        <form action="" method="post">
+          {% csrf_token %}
+          {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+              Mauvais identificant/mot de passe
+            </div>
+          {% endif %}
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Username" name="username">
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Password" name="password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+        </form>
+        <p><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></p>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  </div>
+  <!-- /.login-box -->
+  </body>
+
+{% endblock %}

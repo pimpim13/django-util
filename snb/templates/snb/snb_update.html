@@ -14,7 +14,13 @@
                 <tr>
                     <th scope="col">Année</th>
                     <th scope="col">SNB</th>
+<<<<<<< HEAD
                     <th scope="col">Action</th>
+=======
+                    <th scope="col">Date d'application</th>
+                    <th scope="col">Action</th>
+
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
                 </tr>
                 </thead>
                 <tbody>
@@ -22,6 +28,11 @@
                 <tr>
                     <th scope="row">{{ x.annee }}</th>
                     <td> {{ x.snb}} </td>
+<<<<<<< HEAD
+=======
+                    <td> {{ x.date_application}} </td>
+
+>>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
                     <td><button type="button" class="btn btn-primary btn-sm" value="{{ x.annee }}">
                         <a class="text-light" href="{% url 'snb_update_item' x.pk %}">Modifier</a></button>
                         <button type="button" class="btn btn-danger btn-sm" value="{{ x.annee }}">
