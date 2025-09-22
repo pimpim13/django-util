@@ -11,16 +11,8 @@ const nr = document.querySelector('#id_Nr')
 const ech = document.querySelector('#id_echelon')
 const majres = document.querySelector('#id_maj_res')
 const tpstrv = document.querySelector('#id_tps_trav')
-<<<<<<< HEAD
 const nrFutur = document.querySelector('#id_Nr_futur')
 const echFutur = document.querySelector('#id_echelon_futur')
-
-
-=======
-//const nrFutur = document.querySelector('#id_Nr_futur')
-//const echFutur = document.querySelector('#id_echelon_futur')
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
-
 
 slideSnb.addEventListener('input', () => {
   snb_val.innerHTML = slideSnb.value
@@ -36,19 +28,15 @@ nr.addEventListener('change', ()=> {
     }
 })
 
-<<<<<<< HEAD
-=======
+
 /*
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
 ech.addEventListener('change', ()=> {
   if(nr.value > echFutur.value){
     echFutur.options.selectedIndex = ech.options.selectedIndex
     }
 })
-<<<<<<< HEAD
-=======
 */
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
+
 
 const form = document.querySelector('.form')
 form.addEventListener('change',memocheck)
@@ -71,13 +59,8 @@ function setMemo(){
     localStorage.setItem('echelon',ech.options.selectedIndex)
     localStorage.setItem('maj_res',majres.options.selectedIndex)
     localStorage.setItem('tps_trav',tpstrv.options.selectedIndex)
-<<<<<<< HEAD
     localStorage.setItem('nr_futur',nrFutur.options.selectedIndex)
     localStorage.setItem('ech_futur',echFutur.options.selectedIndex)
-=======
-    //localStorage.setItem('nr_futur',nrFutur.options.selectedIndex)
-    //localStorage.setItem('ech_futur',echFutur.options.selectedIndex)
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
     localStorage.setItem('inflation',slideInflation.value)
     localStorage.setItem('snb',slideSnb.value)
 
@@ -89,13 +72,8 @@ function setPreferences(){
     ech.options[localStorage.getItem('echelon')].selected = true
     majres.options[localStorage.getItem('maj_res')].selected = true
     tpstrv.options[localStorage.getItem('tps_trav')].selected = true
-<<<<<<< HEAD
     nrFutur.options[localStorage.getItem('nr_futur')].selected = true
     echFutur.options[localStorage.getItem('ech_futur')].selected = true
-=======
-    //nrFutur.options[localStorage.getItem('nr_futur')].selected = true
-    //echFutur.options[localStorage.getItem('ech_futur')].selected = true
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
     slideSnb.value = localStorage.getItem('snb')
     slideInflation.value = localStorage.getItem('inflation')
     snb_val.innerHTML = slideSnb.value
@@ -104,11 +82,7 @@ function setPreferences(){
 }
 
 if(localStorage.getItem('nr')){
-<<<<<<< HEAD
   console.log(localStorage.getItem('nr'))
-=======
-  //console.log(localStorage.getItem('nr'))
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
   setPreferences()
 
 }
