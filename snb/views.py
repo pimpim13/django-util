@@ -8,12 +8,10 @@ from pathlib import Path
 
 from snb.models import Snb_ref, Coeff_New, Snb_ref_New
 from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm, TranspositionForm
-from frais.parse_xl import populate_nr
 from snb.api_snb import test as pdf_gen
 
 from datetime import datetime
 
-from utilproject.settings import MEDIA_ROOT
 
 EVOL_SNB = "2"    # valeur par défaut du curseur d'évolution du SNB
 INFLATION = "5.1"  # valeur par défaut du curseur d'évolution de l'inflation
@@ -22,8 +20,8 @@ TAUX_BRUT_NET = 0.75  # valeur par défaut du niveau de charges sociales
 
 def snb(request):
 
-    if not Coeff_New.objects.all():
-        populate_db_nr()
+    # if not Coeff_New.objects.all():
+    #     populate_db_nr()
 
     context = {}
     evol_snb = EVOL_SNB
@@ -146,11 +144,11 @@ def snb_delete_item(request, item):
     Snb_ref_New.objects.get(annee=item).delete()
     return redirect('snb_list')
 
-
-def populate_db_nr():
-    datas = populate_nr()
-    for data in datas:
-        Coeff_New.objects.create(**data)
+#
+# def populate_db_nr():
+#     datas = populate_nr()
+#     for data in datas:
+#         Coeff_New.objects.create(**data)
 
 
 def calculate_mensuel(snb=0.0, Nr=0.0, echelon=0.0,  maj_res=0.0, tps_trav=0.0, annee=0):

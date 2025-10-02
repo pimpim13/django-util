@@ -4,10 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 import json
-
-
-import pandas as pd
-
 from django.shortcuts import render, redirect
 
 from frais.decorators import user_is_staff
