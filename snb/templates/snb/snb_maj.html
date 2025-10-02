@@ -16,13 +16,10 @@
             <div>
                 {{ form.snb|as_crispy_field }}
             </div>
-<<<<<<< HEAD
-=======
 
             <div>
                 {{ form.date_application|as_crispy_field }}
             </div>
->>>>>>> 693dd64c9bccca497cb0228fa83746e5ca9f687d
             <input class="btn btn-primary my-4" type="submit"
                    value="{% if not form.instance.pk %}Créer{% else %}Modifier{% endif %}">
         </form>

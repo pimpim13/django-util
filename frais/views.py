@@ -2,8 +2,11 @@ from pathlib import Path
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+from django.http import JsonResponse
 import json
 
+
+import pandas as pd
 
 from django.shortcuts import render, redirect
 
@@ -13,6 +16,9 @@ from .forms import FraisForm, updateUrsaffForm, newUrsaffForm
 from frais.models import ursaffModel, Bareme
 from datetime import date
 from frais import parse_xl
+
+from utilproject.settings import MEDIA_ROOT
+from .import_bareme_cmd import convert_pdf2csv, import_bareme_csv
 
 
 def frais(request):
@@ -24,7 +30,7 @@ def frais(request):
         annee_bareme = Bareme.objects.last().annee
     else:
         annee_bareme = date.today().year
-
+    print(annee_bareme)
     return redirect('frais_an', annee_bareme)
 #     return redirect('frais_an', an=annee_bareme)
 
@@ -186,12 +192,14 @@ def dict_to_db(elements):
 
 @user_is_staff
 @login_required
-def new_bareme_item(request):
+def new_bareme_item_old(request):
 
     context = {}
     an = Bareme.objects.last().annee + 1
     context['an'] = an
     success = True
+
+
     if request.method == 'POST' and request.FILES['file']:
 
         an = request.POST.get('annee')
@@ -203,16 +211,22 @@ def new_bareme_item(request):
             # return redirect('frais')
         else:
             file = request.FILES['file']
-            location = Path(MEDIA_ROOT / 'xlsx')
+            location = Path(MEDIA_ROOT / 'pdf')
             fs = FileSystemStorage(location=location)
             filename = fs.save(file.name, file)
             uploaded_file_url = fs.url(filename)
             uploaded_file_path = fs.path(filename)
-            datas = parse_xl.xlsx_to_db(uploaded_file_path, an)
+            origin = MEDIA_ROOT / 'pdf' / uploaded_file_path
+            dest = MEDIA_ROOT / 'csv' / 'bareme.csv'
+            # datas = parse_xl.xlsx_to_db(uploaded_file_path, an)
+
+            convert_pdf2csv(origin=origin, dest=dest)
+
+            result = import_bareme_csv()
+            nb_enr = Bareme.objects.filter(annee=an).count()
+
 
             success = True
-            nb_enr = dict_to_db(datas)
-
             context['success'] = success
             messages.success(request, f"{nb_enr} nouvelles entrées pour l'année {an} ont été ajoutées")
 
@@ -220,6 +234,104 @@ def new_bareme_item(request):
 
     context['success'] = success
     return render(request, 'frais/bareme_new.html', context=context)
+
+
+@user_is_staff
+@login_required
+def new_bareme_item(request):
+    """Vue pour l'upload et le traitement des fichiers PDF/CSV de barème"""
+
+    context = {}
+    an = Bareme.objects.last().annee + 1
+    context['an'] = an
+
+    if request.method == 'GET':
+        # Affichage du formulaire
+        return render(request, 'frais/bareme_new.html', context=context)
+
+    elif request.method == 'POST':
+        # Vérifier si c'est une requête AJAX
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+        try:
+            an = request.POST.get('annee')
+
+            # Vérifier si l'année existe déjà
+            if Bareme.objects.filter(annee=an).count() != 0:
+                error_msg = f"L'année {an} existe déjà"
+
+                if is_ajax:
+                    return JsonResponse({
+                        'success': False,
+                        'error': error_msg
+                    })
+                else:
+                    messages.error(request, error_msg)
+                    context['an'] = an
+                    return render(request, 'frais/bareme_new.html', context=context)
+
+            # Vérifier qu'un fichier est fourni
+            if 'file' not in request.FILES:
+                error_msg = "Aucun fichier fourni"
+
+                if is_ajax:
+                    return JsonResponse({
+                        'success': False,
+                        'error': error_msg
+                    })
+                else:
+                    messages.error(request, error_msg)
+                    context['an'] = an
+                    return render(request, 'frais/bareme_new.html', context=context)
+
+            file = request.FILES['file']
+
+            # Sauvegarder le fichier PDF
+            location = Path(MEDIA_ROOT / 'pdf')
+            fs = FileSystemStorage(location=location)
+            filename = fs.save(file.name, file)
+            uploaded_file_path = fs.path(filename)
+            origin = MEDIA_ROOT / 'pdf' / uploaded_file_path
+            dest = MEDIA_ROOT / 'csv' / 'bareme.csv'
+
+            # Convertir le PDF en CSV
+            convert_pdf2csv(origin=origin, dest=dest)
+
+            # Importer les données CSV
+            result = import_bareme_csv()
+
+            nb_enr = Bareme.objects.filter(annee=an).count()
+            success_msg = f"{nb_enr} nouvelles entrées pour l'année {an} ont été ajoutées"
+
+            if is_ajax:
+                # Retourner une réponse JSON pour AJAX
+                return JsonResponse({
+                    'success': True,
+                    'created': result['created'],
+                    'updated': result['updated'],
+                    'incomplete': result['incomplete'],
+                    'erreurs': result.get('erreurs', []),
+                    'nb_enr': nb_enr,
+                    'annee': an,
+                    'message': success_msg
+                })
+            else:
+                # Retourner une page HTML classique
+                messages.success(request, success_msg)
+                return redirect('bareme_item')
+
+        except Exception as e:
+            error_msg = f"Erreur lors de l'import : {str(e)}"
+
+            if is_ajax:
+                return JsonResponse({
+                    'success': False,
+                    'error': error_msg
+                })
+            else:
+                messages.error(request, error_msg)
+                context['an'] = request.POST.get('annee', an)
+                return render(request, 'frais/bareme_new.html', context=context)
 
 
 @user_is_staff
@@ -248,3 +360,8 @@ def del_bareme_item(request, item):
     messages.success(request, f"Les données de l'année {item} ont été supprimées")
 
     return redirect('bareme_item')
+
+
+
+if __name__ == '__main__':
+    pass
