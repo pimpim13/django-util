@@ -8,7 +8,7 @@ from pathlib import Path
 
 from snb.models import Snb_ref, Coeff_New, Snb_ref_New
 from snb.forms import SnbUpdateForm, SnbCreateForm, CalculSalaireForm, EvolSnbForm, TranspositionForm
-from snb.api_snb import test as pdf_gen
+#from snb.api_snb import test as pdf_gen
 
 from datetime import datetime
 
@@ -460,10 +460,10 @@ def transpose_compute(request):
     return JsonResponse(context)
 
 
-def test(request):
-
-    pdf_gen()
-    texte = f"pdf généré à {datetime.now()}"
+# def test(request):
+#
+#     pdf_gen()
+#     texte = f"pdf généré à {datetime.now()}"
 
 
     # location = Path(MEDIA_ROOT / 'pdf')

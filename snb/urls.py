@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
 from . import views
-from snb.views import SnbListView, SnbUpdate, compute, test
+from snb.views import SnbListView, SnbUpdate, compute # test
 
 urlpatterns = [
     re_path(r'^$', views.snb, name='snb'),
@@ -19,5 +19,5 @@ urlpatterns = [
     path('transposition/', views.snb_transpose, name='snb_transposition'),
     path('transposition/compute/', views.transpose_compute, name='transpose_compute'),
 
-    path('test/', views.test, name='test'),
+    # path('test/', views.test, name='test'),
 ]

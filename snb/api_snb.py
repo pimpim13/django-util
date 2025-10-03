@@ -1,21 +1,21 @@
-from datetime import date, datetime
-from io import BytesIO
-from django.http import HttpResponse
-
-
-
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.platypus import Table, TableStyle
-
-from snb.models import Snb_ref_New, Coeff_New, Echelon
+# from datetime import date, datetime
+# from io import BytesIO
+# from django.http import HttpResponse
+#
+#
+#
+# from reportlab.lib import colors
+# from reportlab.lib.pagesizes import A4
+# from reportlab.platypus import SimpleDocTemplate
+# from reportlab.platypus import Table, TableStyle
+#
+# from snb.models import Snb_ref_New, Coeff_New, Echelon
 
 
 def calcul_salaire_mensuel(ech, maj_res, tps_trav, coeff, snb):
     return round((snb * coeff * ech * maj_res * tps_trav)/100, 2)
 
-
+"""
 def test():
 
     data = create_table()
@@ -109,7 +109,7 @@ def create_table():
 
 
     return table
-
+"""
 
 if __name__ == '__main__':
-    test()
+    pass

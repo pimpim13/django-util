@@ -1,9 +1,9 @@
 # from pprint import pprint
 import json
-import openpyxl
+# import openpyxl
 # import pdftables_api
 from pathlib import Path
-from utilproject.settings import PDF_TABLE_API_KEY
+# from utilproject.settings import PDF_TABLE_API_KEY
 
 
 def __init__():
@@ -60,49 +60,49 @@ def __init__():
 #
 #     return bareme
 
-
-def save_to_json(datas, name=""):
-    with open(name, "w") as f:
-        json.dump(datas, f, indent=4)
-    return
-
-
-def get_json(name):
-    try:
-        with open(name, "r") as f:
-            fichier = json.load(f)
-    except:
-        return False
-    return fichier
+#
+# def save_to_json(datas, name=""):
+#     with open(name, "w") as f:
+#         json.dump(datas, f, indent=4)
+#     return
 
 
-def update_ursaff(annee, taux_cs_ecart, taux_cs_non_soumises):
-    ursaff = get_json('../static/datas/ursaff.json')
-    if not ursaff:
-        ursaff = {annee: {'taux_cs_ecart': taux_cs_ecart,
-                          'taux_cs_non_soumises': taux_cs_non_soumises,
-                          }
-                  }
+# def get_json(name):
+#     try:
+#         with open(name, "r") as f:
+#             fichier = json.load(f)
+#     except:
+#         return False
+#     return fichier
 
-    else:
-        ursaff[annee] = {'taux_cs_ecart': taux_cs_ecart,
-                         'taux_cs_non_soumises': taux_cs_non_soumises,
-                         }
-    save_to_json(ursaff, name='../static/datas/ursaff.json')
+#
+# def update_ursaff(annee, taux_cs_ecart, taux_cs_non_soumises):
+#     ursaff = get_json('../static/datas/ursaff.json')
+#     if not ursaff:
+#         ursaff = {annee: {'taux_cs_ecart': taux_cs_ecart,
+#                           'taux_cs_non_soumises': taux_cs_non_soumises,
+#                           }
+#                   }
+#
+#     else:
+#         ursaff[annee] = {'taux_cs_ecart': taux_cs_ecart,
+#                          'taux_cs_non_soumises': taux_cs_non_soumises,
+#                          }
+#     save_to_json(ursaff, name='../static/datas/ursaff.json')
 
 
-def jsonTodb(file):
-
-    with open(file, 'r') as f:
-        data = json.load(f)
-
-    for element in data.keys():
-        for x in data[element].keys():
-            print(x)
-            repas = data[element][x]['R']
-            nuit = data[element][x]['N+PD']
-
-            print(element, x, repas, nuit)
+# def jsonTodb(file):
+#
+#     with open(file, 'r') as f:
+#         data = json.load(f)
+#
+#     for element in data.keys():
+#         for x in data[element].keys():
+#             print(x)
+#             repas = data[element][x]['R']
+#             nuit = data[element][x]['N+PD']
+#
+#             print(element, x, repas, nuit)
 
 
 # def xlsx_to_db(path, an):
@@ -233,6 +233,8 @@ if __name__ == '__main__':
     # update_ursaff('2021', 8.86, 6.01)
     # pdf_to_xlsx('/Users/alainzypinoglou/Documents/CFDT/snb.pdf', 'test')
     # print(xlsx_to_dict('output.xlsx'))
-    populate_nr()
+    # populate_nr()
+    pass
+
 
 
