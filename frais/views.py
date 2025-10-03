@@ -14,7 +14,7 @@ from datetime import date
 from frais import parse_xl
 
 from utilproject.settings import MEDIA_ROOT
-from .import_bareme_cmd import convert_pdf2csv, import_bareme_csv
+from .import_bareme_cmd import  import_bareme_csv # convert_pdf2csv
 
 
 def frais(request):
@@ -186,51 +186,6 @@ def dict_to_db(elements):
     return len(elements)
 
 
-@user_is_staff
-@login_required
-def new_bareme_item_old(request):
-
-    context = {}
-    an = Bareme.objects.last().annee + 1
-    context['an'] = an
-    success = True
-
-
-    if request.method == 'POST' and request.FILES['file']:
-
-        an = request.POST.get('annee')
-
-        if Bareme.objects.filter(annee=an).count() != 0:
-            messages.error(request, f"l'année {an} existe déjà")
-            success = False
-            context['an'] = an
-            # return redirect('frais')
-        else:
-            file = request.FILES['file']
-            location = Path(MEDIA_ROOT / 'pdf')
-            fs = FileSystemStorage(location=location)
-            filename = fs.save(file.name, file)
-            uploaded_file_url = fs.url(filename)
-            uploaded_file_path = fs.path(filename)
-            origin = MEDIA_ROOT / 'pdf' / uploaded_file_path
-            dest = MEDIA_ROOT / 'csv' / 'bareme.csv'
-            # datas = parse_xl.xlsx_to_db(uploaded_file_path, an)
-
-            convert_pdf2csv(origin=origin, dest=dest)
-
-            result = import_bareme_csv()
-            nb_enr = Bareme.objects.filter(annee=an).count()
-
-
-            success = True
-            context['success'] = success
-            messages.success(request, f"{nb_enr} nouvelles entrées pour l'année {an} ont été ajoutées")
-
-            return redirect('bareme_item')
-
-    context['success'] = success
-    return render(request, 'frais/bareme_new.html', context=context)
-
 
 @user_is_staff
 @login_required
@@ -291,7 +246,7 @@ def new_bareme_item(request):
             dest = MEDIA_ROOT / 'csv' / 'bareme.csv'
 
             # Convertir le PDF en CSV
-            convert_pdf2csv(origin=origin, dest=dest)
+            # convert_pdf2csv(origin=origin, dest=dest)
 
             # Importer les données CSV
             result = import_bareme_csv()

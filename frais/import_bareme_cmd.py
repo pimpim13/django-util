@@ -2,14 +2,14 @@ import csv
 import os
 
 from utilproject.settings import MEDIA_ROOT
-import camelot
+# import camelot
 from .models import Bareme
 
 
-def convert_pdf2csv(origin, dest='bareme'):
-    table = camelot.read_pdf(origin, pages='1-end')
-    table.export(dest, f='csv', compress=False)
-    return
+# def convert_pdf2csv(origin, dest='bareme'):
+#     table = camelot.read_pdf(origin, pages='1-end')
+#     table.export(dest, f='csv', compress=False)
+#     return
 
 
 def import_bareme_csv():
