@@ -42,3 +42,4 @@ wheels/
 *.bak
 *.swp
 *.swo
+/media/

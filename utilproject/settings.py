@@ -14,8 +14,8 @@ SECRET_KEY = env("SECRET_KEY")
 PDF_TABLE_API_KEY = env('PDF_TABLE_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = env.bool("DEBUG", False)
-DEBUG = True
+DEBUG = env.bool("DEBUG", False)
+# DEBUG = True
 
 # ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
