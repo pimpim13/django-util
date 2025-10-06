@@ -14,7 +14,7 @@ from datetime import date
 from frais import parse_xl
 
 from utilproject.settings import MEDIA_ROOT
-from .import_bareme_cmd import  import_bareme_csv, convert_pdf2csv
+from .import_bareme_cmd import convert_pdf2csv, import_bareme_csv
 
 
 def frais(request):

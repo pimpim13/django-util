@@ -25,7 +25,7 @@ class Bareme(models.Model):
     Nuit_Pdj = models.FloatField()
 
     class Meta:
-        ordering = ('-annee',)
+        ordering = ('annee',)
 
     def __str__(self):
         return f'{self.annee} - {self.localisation} - {self.college} - {self.Repas} - {self.Nuit_Pdj}'
