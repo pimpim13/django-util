@@ -1,10 +1,8 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-#from utilproject.util import recup_ip
 
 
 def home(request):
     #ip = recup_ip(request)
-    return render(request, 'home.html', {"toto": "Accueil",
+    return render(request, 'home.html', {"message": "Les frais 2025 vont bientôt être disponibles",
                                          "ip": "0.0.0.0" })
 

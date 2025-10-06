@@ -14,7 +14,7 @@ from datetime import date
 from frais import parse_xl
 
 from utilproject.settings import MEDIA_ROOT
-from .import_bareme_cmd import  import_bareme_csv # convert_pdf2csv
+from .import_bareme_cmd import  import_bareme_csv, convert_pdf2csv
 
 
 def frais(request):
@@ -246,10 +246,10 @@ def new_bareme_item(request):
             dest = MEDIA_ROOT / 'csv' / 'bareme.csv'
 
             # Convertir le PDF en CSV
-            # convert_pdf2csv(origin=origin, dest=dest)
+            convert_pdf2csv(origin=origin, dest=dest)
 
             # Importer les données CSV
-            result = import_bareme_csv()
+            result = import_bareme_csv(annee=an)
 
             nb_enr = Bareme.objects.filter(annee=an).count()
             success_msg = f"{nb_enr} nouvelles entrées pour l'année {an} ont été ajoutées"

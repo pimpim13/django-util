@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-from django.shortcuts import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-
 from accounts.models import CustomUser
 
 
@@ -27,6 +25,3 @@ def signup(request):
 
     return render(request, 'registration/signup.html', context=context)
 
-
-def profile(request):
-    return redirect('home')
